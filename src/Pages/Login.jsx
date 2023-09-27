@@ -2,7 +2,7 @@ import React, {  useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import {useDispatch} from "react-redux";
 import { EmailIcon, ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
-import { Input, InputGroup, InputRightElement, Button, Box, FormControl, FormLabel, Stack, Text, useToast } from '@chakra-ui/react';
+import { Input, InputGroup, InputRightElement, Button, Box, FormControl, FormLabel, useToast } from '@chakra-ui/react';
 import { LoginAuth } from '../Redux/Auth/action';
 import { LOGIN_SUCCESS } from '../Redux/Auth/actionTypes';
 const Login = () => {
@@ -110,15 +110,6 @@ const Login = () => {
                         >LOGIN</Button>
                 </Box>
                 </form>
-                {/* <Stack pt={6}>
-                    <Text fontSize={"15px"} align={"center"}>
-                        Already you have account? {" "}
-                        <Link to="/adminSignup" style={{ color: "blue" }}>
-                            Signup
-                        </Link>
-                    </Text>
-
-                </Stack> */}
             </Box>
         </div>
     )

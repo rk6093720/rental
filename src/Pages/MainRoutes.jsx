@@ -15,12 +15,10 @@ import Payment from './Payment';
 import VacateNotices from './VacateNotices';
 import Reports from './Reports';
 import Dashboard from './Dashboard';
-import ForgetPassword from './ForgetPassword';
-
-// import { useSelector } from 'react-redux';
-
+import AddLandlord from './AddLandlord';
+import ViewLandLord from './ViewLandLord';
+import EditLandLord from './EditLandLord';
 const MainRoutes = () => {
-    // const auth = useSelector((state)=> state.Auth.isAuth)
     return (
         <div>
             <Routes>
@@ -39,10 +37,11 @@ const MainRoutes = () => {
                 <Route path='/vacateNotices' element={<VacateNotices/>}/>
                 <Route path='/reports' element={<Reports/>}/>
                 <Route path='/dashboard' element={<Dashboard/>}/>
-                 
+                <Route path='/AddLandLord' element={<AddLandlord/>}/>
+                <Route path='/viewLandlord/:id' element={<ViewLandLord/>}/> 
+                <Route path='/landlord/:id/edit' element={<EditLandLord/>}/>           
             </Routes>
         </div>
     )
 }
-
 export default MainRoutes
