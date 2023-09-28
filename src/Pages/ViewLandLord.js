@@ -1,4 +1,4 @@
-import { Box, Image, SimpleGrid, Tab, TabList, TabPanel, TabPanels, Table, TableCaption, TableContainer, Tabs, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
+import { Box, Button, Image, SimpleGrid, Tab, TabList, TabPanel, TabPanels, Table, TableCaption, TableContainer, Tabs, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom'
@@ -20,6 +20,7 @@ const ViewLandLord = () => {
           currentLand &&  setCurrentLandLord(currentLand);
        }
     },[id,landlord]);
+    console.log(currentLandLord)
   return (
     <div>
           <Tabs>
@@ -81,8 +82,9 @@ const ViewLandLord = () => {
                               <Tbody>
                                   <Tr>
                                       <Td>{currentLandLord.registerDate}</Td>
-                                      <Td>  {currentLandLord.document} 
+                                      <Td>  <Image src={`/images/${currentLandLord.document}`}/>
                                         </Td>
+                                        
                                   </Tr>
                               </Tbody>
                           </Table>

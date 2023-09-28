@@ -45,6 +45,24 @@ const reducer = (state = initialState, action) => {
             isLoading:false,
             isError:true
         }
+    case types.EDIT_LANDLORD_REQUEST:
+        return{
+            ...state,
+            isLoading:true,
+        }
+    case types.EDIT_LANDLORD_SUCCESS:
+        return {
+            ...state,
+            landlord:state.landlord.map((item)=> item.id === payload.id ? payload:item),
+            isLoading:false,
+            isError:false,
+        }
+    case types.EDIT_LANDLORD_FAILURE:
+        return{
+            ...state,
+            isLoading:false,
+            isError:true,
+        }
     default:
         return state
     }

@@ -26,9 +26,13 @@ const postLandlord = (payload)=>async(dispatch)=>{
     .catch((e)=>{
         return dispatch({type:types.POST_LANDLORD_FAILURE,payload:e})
     })
+}
+
+const editLandLord = () =>(dispatch)=>{
 
 }
 export{
     getLandlord,
-    postLandlord
+    postLandlord,
+    editLandLord
 }

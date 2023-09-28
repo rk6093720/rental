@@ -2,7 +2,7 @@ import { Box, Button, Flex, Input, Spacer, Table, TableCaption, TableContainer, 
 import React, { useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import { BsPersonFillAdd } from "react-icons/bs"
-import { ChevronDownIcon, EditIcon } from '@chakra-ui/icons';
+import { ChevronDownIcon, DeleteIcon, EditIcon } from '@chakra-ui/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { getLandlord } from '../Redux/App/action';
 const Landlord = () => {
@@ -61,6 +61,11 @@ const Landlord = () => {
                 <Link to={`/landlord/${item._id}/edit`}>
                 <EditIcon />
                   </Link>
+                </Td>
+                <Td>
+                  <Button>
+                    <DeleteIcon/>
+                  </Button>
                 </Td>
               </Flex>
             </Tr>
