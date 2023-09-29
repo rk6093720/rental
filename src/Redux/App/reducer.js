@@ -53,7 +53,7 @@ const reducer = (state = initialState, action) => {
     case types.EDIT_LANDLORD_SUCCESS:
         return {
             ...state,
-            landlord:state.landlord.map((item)=> item.id === payload.id ? payload:item),
+            landlord:state.landlord.map((item)=> item._id === payload.id ? payload:item),
             isLoading:false,
             isError:false,
         }
@@ -62,6 +62,24 @@ const reducer = (state = initialState, action) => {
             ...state,
             isLoading:false,
             isError:true,
+        }
+    case types.DELETE_LANDLORD_REQUEST:
+        return{
+            ...state,
+            isLoading:true,
+        }
+    case types.DELETE_LANDLORD_SUCCESS:
+        return{
+            ...state,
+            isLoading:false,
+            landlord:state.landlord.filter((land)=>land._id !== payload),
+            isError:false,
+        }
+    case types.DELETE_LANDLORD_FAILURE:
+        return {
+            ...state,
+            isLoading:false,
+            isError:true
         }
     default:
         return state

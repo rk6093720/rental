@@ -7,7 +7,7 @@ const getLandlord = ()=> async(dispatch)=>{
     return await axios.get("http://localhost:8080/landlord/read")
     .then((r)=>{
         console.log(r,"get")
-        return dispatch({type:types.GET_LANDLORD_SUCCESS, payload:r.data.Landlord})
+        return dispatch({type:types.GET_LANDLORD_SUCCESS, payload:r.data.Landlords})
     })
     .catch((e)=>{
        return  dispatch({type:types.GET_LANDLORD_FAILURE,payload:e})
@@ -28,11 +28,33 @@ const postLandlord = (payload)=>async(dispatch)=>{
     })
 }
 
-const editLandLord = () =>(dispatch)=>{
-
+const editLandLord = (id,payload) =>async(dispatch)=>{
+    dispatch({type:types.EDIT_LANDLORD_REQUEST});
+    return await axios.put(`http://localhost:8080/landlord/update/${id}`,payload)
+    .then((r)=>{
+        console.log(r);
+        return dispatch({ type: types.EDIT_LANDLORD_SUCCESS, payload: r.data.editLandlord })
+    })
+    .catch((e)=>{
+         dispatch({type:types.EDIT_LANDLORD_FAILURE,payload:e})
+    })
 }
+
+const deleteLandLord = (id) => async(dispatch)=>{
+      dispatch({type:types.DELETE_LANDLORD_REQUEST});
+    return await axios.delete(`http://localhost:8080/landlord/delete/${id}`)
+    .then((r)=>{
+        console.log(r);
+        return dispatch({type:types.DELETE_LANDLORD_SUCCESS,payload:r.data})
+    })
+    .catch((e)=>{
+        dispatch({type:types.DELETE_LANDLORD_FAILURE,payload:e})
+    })
+}
+
 export{
     getLandlord,
     postLandlord,
-    editLandLord
+    editLandLord,
+    deleteLandLord
 }

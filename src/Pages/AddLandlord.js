@@ -1,5 +1,5 @@
 import { EmailIcon } from '@chakra-ui/icons'
-import { Box, Button, FormControl, FormLabel, Heading, Input, InputGroup, InputRightElement } from '@chakra-ui/react'
+import { Box, Button, FormControl, FormLabel, Heading, Input, InputGroup, InputRightElement, useToast } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { postLandlord } from '../Redux/App/action';
@@ -22,6 +22,7 @@ const AddLandlord = () => {
   const [propertyName, setPropertyName]= useState("");
   const [registerDate,setRegisterDate]=useState("");
   const dispatch = useDispatch();
+  const toast = useToast();
   const handleChangeFile = (e) =>{
     setImage(e.target.files[0])
     setDocument(image)
@@ -46,7 +47,27 @@ const AddLandlord = () => {
     formData.append("registerDate", registerDate)
    await dispatch(postLandlord(formData))
     .then((r)=>{
-         console.log(r)
+      if (r.type === "POST_LANDLORD_SUCCESS"){
+        toast({
+          title: 'new Landlord added successfully',
+          duration: 5000,
+          position: 'top',
+          isClosable: true,
+          colorScheme: 'green',
+          status: 'success',
+        })
+        window.location.reload();
+      }else{
+        toast({
+          title: 'landlord has already present',
+          description:"something went wrong",
+          duration: 5000,
+          position: 'top',
+          isClosable: true,
+          colorScheme: 'green',
+          status: 'success',
+        })
+      }
     })
   }
   return (
@@ -186,7 +207,7 @@ const AddLandlord = () => {
             <InputGroup className='inputFordocument' style={{ width: "100%", height: "5"}}>
               <Input placeholder='enter your Document'
                 type="file"
-                accept="image/*"
+                enctype="multipart/form-data"
                 name="document"
                 _hover={{ bg: "green", color: "white" }}
                 style={{ fontSize: "24px" }}

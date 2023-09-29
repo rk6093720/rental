@@ -1,22 +1,31 @@
-import { Box, Button, Flex, Input, Spacer, Table, TableCaption, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react'
-import React, { useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom';
+import { Box, Input, Spacer} from '@chakra-ui/react'
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { BsPersonFillAdd } from "react-icons/bs"
-import { ChevronDownIcon, DeleteIcon, EditIcon } from '@chakra-ui/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { getLandlord } from '../Redux/App/action';
+import { ChevronDownIcon, DeleteIcon, EditIcon } from '@chakra-ui/icons';
+import { Button, Flex, Table, TableCaption, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 const Landlord = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const land = useSelector((state) => state.App.landlord);
-  const handleView = (id)=>{
-    navigate("/viewlandlord")
+  const [color,setColor]= useState(false)
+  // const navigate = useNavigate();
+  const handleDelete = (id)=>{
+    if(id){
+      setColor(!color)
+    }
+       console.log(id);
+        
   }
+  const land = useSelector((state) => state.App.landlord);
   useEffect(()=>{
+    if(land?.length === 0)
+    {
     dispatch(getLandlord())
-  },[])
- 
-
+    }
+  },[land.length, dispatch])
+console.log(land);
+console.log(color)
   return (
     <div>
       <Flex minWidth='max-content' alignItems='center' gap='2'>
@@ -43,37 +52,38 @@ const Landlord = () => {
                 <Th>Action</Th>
               </Tr>
             </Thead>
-        {
-          land.map((item)=>{
-            return <Tbody>
-            <Tr>
-              <Td>{item.firstName}</Td>
-              <Td>{item.LastName}</Td>
-              <Td>{item.email}</Td>
-              <Td>{item.phone}</Td>
-              <Flex>
-                <Td>
+            <Tbody>
+              {
+                land?.length > 0 && land?.map((item) => {
+                  return<Tr key={item._id}>
+                <Td>{item.firstName}</Td>
+                <Td>{item.LastName}</Td>
+                <Td>{item.email}</Td>
+                <Td>{item.phone}</Td>
+                <Flex>
+                  <Td>
                     <Link to={`/viewLandlord/${item._id}`}>
-                  <ChevronDownIcon />
+                      <ChevronDownIcon />
                     </Link>
                   </Td>
-                <Td>
-                <Link to={`/landlord/${item._id}/edit`}>
-                <EditIcon />
-                  </Link>
-                </Td>
-                <Td>
-                  <Button>
-                    <DeleteIcon/>
-                  </Button>
-                </Td>
-              </Flex>
-            </Tr>
+                  <Td>
+                    <Link to={`/landlord/${item._id}/edit`}>
+                      <EditIcon />
+                    </Link>
+                  </Td>
+                  <Td>
+                    <Button  onClick={()=>handleDelete(item._id)}>
+                          {color ? <DeleteIcon style={{ color: "green" }} /> : <DeleteIcon style={{ color: "red" }} />} 
+                    </Button>
+                  </Td>
+                </Flex>
+              </Tr>
+                })
+              }
             </Tbody>
-          })
-        }
           </Table>
         </TableContainer>
+        
       </Box>
     </div>
   )
