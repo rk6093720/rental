@@ -8,12 +8,11 @@ import { ChevronDownIcon, DeleteIcon, EditIcon } from '@chakra-ui/icons';
 import { Button, Flex, Table, TableCaption, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 const Landlord = () => {
   const dispatch = useDispatch();
-  const [color,setColor]= useState(false)
+  const [color,setColor]= useState(null)
   // const navigate = useNavigate();
   const handleDelete = (id)=>{
-    if(id){
-      setColor(!color)
-    }
+      setColor(id)
+    
        console.log(id);
         
   }
@@ -73,7 +72,7 @@ console.log(color)
                   </Td>
                   <Td>
                     <Button  onClick={()=>handleDelete(item._id)}>
-                          {color ? <DeleteIcon style={{ color: "green" }} /> : <DeleteIcon style={{ color: "red" }} />} 
+                          <DeleteIcon style={{ color:color===item._id ? "green":"red" }} /> 
                     </Button>
                   </Td>
                 </Flex>
