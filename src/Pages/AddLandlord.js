@@ -3,9 +3,10 @@ import { Box, Button, FormControl, FormLabel, Heading, Input, InputGroup, InputR
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { postLandlord } from '../Redux/App/action';
+import { useNavigate } from 'react-router-dom';
 
 const AddLandlord = () => {
-  const [image,setImage]= useState("");
+  const [image,setImage]= useState(null);
   const [firstName,setFirstName]= useState("");
   const [LastName,setLastName]= useState("");
   const [email, setEmail] = useState("");
@@ -17,20 +18,20 @@ const AddLandlord = () => {
   const [address,setAddress]= useState("");
   const [countApartment,setCountApartment]= useState("");
   const [adharCard,setAdharCard]= useState("");
-  const [document,setDocument]= useState("");
   const [propertyCode,setPropertyCode]= useState("");
   const [propertyName, setPropertyName]= useState("");
   const [registerDate,setRegisterDate]=useState("");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const toast = useToast();
   const handleChangeFile = (e) =>{
     setImage(e.target.files[0])
-    setDocument(image)
+    // setDocument(image)
   }
   const handleForm = async (e) =>{
      e.preventDefault();
     const formData = new FormData();
-    formData.append("document", document); // Use "document" as the key
+    formData.append("document", image); // Use "document" as the key
     formData.append("firstName", firstName);
     formData.append("LastName", LastName);
     formData.append("email", email);
@@ -47,6 +48,7 @@ const AddLandlord = () => {
     formData.append("registerDate", registerDate)
    await dispatch(postLandlord(formData))
     .then((r)=>{
+      console.log(r);
       if (r.type === "POST_LANDLORD_SUCCESS"){
         toast({
           title: 'new Landlord added successfully',
@@ -57,16 +59,8 @@ const AddLandlord = () => {
           status: 'success',
         })
         window.location.reload();
-      }else{
-        toast({
-          title: 'landlord has already present',
-          description:"something went wrong",
-          duration: 5000,
-          position: 'top',
-          isClosable: true,
-          colorScheme: 'green',
-          status: 'success',
-        })
+        navigate("/landlords")
+        
       }
     })
   }
@@ -162,6 +156,7 @@ const AddLandlord = () => {
             <InputGroup className='inputForpostalcode' style={{ width: "100%", height: "5%" }}>
               <Input placeholder='enter your Postalcode'
                 type='text'
+                maxLength={6}
                 _hover={{ bg: "green", color: "white" }}
                 value={postalCode}
                 style={{ fontSize: "24px" }}
@@ -207,7 +202,7 @@ const AddLandlord = () => {
             <InputGroup className='inputFordocument' style={{ width: "100%", height: "5"}}>
               <Input placeholder='enter your Document'
                 type="file"
-                enctype="multipart/form-data"
+                accept="image/*" 
                 name="document"
                 _hover={{ bg: "green", color: "white" }}
                 style={{ fontSize: "24px" }}

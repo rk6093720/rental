@@ -42,10 +42,10 @@ const editLandLord = (id,payload) =>async(dispatch)=>{
 
 const deleteLandLord = (id) => async(dispatch)=>{
       dispatch({type:types.DELETE_LANDLORD_REQUEST});
-    return await axios.delete(`http://localhost:8080/landlord/delete/${id}`)
+    return await axios.delete(`http://localhost:8080/landlord/remove/${id}`)
     .then((r)=>{
         console.log(r);
-        return dispatch({type:types.DELETE_LANDLORD_SUCCESS,payload:r.data})
+        return dispatch({type:types.DELETE_LANDLORD_SUCCESS,payload:id})
     })
     .catch((e)=>{
         dispatch({type:types.DELETE_LANDLORD_FAILURE,payload:e})

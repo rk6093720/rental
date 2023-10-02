@@ -47,11 +47,6 @@ const Login = () => {
             console.log(error);
          }
     }
-//    useEffect(()=>{
-//     if(isAuth){
-//         navigate("/")
-//     }
-//    },[isAuth])
     return (
         <div className='mainLogin' style={{ margin: "auto",marginTop:"65px"}}>
             <Box className='wholeBoxForLogin' style={{ width: "500px", height: "450px", margin: "auto", marginTop: "25px", padding: "5px", boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px" }}>
