@@ -18,6 +18,9 @@ import Dashboard from './Dashboard';
 import AddLandlord from './AddLandlord';
 import ViewLandLord from './ViewLandLord';
 import EditLandLord from './EditLandLord';
+import ViewProperties from './ViewProperties';
+import AddProperty from './AddProperty';
+import EditProperty from './EditProperty';
 const MainRoutes = () => {
     return (
         <div>
@@ -38,8 +41,11 @@ const MainRoutes = () => {
                 <Route path='/reports' element={<Reports/>}/>
                 <Route path='/dashboard' element={<Dashboard/>}/>
                 <Route path='/AddLandLord' element={<AddLandlord/>}/>
-                <Route path='/viewLandlord/:id' element={<ViewLandLord/>}/> 
-                <Route path='/landlord/:id/edit' element={<EditLandLord/>}/>           
+                <Route path='/AddProperty' element={<AddProperty/>}/>
+                <Route path='/viewLandlord/:id' element={<ViewLandLord/>}/>
+                <Route path='/viewProperty/:id' element={<ViewProperties/>}/> 
+                <Route path='/landlord/:id/edit' element={<EditLandLord/>}/>  
+                <Route path='/property/:id/edit' element={<EditProperty/>}/>         
             </Routes>
         </div>
     )
