@@ -47,6 +47,9 @@ const AddProperty = () => {
                                 <Select placeholder='select your property type'>
                                     <option value="Other">Other</option>
                                     <option value="Apartment">Apartment</option>
+                                    <option value="Home">Home</option>
+                                    <option value="commercial">commercial</option>
+                                    <option value="shop">Shop</option>
                                 </Select>
                                 <Button onClick={handlePrev} isDisabled={index === 0}>Previous</Button>
                                 {active < steps.length - 1 && (
@@ -57,9 +60,21 @@ const AddProperty = () => {
                         )}
                         {active === 1 && index === active && (
                             <Box>
-                                {/* Input fields for the current step */}
-                                {/* Add your input fields here */}
-                                
+                                <Input type='number' placeholder='enter your agent commission value'/>
+                                <Select placeholder='Agent commission type'>
+                                    <option value="fixedValue">fixedValue</option>
+                                    <option value="% of Total Rent">% of Total Rent</option>
+                                    <option value="% of Total collected Rent">% of Total collected Rent</option>
+                                </Select>
+                                <Select placeholder='payment method type'>
+                                    <option value="Payment of UPI">Payment of UPI</option>
+                                    <option value="PhonePay">PhonePay</option>
+                                    <option value="Paytm">Paytm</option>
+                                    <option value="GooglePay">GooglePay</option>
+                                    <option value="Credit Card">Credit Card</option>
+                                    <option value="Debit Card">Debit Card</option>
+                                </Select>
+                                <Input type="text" placeholder='enter your payment description'/>
                                 <Button onClick={handlePrev} >Previous</Button>
                                 {active < steps.length - 1 && (
                                     <Button onClick={handleNext}>Next</Button>
