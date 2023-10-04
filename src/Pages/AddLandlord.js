@@ -2,7 +2,7 @@ import { EmailIcon } from '@chakra-ui/icons'
 import { Box, Button, FormControl, FormLabel, Heading, Input, InputGroup, InputRightElement, useToast } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux';
-import { postLandlord } from '../Redux/App/action';
+import { getLandlord, postLandlord } from '../Redux/App/action';
 import { useNavigate } from 'react-router-dom';
 
 const AddLandlord = () => {
@@ -47,6 +47,7 @@ const AddLandlord = () => {
     formData.append("propertyCode", propertyCode);
     formData.append("registerDate", registerDate)
    await dispatch(postLandlord(formData))
+     .then(()=> dispatch(getLandlord()))
     .then((r)=>{
       console.log(r);
       if (r.type === "POST_LANDLORD_SUCCESS"){

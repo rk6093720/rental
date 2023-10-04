@@ -16,6 +16,7 @@ const Landlord = () => {
   // const navigate = useNavigate();
   const handleDelete = (item)=>{
       dispatch(deleteLandLord(item._id))
+      .then(()=> dispatch(getLandlord()))
     setColor(item._id)
   }
   const land = useSelector((state) => state.App.landlord);
