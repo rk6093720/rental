@@ -235,7 +235,7 @@ const AddLandlord = () => {
             <FormLabel>Registration Date</FormLabel>
             <InputGroup className='inputForRegistration registerDate' style={{ width: "100%", height: "5%"}}>
               <Input placeholder='enter your Registration registerDate'
-                type='date'
+                type='datetime-local'
                 _hover={{ bg: "green", color: "white" }}
                 value={registerDate}
                 style={{ fontSize: "24px" }}
