@@ -1,7 +1,11 @@
 import { FormControl, Input, Select } from '@chakra-ui/react'
-import React from 'react'
+import React, { useState } from 'react'
 
-const ExtraCharge = ({extraFee,setExtraFee,valueCharge,setValueCharge,charge,setCharge,recurrence,setRecurrence}) => {
+const ExtraCharge = () => {
+    const [extraFee, setExtraFee]= useState("");
+    const [valueCharge, setValueCharge] = useState("");
+    const [charge, setCharge] = useState("");
+    const [recurrence, setRecurrence] = useState("");
   return (
     <div>
           <FormControl isRequired>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Box, Button, FormControl, Input, Stack, Step, StepDescription, StepIcon, StepIndicator, StepNumber, StepSeparator, StepStatus, StepTitle, Stepper,Select} from '@chakra-ui/react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getProperty, postProperty } from '../Redux/Property/action';
 import ModalComponent from '../Component/ModalComponent';
 import PaymentSetting from '../Component/PaymentSetting';
@@ -45,10 +45,8 @@ const AddProperty = () => {
     const [extraComponents,setExtraComponents]=useState([]);
     const [lateFineComponents,setLateFineComponents]=useState([]);
     const [utilityComponents,setUtilityComponents]= useState([]);
-    const handleAddModal = () => {
-        // Add a new modal component to the list
-        setModalComponents([...modalComponents, <ModalComponent key={modalComponents.length} />]);
-    };
+    const landlord = useSelector((state)=> state.App.landlord)
+   
     const handleDeleteModal = (indexToDelete) => {
         // Remove the modal component at the specified index
         const updatedModalComponents = modalComponents.filter((_, index) => index !== indexToDelete);
@@ -117,9 +115,14 @@ const AddProperty = () => {
         setActive((active)=> active + 1) // Go to the next step
     };
     const handleLand=()=>{
+        //  const newLand = landlord.find(())
 
     }
     // <PaymentSetting  />
+    const handleAddModal = () => {
+        // Add a new modal component to the list
+        setModalComponents([...modalComponents, <ModalComponent key={modalComponents.length}  />]);
+    };
     return (
         <Stack style={{ width:"100%", height:"100vh", marginTop:"15px"}}>
             <Stepper size="lg" index={active} orientation='vertical' height='400px' gap='0' marginTop={"15px"} padding={"10px"}>
@@ -182,7 +185,6 @@ const AddProperty = () => {
                                     </div>
                                 ))}
                                 <Button onClick={handleAddModal}>Add another field</Button>
-                                 
                                   <br/>
                                 <Button onClick={handlePrev} isDisabled={index === 0}>Previous</Button>
                                 {active < steps.length - 1 && (
@@ -276,7 +278,8 @@ const AddProperty = () => {
                 ))}
             </Stepper>
             {active === steps.length - 1 && (
-                <Button className='addPropertybutton' _hover={{bg:"green",color:"white"}} style={{marginTop:"10%", width:"30%", margin:"auto",fontSize:"24px"}} onClick={handleAddProperty}>Submit</Button>
+                <Button className='addPropertybutton' _hover={{bg:"green",color:"white"}} style={{marginTop:"40%", width:"30%", 
+                margin:"auto",fontSize:"24px"}} onClick={handleAddProperty}>Submit</Button>
             )}
         </Stack>
     );

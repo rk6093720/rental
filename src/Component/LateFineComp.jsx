@@ -1,7 +1,12 @@
 import { FormControl, Input, Select } from '@chakra-ui/react'
-import React from 'react'
+import React, { useState } from 'react'
 
-const LateFineComp = ({lateFine,setLateFine,extraCharge,setExtraCharge,typesCharge,setTypesCharge,gracePeriod,setGracePeriod,frequency,setFrequency}) => {
+const LateFineComp = () => {
+   const [lateFine, setLateFine]=useState("");
+   const [extraCharge, setExtraCharge]=useState(0);
+   const [ typesCharge, setTypesCharge]=useState("");
+   const [ gracePeriod, setGracePeriod]=useState(0); 
+   const [frequency, setFrequency]=useState("")
   return (
     <div>
           <FormControl isRequired>

@@ -1,6 +1,9 @@
 import { FormControl, Input, Select } from '@chakra-ui/react'
-import React from 'react'
-const UtilityComponent = ({utilityName,setUtilityName,cost,setCost,bill,setBill}) => {
+import React, { useState } from 'react'
+const UtilityComponent = () => {
+    const [utilityName, setUtilityName]= useState("");
+    const [cost, setCost] = useState("");
+    const [bill, setBill] = useState("");
   return (
       <div>
         <FormControl isRequired>

@@ -1,7 +1,9 @@
 import { FormControl, Input, Select } from '@chakra-ui/react'
-import React from 'react'
+import React, { useState } from 'react'
 
-const PaymentSetting = ({paymentType,setPaymentType,pDescription,setPDescription}) => {
+const PaymentSetting = () => {
+    const [paymentType,setPaymentType]=useState("");
+    const [pDescription, setPDescription]=useState("")
   return (
     <div>
           <FormControl isRequired>
