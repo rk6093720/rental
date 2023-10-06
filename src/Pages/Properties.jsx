@@ -3,9 +3,9 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { BsPersonFillAdd } from "react-icons/bs"
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteLandLord, getLandlord } from '../Redux/App/action';
 import { ChevronDownIcon, DeleteIcon, EditIcon } from '@chakra-ui/icons';
 import { Button, Flex, Table, TableCaption, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
+import { deleteProperty, getProperty } from '../Redux/Property/action';
 const Properties = () => {
   const dispatch = useDispatch();
   const [color, setColor] = useState(null);
@@ -15,16 +15,16 @@ const Properties = () => {
   }
   // const navigate = useNavigate();
   const handleDelete = (item) => {
-    dispatch(deleteLandLord(item._id))
+    dispatch(deleteProperty(item._id))
     setColor(item._id)
   }
-  const land = useSelector((state) => state.App.landlord);
+  const property = useSelector((state) => state.Property.properties);
   useEffect(() => {
-    if (land?.length === 0) {
-      dispatch(getLandlord())
+    if (property?.length === 0) {
+      dispatch(getProperty())
     }
-  }, [land.length, dispatch])
-  console.log(land);
+  }, [property.length, dispatch])
+  console.log(property,"property");
   console.log(color)
   return (
     <div>
@@ -56,20 +56,20 @@ const Properties = () => {
             </Thead>
             <Tbody>
               {
-                land?.length > 0 && land?.map((item) => {
+                property?.length > 0 && property?.map((item) => {
                   return <Tr key={item._id}>
-                    <Td>{item.firstName}</Td>
-                    <Td>{item.LastName}</Td>
-                    <Td>{item.email}</Td>
+                    <Td>{item.propertycode}</Td>
+                    <Td>{item.propertyname}</Td>
+                    <Td>{item.location}</Td>
                     <Td>{item.phone}</Td>
                     <Flex>
                       <Td>
-                        <Link to={`/viewLandlord/${item._id}`}>
+                        <Link to={`/viewProperty/${item._id}`}>
                           <ChevronDownIcon />
                         </Link>
                       </Td>
                       <Td>
-                        <Link to={`/landlord/${item._id}/edit`}>
+                        <Link to={`/property/${item._id}/edit`}>
                           <EditIcon />
                         </Link>
                       </Td>
