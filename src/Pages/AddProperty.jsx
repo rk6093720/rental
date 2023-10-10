@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
-import { Box, Button, FormControl, Input, Stack, Step, StepDescription, StepIcon, StepIndicator, StepNumber, StepSeparator, StepStatus, StepTitle, Stepper,Select} from '@chakra-ui/react';
+import {
+    Box, Button, FormControl, Input, Stack, Step, StepDescription, StepIcon, StepIndicator, StepNumber, StepSeparator, StepStatus, StepTitle, Stepper,Modal,ModalBody,ModalCloseButton,ModalContent,ModalFooter,ModalHeader,ModalOverlay,Select,Tab,TabList,TabPanel,TabPanels,Tabs,Text,useDisclosure,
+} from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getProperty, postProperty } from '../Redux/Property/action';
-import ModalComponent from '../Component/ModalComponent';
-import PaymentSetting from '../Component/PaymentSetting';
-import ExtraCharge from '../Component/ExtraCharge';
-import LateFineComp from '../Component/LateFineComp';
-import UtilityComponent from '../Component/UtilityComponent';
+import { addModal, deleteModal } from '../Redux/Property/action';
 const steps = [
     { title: 'PropertyDetails', description: 'Contact Info' },
     { title: 'PaymentSetting', description: 'Payment for Rooms' },
@@ -19,94 +16,69 @@ const AddProperty = () => {
     const [propertyCode,setPropertyCode]= useState("");
     const [address,setAddress]= useState("");
     const [location,setLocation]= useState("");
-    const [pType,setPType]= useState("");
-    const [agentC,setAgentC]=useState(0);
-    const [agentType,setAgentType]= useState("");
-    const [paymentType,setPaymentType]= useState("");
-    const [unit,setUnit]= useState("")
-    const [land,setLand]= useState("");
-    const [pDescription,setPDescription]= useState('');
-    const [extraFee,setExtraFee]= useState("");
-    const [valueCharge,setValueCharge]= useState("");
-    const [charge,setCharge]= useState("");
-    const [recurrence,setRecurrence]= useState("");
-    const [lateFine,setLateFine]=useState("");
-    const [extraCharge,setExtraCharge]=useState("");
-    const [typesCharge,setTypesCharge]= useState("");
-    const [gracePeriod,setGracePeriod]= useState(0);
-    const [frequency,setFrequency]= useState("");
-    const [utilityName,setUtilityName]=useState("");
-    const [cost,setCost]=useState(0);
-    const [bill,setBill]=useState(0);
+    const [pType,setPType]= useState(""); 
+    const [agentC,setAgentC]= useState("");
+    const [agentType,setAgentType]= useState("")
     const [active,setActive]= useState(0);
+    const [utilityName, setUtilityName] = useState("");
+    const [cost, setCost] = useState("");
+    const [bill, setBill] = useState("");
+    const [unit, setUnit] = useState("");
+    const { isOpen, onOpen, onClose } = useDisclosure();
+    const [unitName, setUnitName] = useState("");
+    const [floor, setFloor] = useState("");
+    const [unitType, setUnitType] = useState("");
+    const [amount, setAmount] = useState(0);
+    const [lateFine, setLateFine] = useState("");
+    const [extraCharge, setExtraCharge] = useState(0);
+    const [typesCharge, setTypesCharge] = useState("");
+    const [gracePeriod, setGracePeriod] = useState(0);
+    const [frequency, setFrequency] = useState("")
+    const [bedRoom, setBedRoom] = useState(0);
+    const [bathRoom, setBathRoom] = useState(0);
+    const [totalRoom, setTotalRoom] = useState(0);
+    const [squareFoot, setSquareFoot] = useState(0);
+    const [paymentType, setPaymentType] = useState("");
+    const [pDescription, setPDescription] = useState("");
+    const [extraFee, setExtraFee] = useState("");
+    const [valueCharge, setValueCharge] = useState("");
+    const [charge, setCharge] = useState("");
+    const [recurrence, setRecurrence] = useState("");
+    const [tabIndex, setTabIndex] = useState(0);
     const dispatch = useDispatch();
-    const [modalComponents, setModalComponents] = useState([]);
-    const [paymentSettings,setPaymentSettings]= useState([]);
-    const [extraComponents,setExtraComponents]=useState([]);
-    const [lateFineComponents,setLateFineComponents]=useState([]);
-    const [utilityComponents,setUtilityComponents]= useState([]);
-    const landlord = useSelector((state)=> state.App.landlord)
-   
-    const handleDeleteModal = (indexToDelete) => {
-        // Remove the modal component at the specified index
-        const updatedModalComponents = modalComponents.filter((_, index) => index !== indexToDelete);
-        setModalComponents(updatedModalComponents);
-    };
-    const handlePayment=()=>{
-        setPaymentSettings([...paymentSettings, <PaymentSetting key={paymentSettings.length} paymentType={paymentType} setPaymentType={setPaymentType} pDescription={pDescription} setPDescription={setPDescription} />])
-    }
-    const handleDeletePaymentModal=(indexDelete)=>{
-        const updatePayment = paymentSettings.filter((_, index)=> index !== indexDelete);
-        setPaymentSettings(updatePayment);
-    }
-    const handleExtra = () =>{
-       setExtraComponents([...extraComponents, <ExtraCharge key={extraComponents.length} extraFee={extraFee} setExtraFee={setExtraFee} valueCharge={valueCharge} setValueCharge={setValueCharge} charge={charge} setCharge={setCharge} recurrence={recurrence} setRecurrence={setRecurrence}/>])
-    }
-    const handleDeleteExtraModal = (indexExtra)=>{
-        const updateExtra = extraComponents.filter((_, index)=> index !== indexExtra);
-        setExtraComponents(updateExtra)
-    }
-    const handleLateFine =()=>{
-      setLateFineComponents([...lateFineComponents, <LateFineComp key={lateFineComponents.length} lateFine={lateFine} setLateFine={setLateFine} extraCharge={extraCharge} setExtraCharge={setExtraCharge} typesCharge={typesCharge} setTypesCharge={setTypesCharge} gracePeriod={gracePeriod} setGracePeriod={setGracePeriod} frequency={frequency} setFrequency={setFrequency}/>])
-    }
-    const handleDeletLateModal=(indexLate)=>{
-        const updateLateFine = lateFineComponents.filter((_, index)=> index !== indexLate);
-        setLateFineComponents(updateLateFine);
-    }
-    const handleUtility = () =>{
-       setUtilityComponents([...utilityComponents, <UtilityComponent key={utilityComponents.length} cost={cost} setCost={setCost} bill={bill} setBill={setBill} utilityName={utilityName} setUtilityName={setUtilityName}/>])
-    }
-    const handleDeletUtilityModal=(indexUtility)=>{
-         const updateUtility = utilityComponents.filter((_, index)=> index !== indexUtility);
-         setUtilityComponents(updateUtility)
-    }
-    const handleAddProperty= async()=>{
-        const payload={
+    const [land,setLandlord]= useState("");
+    const landlord = useSelector((state)=> state.App.landlord);
+    const modals = useSelector((state) => state.Property.modals);
+    const handleAddProperty = async () => {
+        const payload = {
             propertyName,
             propertyCode,
             address,
-            location, 
-             pType, 
-            agentC, 
-            agentType, 
-            paymentType ,
-            unit,
-            pDescription,
-            extraFee,
-            valueCharge,
-            charge,
-            recurrence,
-            lateFine, 
-            extraCharge,
-            typesCharge,
-            gracePeriod,
-            frequency, 
-            utilityName,
-            cost, 
-            bill, 
-        }
-       await dispatch(postProperty(payload))
-       .then(()=> dispatch(getProperty()))
+            location,
+            pType,
+            agentC,
+            agentType,
+            
+          
+        };
+        console.log(payload);
+    };
+  const handleModal = () =>{
+    const newModel={
+        unitName,
+        floor,
+        amount,
+        unitType,
+        bedRoom,
+        bathRoom,
+        totalRoom,
+        squareFoot
+    }
+    dispatch(addModal(newModel))
+  }
+    const handleDeleteModal=(id)=>{
+        console.log(id)
+        dispatch(deleteModal(id))
     }
     const handlePrev = () => {
         setActive((active)=> active - 1)// Go to the previous step
@@ -118,11 +90,7 @@ const AddProperty = () => {
         //  const newLand = landlord.find(())
 
     }
-    // <PaymentSetting  />
-    const handleAddModal = () => {
-        // Add a new modal component to the list
-        setModalComponents([...modalComponents, <ModalComponent key={modalComponents.length}  />]);
-    };
+    console.log(modals)
     return (
         <Stack style={{ width:"100%", height:"100vh", marginTop:"15px"}}>
             <Stepper size="lg" index={active} orientation='vertical' height='400px' gap='0' marginTop={"15px"} padding={"10px"}>
@@ -178,13 +146,150 @@ const AddProperty = () => {
                                 <Input type="text" value={land} onChange={handleLand} placeholder='find Landlord'/>
                                 </FormControl>
                                 <br/>
-                                {modalComponents.map((modal, modalIndex) => (
-                                    <div key={modalIndex}>
-                                        {modal}
-                                        <Button onClick={() => handleDeleteModal(modalIndex)}>Delete Modal</Button>
+                                { modals.map((_, index)=>(
+                                        <div key={index}>
+                                            <FormControl isRequired>
+                                                <Input
+                                                    type='number'
+                                                    onClick={onOpen}
+                                                    value={unit}
+                                                    onChange={(e) => setUnit(e.target.value)}
+                                                    placeholder='enter your unit'
+                                                />
+                                            </FormControl>
+                                            <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>
+                                                <ModalOverlay />
+                                                <ModalContent>
+                                                    <ModalHeader>Unit Detail</ModalHeader>
+                                                    <ModalCloseButton />
+                                                    <ModalBody>
+                                                        <Tabs variant='enclosed' index={tabIndex} onChange={(index) => setTabIndex(index)}>
+                                                            <TabList>
+                                                                <Tab>Residential</Tab>
+                                                                <Tab>Commercial</Tab>
+                                                            </TabList>
+                                                            <TabPanels>
+                                                                <TabPanel>
+                                                                    <Input
+                                                                        type='text'
+                                                                        value={unitName}
+                                                                        onChange={(e) => setUnitName(e.target.value)}
+                                                                        placeholder='enter your unit name'
+                                                                    />
+                                                                    <br />
+                                                                    <Input
+                                                                        type='number'
+                                                                        value={floor}
+                                                                        onChange={(e) => setFloor(e.target.value)}
+                                                                        placeholder='enter your unit floor'
+                                                                    />
+                                                                    <br />
+                                                                    <Input
+                                                                        type='number'
+                                                                        value={amount}
+                                                                        onChange={(e) => setAmount(e.target.value)}
+                                                                        placeholder='enter your Rent Amount'
+                                                                    />
+                                                                    <br />
+                                                                    <Select
+                                                                        value={unitType}
+                                                                        onChange={(e) => setUnitType(e.target.value)}
+                                                                        placeholder='enter your unit Type'
+                                                                    >
+                                                                        <option value="TwoBedRoom">TwoBedRoom</option>
+                                                                        <option value="SingleRoom">SingleRoom</option>
+                                                                        <option value="villa">villa</option>
+                                                                        <option value="BigHall">BigHall</option>
+                                                                    </Select>
+                                                                    <Input
+                                                                        type="number"
+                                                                        value={bedRoom}
+                                                                        onChange={(e) => setBedRoom(e.target.value)}
+                                                                        placeholder='Bedroom'
+                                                                    />
+                                                                    <Input
+                                                                        type='number'
+                                                                        value={bathRoom}
+                                                                        onChange={(e) => setBathRoom(e.target.value)}
+                                                                        placeholder='Bathroom'
+                                                                    />
+                                                                    <Input
+                                                                        type="number"
+                                                                        value={totalRoom}
+                                                                        onChange={(e) => setTotalRoom(e.target.value)}
+                                                                        placeholder='total room'
+                                                                    />
+                                                                    <Input
+                                                                        type="number"
+                                                                        value={squareFoot}
+                                                                        onChange={(e) => setSquareFoot(e.target.value)}
+                                                                        placeholder='square foot'
+                                                                    />
+                                                                </TabPanel>
+                                                                <TabPanel>
+                                                                    <Input
+                                                                        type='text'
+                                                                        value={unitName}
+                                                                        onChange={(e) => setUnitName(e.target.value)}
+                                                                        placeholder='enter your unit name'
+                                                                    />
+                                                                    <br />
+                                                                    <Input
+                                                                        type='number'
+                                                                        value={floor}
+                                                                        onChange={(e) => setFloor(e.target.value)}
+                                                                        placeholder='enter your unit floor'
+                                                                    />
+                                                                    <br />
+                                                                    <Input
+                                                                        type='number'
+                                                                        value={amount}
+                                                                        onChange={(e) => setAmount(e.target.value)}
+                                                                        placeholder='enter your Rent Amount'
+                                                                    />
+                                                                    <br />
+                                                                    <Select
+                                                                        value={unitType}
+                                                                        onChange={(e) => setUnitType(e.target.value)}
+                                                                        placeholder='enter your unit Type'
+                                                                    >
+                                                                        <option value="TwoBedRoom">TwoBedRoom</option>
+                                                                        <option value="SingleRoom">SingleRoom</option>
+                                                                        <option value="villa">villa</option>
+                                                                        <option value="BigHall">BigHall</option>
+                                                                    </Select>
+
+                                                                    <Input
+                                                                        type="number"
+                                                                        value={totalRoom}
+                                                                        onChange={(e) => setTotalRoom(e.target.value)}
+                                                                        placeholder='total room'
+                                                                    />
+                                                                    <Input
+                                                                        type="number"
+                                                                        value={squareFoot}
+                                                                        onChange={(e) => setSquareFoot(e.target.value)}
+                                                                        placeholder='square foot'
+                                                                    />
+                                                                </TabPanel>
+                                                            </TabPanels>
+                                                        </Tabs>
+                                                    </ModalBody>
+                                                    <ModalFooter>
+                                                        <Button colorScheme='blue' mr={3} onClick={onClose}>
+                                                            Close
+                                                        </Button>
+                                                        <Button variant='ghost' onClick={onClose}>
+                                                            Continue
+                                                        </Button>
+                                                    </ModalFooter>
+                                                </ModalContent>
+                                            </Modal>
+                                            <Button onClick={()=> handleDeleteModal(index)}>Delete Modal</Button>
                                     </div>
                                 ))}
-                                <Button onClick={handleAddModal}>Add another field</Button>
+                                
+                                <Button onClick={handleModal} >Add Modal</Button>
                                   <br/>
                                 <Button onClick={handlePrev} isDisabled={index === 0}>Previous</Button>
                                 {active < steps.length - 1 && (
@@ -207,13 +312,21 @@ const AddProperty = () => {
                                 </Select>
                                 </FormControl>
                                 <br/>
-                                {paymentSettings.map((payment, paymentIndex) => (
-                                    <div key={paymentIndex}>
-                                        {payment}
-                                        <Button onClick={() => handleDeletePaymentModal(paymentIndex)}>Delete Modal</Button>
-                                    </div>
-                                ))}
-                                <Button onClick={handlePayment}>Add another field</Button>
+                                <FormControl isRequired>
+                                    <Select value={paymentType} onChange={(e) => setPaymentType(e.target.value)} placeholder='payment method type'>
+                                        <option value="Payment of UPI">Payment of UPI</option>
+                                        <option value="PhonePay">PhonePay</option>
+                                        <option value="Gst">Gst</option>
+                                        <option value="GooglePay">vat</option>
+                                        <option value="Credit Card">Credit Card</option>
+                                        <option value="Debit Card">Debit Card</option>
+                                    </Select>
+                                </FormControl>
+                                <br />
+                                <FormControl isRequired>
+                                    <Input type="text" value={pDescription} onChange={(e) => setPDescription(e.target.value)} placeholder='enter your payment description' />
+                                </FormControl>
+                                <Button >Add another field</Button>
 
                                 <br/>
                                 <Button onClick={handlePrev} >Previous</Button>
@@ -225,13 +338,35 @@ const AddProperty = () => {
                         )}
                         {active === 2 && index === active && (
                             <Box style={{ marginTop: "45px" }}>
-                                {extraComponents.map((extra, extraIndex) => (
-                                    <div key={extraIndex}>
-                                        {extra}
-                                        <Button onClick={() => handleDeleteExtraModal(extraIndex)}>Delete Modal</Button>
-                                    </div>
-                                ))}
-                                <Button onClick={handleExtra}>Add another field</Button>
+                                <FormControl isRequired>
+                                    <Select value={extraFee} onChange={(e) => setExtraFee(e.target.value)} placeholder='types of extra fee'>
+                                        <option value="processing Fee">processing Fee</option>
+                                        <option value="Service fee">Service fee</option>
+                                        <option value="Paytm">Gst</option>
+                                        <option value="vat">vat</option>
+                                    </Select>
+                                </FormControl>
+                                <br />
+                                <FormControl isRequired>
+                                    <Input type='Number' value={valueCharge} onChange={(e) => setValueCharge(e.target.value)} placeholder='value charge supplement' />
+                                </FormControl>
+                                <br />
+                                <FormControl isRequired>
+                                    <Select value={charge} onChange={(e) => setCharge(e.target.value)} placeholder='types of charge '>
+                                        <option value="fixed Value">fixed Value</option>
+                                        <option value="% of Total Rent">% of Total Rent</option>
+                                        <option value="% of Total amount over due">% of Total amount over due</option>
+                                    </Select>
+                                </FormControl>
+                                <br />
+                                <FormControl isRequired>
+                                    <Select value={recurrence} onChange={(e) => setRecurrence(e.target.value)} placeholder='types of Recurrence'>
+                                        <option value="one time">one time</option>
+                                        <option value="period of period">period of period</option>
+                                    </Select>
+                                </FormControl>
+
+                                <Button >Add another field</Button>
 
                                <br/>
                                 <Button onClick={handlePrev} >Previous</Button>
@@ -243,13 +378,38 @@ const AddProperty = () => {
                         )}
                         {active === 3 && index === active && (
                             <Box style={{ marginTop: "45px" }}>
-                                {lateFineComponents.map((late, lateIndex) => (
-                                    <div key={lateIndex}>
-                                        {late}
-                                        <Button onClick={() => handleDeletLateModal(lateIndex)}>Delete Modal</Button>
-                                    </div>
-                                ))}
-                                <Button onClick={handleLateFine}>Add another field</Button>
+                                <FormControl isRequired>
+                                    <Select value={lateFine} onChange={(e) => setLateFine(e.target.value)} placeholder='types of late fine'>
+                                        <option value="penalty">penalty</option>
+                                    </Select>
+                                </FormControl>
+                                <br />
+                                <FormControl isRequired>
+                                    <Input type='number' value={extraCharge} onChange={(e) => setExtraCharge(e.target.value)} placeholder='extra charge of late fee ' />
+                                </FormControl>
+                                <br />
+                                <FormControl isRequired>
+                                    <Select value={typesCharge} onChange={(e) => setTypesCharge(e.target.value)} placeholder='types of charge '>
+                                        <option value="fixed Value">fixed Value</option>
+                                        <option value="% of Total Rent">% of Total Rent</option>
+                                        <option value="% of Total amount over due">% of Total amount over due</option>
+                                    </Select>
+                                </FormControl>
+                                <br />
+                                <FormControl isRequired>
+                                    <Input type='number' value={gracePeriod} onChange={(e) => setGracePeriod(e.target.value)} placeholder='grace period ' />
+                                </FormControl>
+                                <br />
+                                <FormControl isRequired>
+                                    <Select value={frequency} onChange={(e) => setFrequency(e.target.value)} placeholder='frequency'>
+                                        <option value="one time">one time</option>
+                                        <option value="weekly">weekly</option>
+                                        <option value="daily">daily</option>
+                                        <option value="monthly">monthly</option>
+                                        <option value="Bi-weekly">Bi-weekly</option>
+                                    </Select>
+                                </FormControl>
+                                <Button >Add another field</Button>
                                 <br/>
                                 <Button onClick={handlePrev} >Previous</Button>
                                 {active < steps.length - 1 && (
@@ -260,13 +420,23 @@ const AddProperty = () => {
                         )}
                         {active === 4 && index === active && (
                             <Box style={{ marginTop: "45px" }}>
-                                {utilityComponents.map((utility, utilityIndex) => (
-                                    <div key={utilityIndex}>
-                                        {utility}
-                                        <Button onClick={() => handleDeletUtilityModal(utilityIndex)}>Delete Modal</Button>
-                                    </div>
-                                ))}
-                                <Button onClick={handleUtility}>Add another field</Button>
+                                <FormControl isRequired>
+                                    <Select value={utilityName} onChange={(e) => setUtilityName(e.target.value)} placeholder='Utility Name'>
+                                        <option value="waterBill">waterBill</option>
+                                        <option value="electricityBill">electricityBill</option>
+                                        <option value="security">security</option>
+                                        <option value="garbage">garbage</option>
+                                    </Select>
+                                </FormControl>
+                                <br />
+                                <FormControl isRequired>
+                                    <Input type='number' value={cost} onChange={(e) => setCost(e.target.value)} placeholder='variable cost' />
+                                </FormControl>
+                                <br />
+                                <FormControl isRequired>
+                                    <Input type='number' value={bill} onChange={(e) => setBill(e.target.value)} placeholder='fixed price of bill' />
+                                </FormControl>
+                                <Button >Add another field</Button>
                                 <br/>
                                 <Button onClick={handlePrev} >Previous</Button>
                                 {/* {active < steps.length - 1 && (
