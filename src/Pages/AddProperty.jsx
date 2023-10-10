@@ -3,7 +3,7 @@ import {
     Box, Button, FormControl, Input, Stack, Step, StepDescription, StepIcon, StepIndicator, StepNumber, StepSeparator, StepStatus, StepTitle, Stepper,Modal,ModalBody,ModalCloseButton,ModalContent,ModalFooter,ModalHeader,ModalOverlay,Select,Tab,TabList,TabPanel,TabPanels,Tabs,Text,useDisclosure,
 } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addModal, deleteModal } from '../Redux/Property/action';
+import {  getProperty, postProperty } from '../Redux/Property/action';
 const steps = [
     { title: 'PropertyDetails', description: 'Contact Info' },
     { title: 'PaymentSetting', description: 'Payment for Rooms' },
@@ -20,9 +20,9 @@ const AddProperty = () => {
     const [agentC,setAgentC]= useState("");
     const [agentType,setAgentType]= useState("")
     const [active,setActive]= useState(0);
-    const [utilityName, setUtilityName] = useState("");
-    const [cost, setCost] = useState("");
-    const [bill, setBill] = useState("");
+    const [utilityName] = useState("");
+    const [cost] = useState("");
+    const [bill] = useState("");
     const [unit, setUnit] = useState("");
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [unitName, setUnitName] = useState("");
@@ -48,7 +48,41 @@ const AddProperty = () => {
     const dispatch = useDispatch();
     const [land,setLandlord]= useState("");
     const landlord = useSelector((state)=> state.App.landlord);
-    const modals = useSelector((state) => state.Property.modals);
+    const [late,setLate]= useState([]);
+    const [utilities, setUtilities] = useState([]);
+
+    const handleAddUtility = () => {
+        const newUtility = {
+            utilityName: '',
+            cost: '',
+            bill: '',
+        };
+        setUtilities([...utilities, newUtility]);
+    };
+
+    const handleDeleteUtility = (index) => {
+        const updatedUtilities = [...utilities];
+        updatedUtilities.splice(index, 1);
+        setUtilities(updatedUtilities);
+    };
+
+    const handleUtilityNameChange = (index, value) => {
+        const updatedUtilities = [...utilities];
+        updatedUtilities[index].utilityName = value;
+        setUtilities(updatedUtilities);
+    };
+
+    const handleCostChange = (index, value) => {
+        const updatedUtilities = [...utilities];
+        updatedUtilities[index].cost = value;
+        setUtilities(updatedUtilities);
+    };
+
+    const handleBillChange = (index, value) => {
+        const updatedUtilities = [...utilities];
+        updatedUtilities[index].bill = value;
+        setUtilities(updatedUtilities);
+    };
     const handleAddProperty = async () => {
         const payload = {
             propertyName,
@@ -58,28 +92,33 @@ const AddProperty = () => {
             pType,
             agentC,
             agentType,
-            
-          
+            unitName,
+            floor,
+            amount,
+            unitType,
+            bedRoom,
+            bathRoom,
+            totalRoom,
+            squareFoot,
+            paymentType,
+            pDescription,
+            extraFee,
+            valueCharge,
+            charge,
+            recurrence,
+            lateFine,
+            extraCharge,
+            typesCharge,
+            gracePeriod,
+            frequency,
+            utilityName,
+            cost,
+            bill
         };
-        console.log(payload);
+     await dispatch(postProperty(payload))
+     .then(()=> dispatch(getProperty()))
     };
-  const handleModal = () =>{
-    const newModel={
-        unitName,
-        floor,
-        amount,
-        unitType,
-        bedRoom,
-        bathRoom,
-        totalRoom,
-        squareFoot
-    }
-    dispatch(addModal(newModel))
-  }
-    const handleDeleteModal=(id)=>{
-        console.log(id)
-        dispatch(deleteModal(id))
-    }
+ 
     const handlePrev = () => {
         setActive((active)=> active - 1)// Go to the previous step
     };
@@ -90,7 +129,8 @@ const AddProperty = () => {
         //  const newLand = landlord.find(())
 
     }
-    console.log(modals)
+
+    console.log(utilities)
     return (
         <Stack style={{ width:"100%", height:"100vh", marginTop:"15px"}}>
             <Stepper size="lg" index={active} orientation='vertical' height='400px' gap='0' marginTop={"15px"} padding={"10px"}>
@@ -312,21 +352,27 @@ const AddProperty = () => {
                                 </Select>
                                 </FormControl>
                                 <br/>
-                                <FormControl isRequired>
-                                    <Select value={paymentType} onChange={(e) => setPaymentType(e.target.value)} placeholder='payment method type'>
-                                        <option value="Payment of UPI">Payment of UPI</option>
-                                        <option value="PhonePay">PhonePay</option>
-                                        <option value="Gst">Gst</option>
-                                        <option value="GooglePay">vat</option>
-                                        <option value="Credit Card">Credit Card</option>
-                                        <option value="Debit Card">Debit Card</option>
-                                    </Select>
-                                </FormControl>
-                                <br />
-                                <FormControl isRequired>
-                                    <Input type="text" value={pDescription} onChange={(e) => setPDescription(e.target.value)} placeholder='enter your payment description' />
-                                </FormControl>
-                                <Button >Add another field</Button>
+                                {payment.map((_, index)=>(
+                                    <div key={index}>
+                                        <FormControl isRequired>
+                                            <Select value={paymentType} onChange={(e) => setPaymentType(e.target.value)} placeholder='payment method type'>
+                                                <option value="Payment of UPI">Payment of UPI</option>
+                                                <option value="PhonePay">PhonePay</option>
+                                                <option value="Gst">Gst</option>
+                                                <option value="GooglePay">vat</option>
+                                                <option value="Credit Card">Credit Card</option>
+                                                <option value="Debit Card">Debit Card</option>
+                                            </Select>
+                                        </FormControl>
+                                        <br />
+                                        <FormControl isRequired>
+                                            <Input type="text" value={pDescription} onChange={(e) => setPDescription(e.target.value)} placeholder='enter your payment description' />
+                                        </FormControl>
+                                        <Button onClick={() => handleDeletePayment(index)}>DeletePayment</Button>
+                                    </div>
+
+                                ))}
+                                <Button onClick={handlePayment}>AddPayment</Button>
 
                                 <br/>
                                 <Button onClick={handlePrev} >Previous</Button>
@@ -338,36 +384,39 @@ const AddProperty = () => {
                         )}
                         {active === 2 && index === active && (
                             <Box style={{ marginTop: "45px" }}>
-                                <FormControl isRequired>
-                                    <Select value={extraFee} onChange={(e) => setExtraFee(e.target.value)} placeholder='types of extra fee'>
-                                        <option value="processing Fee">processing Fee</option>
-                                        <option value="Service fee">Service fee</option>
-                                        <option value="Paytm">Gst</option>
-                                        <option value="vat">vat</option>
-                                    </Select>
-                                </FormControl>
-                                <br />
-                                <FormControl isRequired>
-                                    <Input type='Number' value={valueCharge} onChange={(e) => setValueCharge(e.target.value)} placeholder='value charge supplement' />
-                                </FormControl>
-                                <br />
-                                <FormControl isRequired>
-                                    <Select value={charge} onChange={(e) => setCharge(e.target.value)} placeholder='types of charge '>
-                                        <option value="fixed Value">fixed Value</option>
-                                        <option value="% of Total Rent">% of Total Rent</option>
-                                        <option value="% of Total amount over due">% of Total amount over due</option>
-                                    </Select>
-                                </FormControl>
-                                <br />
-                                <FormControl isRequired>
-                                    <Select value={recurrence} onChange={(e) => setRecurrence(e.target.value)} placeholder='types of Recurrence'>
-                                        <option value="one time">one time</option>
-                                        <option value="period of period">period of period</option>
-                                    </Select>
-                                </FormControl>
-
-                                <Button >Add another field</Button>
-
+                                {extra.map((_, index)=>(
+                                    <div key={index}>
+                                        <FormControl isRequired>
+                                            <Select value={extraFee} onChange={(e) => setExtraFee(e.target.value)} placeholder='types of extra fee'>
+                                                <option value="processing Fee">processing Fee</option>
+                                                <option value="Service fee">Service fee</option>
+                                                <option value="Paytm">Gst</option>
+                                                <option value="vat">vat</option>
+                                            </Select>
+                                        </FormControl>
+                                        <br />
+                                        <FormControl isRequired>
+                                            <Input type='Number' value={valueCharge} onChange={(e) => setValueCharge(e.target.value)} placeholder='value charge supplement' />
+                                        </FormControl>
+                                        <br />
+                                        <FormControl isRequired>
+                                            <Select value={charge} onChange={(e) => setCharge(e.target.value)} placeholder='types of charge '>
+                                                <option value="fixed Value">fixed Value</option>
+                                                <option value="% of Total Rent">% of Total Rent</option>
+                                                <option value="% of Total amount over due">% of Total amount over due</option>
+                                            </Select>
+                                        </FormControl>
+                                        <br />
+                                        <FormControl isRequired>
+                                            <Select value={recurrence} onChange={(e) => setRecurrence(e.target.value)} placeholder='types of Recurrence'>
+                                                <option value="one time">one time</option>
+                                                <option value="period of period">period of period</option>
+                                            </Select>
+                                        </FormControl>
+                                        <Button onClick={()=> handleDeleteExtra(index)}>DeleteExtra</Button>
+                                    </div>
+                                ))}
+                                <Button onClick={handleAddExtra}>AddExtra</Button>
                                <br/>
                                 <Button onClick={handlePrev} >Previous</Button>
                                 {active < steps.length - 1 && (
@@ -378,38 +427,45 @@ const AddProperty = () => {
                         )}
                         {active === 3 && index === active && (
                             <Box style={{ marginTop: "45px" }}>
-                                <FormControl isRequired>
-                                    <Select value={lateFine} onChange={(e) => setLateFine(e.target.value)} placeholder='types of late fine'>
-                                        <option value="penalty">penalty</option>
-                                    </Select>
-                                </FormControl>
-                                <br />
-                                <FormControl isRequired>
-                                    <Input type='number' value={extraCharge} onChange={(e) => setExtraCharge(e.target.value)} placeholder='extra charge of late fee ' />
-                                </FormControl>
-                                <br />
-                                <FormControl isRequired>
-                                    <Select value={typesCharge} onChange={(e) => setTypesCharge(e.target.value)} placeholder='types of charge '>
-                                        <option value="fixed Value">fixed Value</option>
-                                        <option value="% of Total Rent">% of Total Rent</option>
-                                        <option value="% of Total amount over due">% of Total amount over due</option>
-                                    </Select>
-                                </FormControl>
-                                <br />
-                                <FormControl isRequired>
-                                    <Input type='number' value={gracePeriod} onChange={(e) => setGracePeriod(e.target.value)} placeholder='grace period ' />
-                                </FormControl>
-                                <br />
-                                <FormControl isRequired>
-                                    <Select value={frequency} onChange={(e) => setFrequency(e.target.value)} placeholder='frequency'>
-                                        <option value="one time">one time</option>
-                                        <option value="weekly">weekly</option>
-                                        <option value="daily">daily</option>
-                                        <option value="monthly">monthly</option>
-                                        <option value="Bi-weekly">Bi-weekly</option>
-                                    </Select>
-                                </FormControl>
-                                <Button >Add another field</Button>
+                                {
+                                    late.map((late, index)=>(
+                                        <div key={index}>
+                                            <FormControl isRequired>
+                                                <Select value={lateFine} onChange={(e) => setLateFine(e.target.value)} placeholder='types of late fine'>
+                                                    <option value="penalty">penalty</option>
+                                                </Select>
+                                            </FormControl>
+                                            <br />
+                                            <FormControl isRequired>
+                                                <Input type='number' value={extraCharge} onChange={(e) => setExtraCharge(e.target.value)} placeholder='extra charge of late fee ' />
+                                            </FormControl>
+                                            <br />
+                                            <FormControl isRequired>
+                                                <Select value={typesCharge} onChange={(e) => setTypesCharge(e.target.value)} placeholder='types of charge '>
+                                                    <option value="fixed Value">fixed Value</option>
+                                                    <option value="% of Total Rent">% of Total Rent</option>
+                                                    <option value="% of Total amount over due">% of Total amount over due</option>
+                                                </Select>
+                                            </FormControl>
+                                            <br />
+                                            <FormControl isRequired>
+                                                <Input type='number' value={gracePeriod} onChange={(e) => setGracePeriod(e.target.value)} placeholder='grace period ' />
+                                            </FormControl>
+                                            <br />
+                                            <FormControl isRequired>
+                                                <Select value={frequency} onChange={(e) => setFrequency(e.target.value)} placeholder='frequency'>
+                                                    <option value="one time">one time</option>
+                                                    <option value="weekly">weekly</option>
+                                                    <option value="daily">daily</option>
+                                                    <option value="monthly">monthly</option>
+                                                    <option value="Bi-weekly">Bi-weekly</option>
+                                                </Select>
+                                            </FormControl>
+                                            <Button onClick={()=> handleDeleteLatefine(index)}>DeleteLateFine</Button>
+                                        </div>
+                                    ))
+                                }
+                                <Button onClick={handleAddLateFine}>AddLateFine</Button>
                                 <br/>
                                 <Button onClick={handlePrev} >Previous</Button>
                                 {active < steps.length - 1 && (
@@ -420,28 +476,44 @@ const AddProperty = () => {
                         )}
                         {active === 4 && index === active && (
                             <Box style={{ marginTop: "45px" }}>
-                                <FormControl isRequired>
-                                    <Select value={utilityName} onChange={(e) => setUtilityName(e.target.value)} placeholder='Utility Name'>
-                                        <option value="waterBill">waterBill</option>
-                                        <option value="electricityBill">electricityBill</option>
-                                        <option value="security">security</option>
-                                        <option value="garbage">garbage</option>
-                                    </Select>
-                                </FormControl>
+                                {utilities.map((utility, index) => (
+                                    <div key={index}>
+                                        <FormControl isRequired>
+                                            <Select
+                                                value={utility.utilityName}
+                                                onChange={(e) => handleUtilityNameChange(index, e.target.value)}
+                                                placeholder='Utility Name'
+                                            >
+                                                <option value="waterBill">waterBill</option>
+                                                <option value="electricityBill">electricityBill</option>
+                                                <option value="security">security</option>
+                                                <option value="garbage">garbage</option>
+                                            </Select>
+                                        </FormControl>
+                                        <br />
+                                        <FormControl isRequired>
+                                            <Input
+                                                type='number'
+                                                value={utility.cost}
+                                                onChange={(e) => handleCostChange(index, e.target.value)}
+                                                placeholder='variable cost'
+                                            />
+                                        </FormControl>
+                                        <br />
+                                        <FormControl isRequired>
+                                            <Input
+                                                type='number'
+                                                value={utility.bill}
+                                                onChange={(e) => handleBillChange(index, e.target.value)}
+                                                placeholder='fixed price of bill'
+                                            />
+                                        </FormControl>
+                                        <Button onClick={() => handleDeleteUtility(index)}>DeleteUtility</Button>
+                                    </div>
+                                ))}
+                                <Button onClick={handleAddUtility}>AddUtility</Button>
                                 <br />
-                                <FormControl isRequired>
-                                    <Input type='number' value={cost} onChange={(e) => setCost(e.target.value)} placeholder='variable cost' />
-                                </FormControl>
-                                <br />
-                                <FormControl isRequired>
-                                    <Input type='number' value={bill} onChange={(e) => setBill(e.target.value)} placeholder='fixed price of bill' />
-                                </FormControl>
-                                <Button >Add another field</Button>
-                                <br/>
-                                <Button onClick={handlePrev} >Previous</Button>
-                                {/* {active < steps.length - 1 && (
-                                    <Button  onClick={handleNext}>Next</Button>
-                                )} */}
+                                <Button onClick={handlePrev}>Previous</Button>
                             </Box>
                         )}
                     </Step>

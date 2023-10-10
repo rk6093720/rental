@@ -84,54 +84,7 @@ const editUnit = (id, payload) => async (dispatch) => {
             dispatch({ type: types.EDIT_UNIT_FAILURE, payload: e })
         })
 }
-export const addModal = (modalData) => ({
-    type: types.ADD_MODAL,
-    payload: modalData,
-});
 
-export const deleteModal = (modalId) => ({
-    type:types.DELETE_MODAL,
-    payload: modalId,
-});
-export const addPaymentModal = (modalData) => ({
-    type: types.ADD_PAYMENT_MODAL,
-    payload: modalData,
-});
-
-export const deletePaymentModal = (modalId) => ({
-    type: types.DELETE_PAYMENT_MODAL,
-    payload: modalId,
-});
-
-export const addExtraModal = (modalData) => ({
-    type: types.ADD_EXTRA_MODAL,
-    payload: modalData,
-});
-
-export const deleteExtraModal = (modalId) => ({
-    type: types.DELETE_EXTRA_MODAL,
-    payload: modalId,
-});
-
-export const addLateFineModal = (modalData) => ({
-    type: types.ADD_LATEFINE_MODAL,
-    payload: modalData,
-});
-
-export const deleteLateFineModal = (modalId) => ({
-    type: types.DELETE_LATEFINE_MODAL,
-    payload: modalId,
-});
-
-export const addUtilityModal = (modalData) => ({
-    type: types.ADD_UTILITY_MODAL,
-    payload: modalData,
-});
-
-export const deleteUtilityModal = (modalId) => ({
-    type: types.DELETE_UTILITY_MODAL,
-    payload: modalId,
-});
 
 const deleteUnit = (id) => async (dispatch) => {
     dispatch({ type: types.DELETE_UNIT_REQUEST });

@@ -1,11 +1,6 @@
 import * as types from "./actionTypes"
 const initialState = {
     properties: [],
-    modals:[],
-    payment:[],
-    extra:[],
-    latefine:[],
-    utility:[],
     units:[],
     isLoading: false,
     isError: false
@@ -159,76 +154,7 @@ const reducer = (state = initialState, action) => {
                 isLoading: false,
                 isError: true
             }
-        case types.ADD_MODAL:
-            return {
-                ...state,
-                isLoading:false,
-                modals: [...state.modals, payload],
-                isError:false,
-            };
-        case types.DELETE_MODAL:
-            return {
-                ...state,
-                modals: state.modals.filter((_, index) => index !== payload),
-                isError: false,
-                isLoading:false,
-            };
-        case types.ADD_EXTRA_MODAL:
-            return {
-                ...state,
-                isLoading: false,
-                modals: [...state.extra, payload],
-                isError: false,
-            };
-        case types.DELETE_EXTRA_MODAL:
-            return {
-                ...state,
-                modals: state.extra.filter((_, index) => index !== payload),
-                isError: false,
-                isLoading: false,
-            };
-        case types.ADD_LATEFINE_MODAL:
-            return {
-                ...state,
-                isLoading: false,
-                modals: [...state.latefine, payload],
-                isError: false,
-            };
-        case types.DELETE_LATEFINE_MODAL:
-            return {
-                ...state,
-                modals: state.latefine.filter((_, index) => index !== payload),
-                isError: false,
-                isLoading: false,
-            };
-        case types.ADD_PAYMENT_MODAL:
-            return {
-                ...state,
-                isLoading: false,
-                modals: [...state.payment, payload],
-                isError: false,
-            };
-        case types.DELETE_PAYMENT_MODAL:
-            return {
-                ...state,
-                modals: state.payment.filter((_, index) => index !== payload),
-                isError: false,
-                isLoading: false,
-            };
-        case types.ADD_UTILITY_MODAL:
-            return {
-                ...state,
-                isLoading: false,
-                modals: [...state.utility, payload],
-                isError: false,
-            };
-        case types.DELETE_UTILITY_MODAL:
-            return {
-                ...state,
-                modals: state.utility.filter((_, index) => index !== payload),
-                isError: false,
-                isLoading: false,
-            };
+  
         default:
             return state
     }
