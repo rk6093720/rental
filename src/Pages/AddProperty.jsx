@@ -12,45 +12,64 @@ const steps = [
     { title: 'Utilities', description: 'Utlitity' },
 ]
 const AddProperty = () => {
-    const [propertyName, setPropertyName]=useState("");
+    const [propertyname, setPropertyName]=useState("");
     const [propertyCode,setPropertyCode]= useState("");
     const [address,setAddress]= useState("");
     const [location,setLocation]= useState("");
-    const [pType,setPType]= useState(""); 
-    const [agentC,setAgentC]= useState("");
-    const [agentType,setAgentType]= useState("")
+    const [propertyType,setPropertyType]= useState(""); 
+    const [agentCommission, setAgentCommission]= useState("");
+    const [agentCommissionType,setAgentCommissionType]= useState("")
     const [active,setActive]= useState(0);
-    const [utilityName] = useState("");
-    const [cost] = useState("");
-    const [bill] = useState("");
-    const [unit, setUnit] = useState("");
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const [unitName, setUnitName] = useState("");
-    const [floor, setFloor] = useState("");
-    const [unitType, setUnitType] = useState("");
-    const [amount, setAmount] = useState(0);
-    const [lateFine, setLateFine] = useState("");
-    const [extraCharge, setExtraCharge] = useState(0);
-    const [typesCharge, setTypesCharge] = useState("");
-    const [gracePeriod, setGracePeriod] = useState(0);
-    const [frequency, setFrequency] = useState("")
-    const [bedRoom, setBedRoom] = useState(0);
-    const [bathRoom, setBathRoom] = useState(0);
-    const [totalRoom, setTotalRoom] = useState(0);
-    const [squareFoot, setSquareFoot] = useState(0);
-    const [paymentType, setPaymentType] = useState("");
-    const [pDescription, setPDescription] = useState("");
-    const [extraFee, setExtraFee] = useState("");
-    const [valueCharge, setValueCharge] = useState("");
-    const [charge, setCharge] = useState("");
-    const [recurrence, setRecurrence] = useState("");
     const [tabIndex, setTabIndex] = useState(0);
     const dispatch = useDispatch();
     const [land,setLandlord]= useState("");
     const landlord = useSelector((state)=> state.App.landlord);
     const [late,setLate]= useState([]);
+    const [modals,setModals]=useState([]);
+    const [payment,setPayment]=useState([]);
+    const [extra,setExtra]=useState([]);
     const [utilities, setUtilities] = useState([]);
-
+    const handleModal=()=>{
+        const newModals={
+            unit:"",
+            unitName:"",
+            floor:"",
+            amount:"",
+            unitType:"",
+            bedRoom:"",
+            bathRoom:"",
+            totalRoom:"",
+            squareFoot:"",
+        }
+        setModals([...modals, newModals])
+    }
+    const handlePayment=()=>{
+        const newPayment={
+            paymentType:"",
+            pDescription:"",
+        }
+        setPayment([...payment,newPayment])
+    }
+    const handleAddExtra=()=>{
+        const newExtra={
+            extraFee:"",
+            valueCharge:"",
+            charge:"",
+            recurrence:"",
+        }
+        setExtra([...extra, newExtra])
+    }
+   const  handleAddLateFine=()=>{
+    const newLateFine={
+        lateFine:"",
+        extraCharge:"",
+        typesCharge:"",
+        gracePeriod:"",
+        frequency:"",
+    };
+    setLate([...late, newLateFine]);
+   }
     const handleAddUtility = () => {
         const newUtility = {
             utilityName: '',
@@ -59,13 +78,139 @@ const AddProperty = () => {
         };
         setUtilities([...utilities, newUtility]);
     };
-
+    const handleDeleteModal=(index)=>{
+        const updateModal=[...modals];
+        updateModal.splice(index, 1);
+        setModals(updateModal);
+    }
+    const handleDeletePayment=(index)=>{
+        const updatePayment = [...payment];
+        updatePayment.splice(index, 1);
+        setPayment(updatePayment)
+    }
+    const handleDeleteExtra=(index)=>{
+        const updateExtra = [...extra];
+        updateExtra.splice(index, 1);
+        setExtra(updateExtra)
+    }
+   
+    const handleDeleteLatefine=(index)=>{
+        const updateLatefine = [...late];
+        updateLatefine.splice(index, 1);
+        setLate(updateLatefine)
+    }
+ 
     const handleDeleteUtility = (index) => {
         const updatedUtilities = [...utilities];
         updatedUtilities.splice(index, 1);
         setUtilities(updatedUtilities);
     };
+    const handleUnit=(index,value)=>{
+        const updateModal = [...modals];
+        updateModal[index].unit = value;
+        setPayment(updateModal)
+    }
+    const handleUnitName=(index,value)=>{
+        const updateModal = [...modals];
+        updateModal[index].unitName = value;
+        setPayment(updateModal)
+    }
+    const handleFloor=(index, value)=>{
+        const updateModal = [...modals];
+        updateModal[index].floor = value;
+        setPayment(updateModal)
+    }
+   const handleAmount=(index, value)=>{
+      const updateModal = [...modals];
+        updateModal[index].amount = value;
+        setPayment(updateModal)
 
+   }
+   const handleUnitType=(index, value)=>{
+      const updateModal = [...modals];
+        updateModal[index].unitType = value;
+        setPayment(updateModal)
+
+   }
+   const handleBedRoom=(index, value)=>{
+      const updateModal = [...modals];
+        updateModal[index].bedRoom = value;
+        setPayment(updateModal)
+
+   }
+   const handleBathRoom=(index, value)=>{
+      const updateModal = [...modals];
+        updateModal[index].bathRoom = value;
+        setPayment(updateModal)
+
+   }
+   const handleTotalRoom=(index, value)=>{
+      const updateModal = [...modals];
+        updateModal[index].totalRoom = value;
+        setPayment(updateModal)
+
+   }
+   const handleSquareFoot=(index, value)=>{
+      const updateModal = [...modals];
+        updateModal[index].squareFoot = value;
+        setPayment(updateModal)
+
+   }
+    const handlePaymentType=(index, value)=>{
+        const updatePayment =[...payment];
+        updatePayment[index].paymentType=value;
+        setPayment(updatePayment)
+    }
+    const handlePDescription=(index,value)=>{
+        const updatePayment = [...payment];
+        updatePayment[index].pDescription = value;
+        setPayment(updatePayment)
+    }
+    const handleExtraFeeChange = (index, value) => {
+        const updateExtraCharge = [...extra];
+        updateExtraCharge[index].extraFee = value;
+        setExtra(updateExtraCharge)
+    }
+   const handleValueChargeChange=(index, value)=>{
+       const updateExtraCharge = [...extra];
+       updateExtraCharge[index].valueCharge = value;
+       setExtra(updateExtraCharge)
+   }
+   const handleChargeChange=(index,value)=>{
+       const updateExtraCharge = [...extra];
+       updateExtraCharge[index].charge = value;
+       setExtra(updateExtraCharge)
+   }
+   const handleRecurrence=(index, value)=>{
+       const updateExtraCharge = [...extra];
+       updateExtraCharge[index].recurrence = value;
+       setExtra(updateExtraCharge)
+   }
+   const  handleLateFineChange =(index, value)=>{
+    const updateLatefine =[...late];
+    updateLatefine[index].lateFine =value;
+    setLate(updateLatefine)
+   }
+   const  handleExtraChargeChange=(index, value)=>{
+       const updateLatefine = [...late];
+       updateLatefine[index].extraCharge = value;
+       setLate(updateLatefine)
+   }
+    const handleTypesChargeChange=(index, value)=>{
+        const updateLatefine = [...late];
+        updateLatefine[index].typesCharge = value;
+        setLate(updateLatefine)
+    }
+    const handleGracePeriodChange=(index, value)=>{
+        const updateLatefine = [...late];
+        updateLatefine[index].gracePeriod = value;
+        setLate(updateLatefine)
+    }
+    const handleFrequencyChange=(index, value)=>{
+        const updateLatefine = [...late];
+        updateLatefine[index].frequency = value;
+        setLate(updateLatefine)
+    }
     const handleUtilityNameChange = (index, value) => {
         const updatedUtilities = [...utilities];
         updatedUtilities[index].utilityName = value;
@@ -85,38 +230,25 @@ const AddProperty = () => {
     };
     const handleAddProperty = async () => {
         const payload = {
-            propertyName,
+            propertyname,
             propertyCode,
             address,
             location,
-            pType,
-            agentC,
-            agentType,
-            unitName,
-            floor,
-            amount,
-            unitType,
-            bedRoom,
-            bathRoom,
-            totalRoom,
-            squareFoot,
-            paymentType,
-            pDescription,
-            extraFee,
-            valueCharge,
-            charge,
-            recurrence,
-            lateFine,
-            extraCharge,
-            typesCharge,
-            gracePeriod,
-            frequency,
-            utilityName,
-            cost,
-            bill
+            propertyType,
+            agentCommission,
+            agentCommissionType,
+            modals,
+            payment,
+            extra,
+            late,
+            utilities
         };
-     await dispatch(postProperty(payload))
-     .then(()=> dispatch(getProperty()))
+     try {
+         await dispatch(postProperty(payload));
+         await dispatch(getProperty());
+     } catch (error) {
+        console.log(error);
+     }
     };
  
     const handlePrev = () => {
@@ -130,7 +262,13 @@ const AddProperty = () => {
 
     }
 
-    console.log(utilities)
+    console.log(utilities, modals, payment, extra, late, propertyname,
+        propertyCode,
+        address,
+        location,
+        propertyType,
+        agentCommission,
+        agentCommissionType)
     return (
         <Stack style={{ width:"100%", height:"100vh", marginTop:"15px"}}>
             <Stepper size="lg" index={active} orientation='vertical' height='400px' gap='0' marginTop={"15px"} padding={"10px"}>
@@ -155,7 +293,7 @@ const AddProperty = () => {
                           <Box style={{marginTop:"45px"}}>
                               <FormControl isRequired>
                                 <Input type='text'
-                                value={propertyName} onChange={(e)=> setPropertyName(e.target.value)} placeholder='enter your property Name' />
+                                value={propertyname} onChange={(e)=>setPropertyName(e.target.value)} placeholder='enter your property Name' />
                                 </FormControl>
                                 <br/>
                                 <FormControl isRequired>
@@ -173,7 +311,7 @@ const AddProperty = () => {
                                 </FormControl>
                                 <br/>
                                 <FormControl isRequired>
-                                <Select value={pType} onChange={(e)=> setPType(e.target.value)} placeholder='select your property type'>
+                                <Select value={propertyType} onChange={(e)=>setPropertyType(e.target.value)} placeholder='select your property type'>
                                     <option value="Other">Other</option>
                                     <option value="Apartment">Apartment</option>
                                     <option value="Home">Home</option>
@@ -186,14 +324,14 @@ const AddProperty = () => {
                                 <Input type="text" value={land} onChange={handleLand} placeholder='find Landlord'/>
                                 </FormControl>
                                 <br/>
-                                { modals.map((_, index)=>(
+                                { modals.map((modal, index)=>(
                                         <div key={index}>
                                             <FormControl isRequired>
                                                 <Input
                                                     type='number'
                                                     onClick={onOpen}
-                                                    value={unit}
-                                                    onChange={(e) => setUnit(e.target.value)}
+                                                    value={modal.unit}
+                                                    onChange={(e) => handleUnit(index,e.target.value)}
                                                     placeholder='enter your unit'
                                                 />
                                             </FormControl>
@@ -212,28 +350,28 @@ const AddProperty = () => {
                                                                 <TabPanel>
                                                                     <Input
                                                                         type='text'
-                                                                        value={unitName}
-                                                                        onChange={(e) => setUnitName(e.target.value)}
+                                                                        value={modal.unitName}
+                                                                        onChange={(e) => handleUnitName(index,e.target.value)}
                                                                         placeholder='enter your unit name'
                                                                     />
                                                                     <br />
                                                                     <Input
                                                                         type='number'
-                                                                        value={floor}
-                                                                        onChange={(e) => setFloor(e.target.value)}
+                                                                        value={modal.floor}
+                                                                        onChange={(e) => handleFloor(index,e.target.value)}
                                                                         placeholder='enter your unit floor'
                                                                     />
                                                                     <br />
                                                                     <Input
                                                                         type='number'
-                                                                        value={amount}
-                                                                        onChange={(e) => setAmount(e.target.value)}
+                                                                        value={modal.amount}
+                                                                        onChange={(e) => handleAmount(index,e.target.value)}
                                                                         placeholder='enter your Rent Amount'
                                                                     />
                                                                     <br />
                                                                     <Select
-                                                                        value={unitType}
-                                                                        onChange={(e) => setUnitType(e.target.value)}
+                                                                        value={modal.unitType}
+                                                                        onChange={(e) => handleUnitType(index,e.target.value)}
                                                                         placeholder='enter your unit Type'
                                                                     >
                                                                         <option value="TwoBedRoom">TwoBedRoom</option>
@@ -243,54 +381,54 @@ const AddProperty = () => {
                                                                     </Select>
                                                                     <Input
                                                                         type="number"
-                                                                        value={bedRoom}
-                                                                        onChange={(e) => setBedRoom(e.target.value)}
+                                                                        value={modal.bedRoom}
+                                                                        onChange={(e) => handleBedRoom(index,e.target.value)}
                                                                         placeholder='Bedroom'
                                                                     />
                                                                     <Input
                                                                         type='number'
-                                                                        value={bathRoom}
-                                                                        onChange={(e) => setBathRoom(e.target.value)}
+                                                                        value={modal.bathRoom}
+                                                                        onChange={(e) => handleBathRoom(index,e.target.value)}
                                                                         placeholder='Bathroom'
                                                                     />
                                                                     <Input
                                                                         type="number"
-                                                                        value={totalRoom}
-                                                                        onChange={(e) => setTotalRoom(e.target.value)}
+                                                                        value={modal.totalRoom}
+                                                                        onChange={(e) => handleTotalRoom(index,e.target.value)}
                                                                         placeholder='total room'
                                                                     />
                                                                     <Input
                                                                         type="number"
-                                                                        value={squareFoot}
-                                                                        onChange={(e) => setSquareFoot(e.target.value)}
+                                                                        value={modal.squareFoot}
+                                                                        onChange={(e) => handleSquareFoot(index,e.target.value)}
                                                                         placeholder='square foot'
                                                                     />
                                                                 </TabPanel>
                                                                 <TabPanel>
                                                                     <Input
                                                                         type='text'
-                                                                        value={unitName}
-                                                                        onChange={(e) => setUnitName(e.target.value)}
+                                                                        value={modal.unitName}
+                                                                        onChange={(e) => handleUnitName(index,e.target.value)}
                                                                         placeholder='enter your unit name'
                                                                     />
                                                                     <br />
                                                                     <Input
                                                                         type='number'
-                                                                        value={floor}
-                                                                        onChange={(e) => setFloor(e.target.value)}
+                                                                        value={modal.floor}
+                                                                        onChange={(e) => handleFloor(index,e.target.value)}
                                                                         placeholder='enter your unit floor'
                                                                     />
                                                                     <br />
                                                                     <Input
                                                                         type='number'
-                                                                        value={amount}
-                                                                        onChange={(e) => setAmount(e.target.value)}
+                                                                    value={modal.amount}
+                                                                    onChange={(e) => handleAmount(index, e.target.value)}
                                                                         placeholder='enter your Rent Amount'
                                                                     />
                                                                     <br />
                                                                     <Select
-                                                                        value={unitType}
-                                                                        onChange={(e) => setUnitType(e.target.value)}
+                                                                       value={modal.unitType}
+                                                                    onChange={(e) => handleUnitType(index, e.target.value)}
                                                                         placeholder='enter your unit Type'
                                                                     >
                                                                         <option value="TwoBedRoom">TwoBedRoom</option>
@@ -301,14 +439,14 @@ const AddProperty = () => {
 
                                                                     <Input
                                                                         type="number"
-                                                                        value={totalRoom}
-                                                                        onChange={(e) => setTotalRoom(e.target.value)}
+                                                                        value={modal.totalRoom}
+                                                                    onChange={(e) => handleTotalRoom(index, e.target.value)}
                                                                         placeholder='total room'
                                                                     />
                                                                     <Input
                                                                         type="number"
-                                                                        value={squareFoot}
-                                                                        onChange={(e) => setSquareFoot(e.target.value)}
+                                                                        value={modal.squareFoot}
+                                                                    onChange={(e) => handleSquareFoot(index, e.target.value)}
                                                                         placeholder='square foot'
                                                                     />
                                                                 </TabPanel>
@@ -341,21 +479,21 @@ const AddProperty = () => {
                         {active === 1 && index === active && (
                             <Box style={{ marginTop: "45px" }}>
                                 <FormControl isRequired>
-                                <Input type='number' value={agentC} onChange={(e)=> setAgentC(e.target.value)} placeholder='enter your agent commission value'/>
+                                <Input type='number' value={agentCommission} onChange={(e)=>setAgentCommission(e.target.value)} placeholder='enter your agent commission value'/>
                                 </FormControl>
                                 <br/>
                                 <FormControl isRequired>
-                                <Select value={agentType} onChange={(e)=>setAgentType(e.target.value)} placeholder='Agent commission type'>
+                                <Select value={agentCommissionType} onChange={(e)=>setAgentCommissionType(e.target.value)} placeholder='Agent commission type'>
                                     <option value="fixedValue">fixedValue</option>
                                     <option value="% of Total Rent">% of Total Rent</option>
                                     <option value="% of Total collected Rent">% of Total collected Rent</option>
                                 </Select>
                                 </FormControl>
                                 <br/>
-                                {payment.map((_, index)=>(
+                                {payment.map((payment, index)=>(
                                     <div key={index}>
                                         <FormControl isRequired>
-                                            <Select value={paymentType} onChange={(e) => setPaymentType(e.target.value)} placeholder='payment method type'>
+                                            <Select value={payment.paymentType} onChange={(e) => handlePaymentType(index,e.target.value)} placeholder='payment method type'>
                                                 <option value="Payment of UPI">Payment of UPI</option>
                                                 <option value="PhonePay">PhonePay</option>
                                                 <option value="Gst">Gst</option>
@@ -366,7 +504,7 @@ const AddProperty = () => {
                                         </FormControl>
                                         <br />
                                         <FormControl isRequired>
-                                            <Input type="text" value={pDescription} onChange={(e) => setPDescription(e.target.value)} placeholder='enter your payment description' />
+                                            <Input type="text" value={payment.pDescription} onChange={(e) => handlePDescription(index,e.target.value)} placeholder='enter your payment description' />
                                         </FormControl>
                                         <Button onClick={() => handleDeletePayment(index)}>DeletePayment</Button>
                                     </div>
@@ -384,10 +522,10 @@ const AddProperty = () => {
                         )}
                         {active === 2 && index === active && (
                             <Box style={{ marginTop: "45px" }}>
-                                {extra.map((_, index)=>(
+                                {extra.map((extra, index)=>(
                                     <div key={index}>
                                         <FormControl isRequired>
-                                            <Select value={extraFee} onChange={(e) => setExtraFee(e.target.value)} placeholder='types of extra fee'>
+                                            <Select value={extra.extraFee} onChange={(e) => handleExtraFeeChange(index,e.target.value)} placeholder='types of extra fee'>
                                                 <option value="processing Fee">processing Fee</option>
                                                 <option value="Service fee">Service fee</option>
                                                 <option value="Paytm">Gst</option>
@@ -396,11 +534,11 @@ const AddProperty = () => {
                                         </FormControl>
                                         <br />
                                         <FormControl isRequired>
-                                            <Input type='Number' value={valueCharge} onChange={(e) => setValueCharge(e.target.value)} placeholder='value charge supplement' />
+                                            <Input type='Number' value={extra.valueCharge} onChange={(e) => handleValueChargeChange(index,e.target.value)} placeholder='value charge supplement' />
                                         </FormControl>
                                         <br />
                                         <FormControl isRequired>
-                                            <Select value={charge} onChange={(e) => setCharge(e.target.value)} placeholder='types of charge '>
+                                            <Select value={extra.charge} onChange={(e) => handleChargeChange(index,e.target.value)} placeholder='types of charge '>
                                                 <option value="fixed Value">fixed Value</option>
                                                 <option value="% of Total Rent">% of Total Rent</option>
                                                 <option value="% of Total amount over due">% of Total amount over due</option>
@@ -408,7 +546,7 @@ const AddProperty = () => {
                                         </FormControl>
                                         <br />
                                         <FormControl isRequired>
-                                            <Select value={recurrence} onChange={(e) => setRecurrence(e.target.value)} placeholder='types of Recurrence'>
+                                            <Select value={extra.recurrence} onChange={(e) => handleRecurrence(index,e.target.value)} placeholder='types of Recurrence'>
                                                 <option value="one time">one time</option>
                                                 <option value="period of period">period of period</option>
                                             </Select>
@@ -431,17 +569,17 @@ const AddProperty = () => {
                                     late.map((late, index)=>(
                                         <div key={index}>
                                             <FormControl isRequired>
-                                                <Select value={lateFine} onChange={(e) => setLateFine(e.target.value)} placeholder='types of late fine'>
+                                                <Select value={late.lateFine} onChange={(e) => handleLateFineChange(index,e.target.value)} placeholder='types of late fine'>
                                                     <option value="penalty">penalty</option>
                                                 </Select>
                                             </FormControl>
                                             <br />
                                             <FormControl isRequired>
-                                                <Input type='number' value={extraCharge} onChange={(e) => setExtraCharge(e.target.value)} placeholder='extra charge of late fee ' />
+                                                <Input type='number' value={late.extraCharge} onChange={(e) => handleExtraChargeChange(index,e.target.value)} placeholder='extra charge of late fee ' />
                                             </FormControl>
                                             <br />
                                             <FormControl isRequired>
-                                                <Select value={typesCharge} onChange={(e) => setTypesCharge(e.target.value)} placeholder='types of charge '>
+                                                <Select value={late.typesCharge} onChange={(e) => handleTypesChargeChange(index,e.target.value)} placeholder='types of charge '>
                                                     <option value="fixed Value">fixed Value</option>
                                                     <option value="% of Total Rent">% of Total Rent</option>
                                                     <option value="% of Total amount over due">% of Total amount over due</option>
@@ -449,11 +587,11 @@ const AddProperty = () => {
                                             </FormControl>
                                             <br />
                                             <FormControl isRequired>
-                                                <Input type='number' value={gracePeriod} onChange={(e) => setGracePeriod(e.target.value)} placeholder='grace period ' />
+                                                <Input type='number' value={late.gracePeriod} onChange={(e) => handleGracePeriodChange(index,e.target.value)} placeholder='grace period ' />
                                             </FormControl>
                                             <br />
                                             <FormControl isRequired>
-                                                <Select value={frequency} onChange={(e) => setFrequency(e.target.value)} placeholder='frequency'>
+                                                <Select value={late.frequency} onChange={(e) => handleFrequencyChange(index,e.target.value)} placeholder='frequency'>
                                                     <option value="one time">one time</option>
                                                     <option value="weekly">weekly</option>
                                                     <option value="daily">daily</option>

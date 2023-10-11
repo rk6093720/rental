@@ -61,7 +61,7 @@ const Properties = () => {
                     <Td>{item.propertycode}</Td>
                     <Td>{item.propertyname}</Td>
                     <Td>{item.location}</Td>
-                    <Td>{item.phone}</Td>
+                    <Td>{item.modals.map((e)=>(e.totalRoom))}</Td>
                     <Flex>
                       <Td>
                         <Link to={`/viewProperty/${item._id}`}>
