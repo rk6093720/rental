@@ -21,6 +21,9 @@ import EditLandLord from './EditLandLord';
 import ViewProperties from './ViewProperties';
 import AddProperty from './AddProperty';
 import EditProperty from './EditProperty';
+import AddTentants from './AddTentants';
+import ViewTentant from './ViewTentant';
+import EditTentant from './EditTentant';
 const MainRoutes = () => {
     return (
         <div>
@@ -42,8 +45,11 @@ const MainRoutes = () => {
                 <Route path='/dashboard' element={<Dashboard/>}/>
                 <Route path='/AddLandLord' element={<AddLandlord/>}/>
                 <Route path='/AddProperty' element={<AddProperty/>}/>
+                <Route path='/AddTentants' element={<AddTentants/>}/>
+                <Route path='/viewTentants/:id' element={<ViewTentant/>}/>
                 <Route path='/viewLandlord/:id' element={<ViewLandLord/>}/>
                 <Route path='/viewProperty/:id' element={<ViewProperties/>}/> 
+                <Route path='/tentant/:id/edit' element={<EditTentant/>}/>
                 <Route path='/landlord/:id/edit' element={<EditLandLord/>}/>  
                 <Route path='/property/:id/edit' element={<EditProperty/>}/>         
             </Routes>

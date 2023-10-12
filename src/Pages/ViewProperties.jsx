@@ -25,7 +25,7 @@ const ViewProperties = () => {
             <Tabs>
                 <TabList>
                     <Tab>Information</Tab>
-                    <Tab>unit(modals)</Tab>
+                    <Tab>unit</Tab>
                     <Tab>Leases</Tab>
                     <Tab>Invoices</Tab>
                     <Tab>VacateNotice</Tab>
@@ -55,12 +55,14 @@ const ViewProperties = () => {
                                     </Tr>
                                 </Thead>
                                 <Tbody>
-                                    <Tr>
-                                        <Td>{currentProperty.propertyCode}</Td>
-                                        <Td>{currentProperty.propertyName}</Td>
-                                        <Td>{currentProperty.city}</Td>
-                                        <Td>{currentProperty.countApartment}</Td>
-                                    </Tr>
+                                    {currentProperty.modals && currentProperty.modals.map((unit, index) => (
+                                        <Tr key={index}>
+                                            <Td>{unit.unitName}</Td>
+                                            <Td>{unit.unitType}</Td>
+                                            <Td>{unit.bedRoom}</Td>
+                                            <Td>{unit.squareFoot}</Td>
+                                        </Tr>
+                                    ))}
                                 </Tbody>
                             </Table>
                         </TableContainer>
@@ -71,15 +73,12 @@ const ViewProperties = () => {
                                 <TableCaption></TableCaption>
                                 <Thead>
                                     <Tr>
-                                        <Th>registrationDate</Th>
-                                        <Th>Document</Th>
+                                        <Th>Leases</Th>
                                     </Tr>
                                 </Thead>
                                 <Tbody>
                                     <Tr>
-                                        <Td>{currentProperty.registerDate}</Td>
-                                        <Td>  <Image src={`/images/${currentProperty.document}`} height="100px" />
-                                        </Td>
+                                        <Td>here i show quickly data please wait ....</Td>
 
                                     </Tr>
                                 </Tbody>

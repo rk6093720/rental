@@ -31,7 +31,7 @@ const editProperty = (id, payload) => async (dispatch) => {
     return await axios.put(`http://localhost:8080/property/update/${id}`, payload)
         .then((r) => {
             console.log(r);
-            dispatch({ type: types.EDIT_PROPERTY_SUCCESS, payload: r.data })
+            dispatch({ type: types.EDIT_PROPERTY_SUCCESS, payload: r.data.editProperty })
         })
         .catch((e) => {
             dispatch({ type: types.EDIT_PROPERTY_FAILURE, payload: e })
