@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Button, FormControl, Input, Stack, Step, StepDescription, StepIcon, StepIndicator, StepNumber, StepSeparator, StepStatus, StepTitle, Stepper, Select } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getTentants, postTentants } from '../Redux/Tentants/action';
+import { editTentants, getTentants} from '../Redux/Tentants/action';
 import { useNavigate, useParams } from 'react-router-dom';
 const steps = [
   { title: 'Information', description: 'Contact Info' },
@@ -26,7 +26,6 @@ const EditTentant = () => {
   const [postalCode, setPostalCode] = useState("");
   const [postalAddress, setPostalAddress] = useState("");
   const [physicalAddress, setPhysicalAddress] = useState("");
-  const [password, setPassword] = useState("");
   const [kinName, setKinName] = useState("");
   const [kinPhone, setKinPhone] = useState("");
   const [kinRelation, setKinRelation] = useState("");
@@ -59,11 +58,53 @@ const EditTentant = () => {
     setActive((active) => active + 1) // Go to the next step
   };
   const handleEditTentant=()=>{
+    const payload={
+      tentant_Type,
+      firstName,
+      lastName,
+      gender,
+      dob,
+      passportNumber,
+      martialStatus,
+      phone,
+      email,
+      country,
+      city,
+      postalCode,
+      postalAddress,
+      physicalAddress,
+      kinName,
+      kinPhone,
+      kinRelation,
+      emergency_name,
+      emergency_phone,
+      emergency_email,
+      emergency_relation,
+      emergency_postalAddress,
+      emergency_physicalAddress,
+      employee_Status,
+      employee_position,
+      employee_phone,
+      employee_email,
+      employee_postalAddress,
+      employee_physicalAddress,
+      business_name,
+      license_number,
+      tax_id,
+      business_address,
+      business_industry,
+      business_description
+    }
+    dispatch(editTentants(id,payload))
+    .then(()=> dispatch(getTentants()))
+    .then((r)=>{
+      navigate("/tentants")
+    })
 
   }
   useEffect(() => {
     if (tentant.length === 0) {
-      dispatch()
+      dispatch(getTentants())
     }
   }, [tentant.length, dispatch])
   useEffect(() => {
@@ -72,22 +113,42 @@ const EditTentant = () => {
       tentantById && setCurrentTentant(tentantById);
       tentantById && setTentant_Type(tentantById.tentant_Type)
       tentantById && setFirstName(tentantById.firstName)
-      tentantById && setLastName(tentantById.LastName)
+      tentantById && setLastName(tentantById.lastName)
       tentantById && setGender(tentantById.gender)
       tentantById && setDob(tentantById.dob)
       tentantById && setPassportNumber(tentantById.passportNumber)
       tentantById && setMartialStatus(tentantById.martialStatus)
       tentantById && setPhone(tentantById.phone)
+      tentantById && setEmail(tentantById.email)
+      tentantById && setCountry(tentantById.country)
+      tentantById && setCity(tentantById.city)
       tentantById && setPostalCode(tentantById.postalCode)
-      tentantById && setAddress(tentantById.address)
-      tentantById && setCountApartment(tentantById.countApartment)
-      tentantById && setAdharCard(tentantById.adharCard)
-      tentantById && setPropertyCode(tentantById.propertyCode)
-      tentantById && setPropertyName(tentantById.propertyName)
-      tentantById && setRegisterDate(tentantById.registerDate)
+      tentantById && setPostalAddress(tentantById.postalAddress)
+      tentantById && setPhysicalAddress(tentantById.physicalAddress)
+      tentantById && setKinName(tentantById.kinName)
+      tentantById && setKinPhone(tentantById.kinPhone)
+      tentantById && setKinRelation(tentantById.kinRelation)
+      tentantById && setEmergency_Name(tentantById.emergency_name)
+      tentantById && setEmergency_Email(tentantById.emergency_email)
+      tentantById && setEmergency_Phone(tentantById.emergency_phone)
+      tentantById && setEmergency_Relation(tentantById.emergency_relation)
+      tentantById && setEmergency_PostalAddress(tentantById.emergency_postalAddress)
+      tentantById && setEmergency_PhysicalAddress(tentantById.emergency_physicalAddress)
+      tentantById && setEmployee_Status(tentantById.employee_Status)
+      tentantById && setEmployee_Email(tentantById.employee_email)
+      tentantById && setEmployee_phone(tentantById.employee_phone)
+      tentantById && setEmployee_Position(tentantById.employee_position)
+      tentantById && setEmployee_PostalAddress(tentantById.employee_postalAddress)
+      tentantById && setEmployee_PhysicalAddress(tentantById.employee_physicalAddress)
+      tentantById && setBusiness_Industry(tentantById.business_industry)
+      tentantById && setBusiness_Name(tentantById.business_name)
+      tentantById && setLicense_Number(tentantById.license_number)
+      tentantById && setBusiness_Description(tentantById.business_description)
+      tentantById && setTax_Id(tentantById.tax_id)
+      tentantById && setBusiness_Address(tentantById.business_address)
     }
   }, [id, tentant])
-  console.log(land);
+  console.log(tentant);
   return (
     <div>
       <Stack style={{ width: "100%", height: "100vh", marginTop: "15px" }}>
@@ -221,14 +282,14 @@ const EditTentant = () => {
                       placeholder='enter your physical address'
                     />
                   </FormControl>
-                  <FormControl isRequired>
+                  {/* <FormControl isRequired>
                     <Input
                       type="password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder='enter your password'
                     />
-                  </FormControl>
+                  </FormControl> */}
 
 
 
