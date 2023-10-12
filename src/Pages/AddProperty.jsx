@@ -13,7 +13,7 @@ const steps = [
 ]
 const AddProperty = () => {
     const [propertyname, setPropertyName]=useState("");
-    const [propertyCode,setPropertyCode]= useState("");
+    const [propertycode,setpropertycode]= useState("");
     const [address,setAddress]= useState("");
     const [location,setLocation]= useState("");
     const [propertyType,setPropertyType]= useState(""); 
@@ -231,7 +231,7 @@ const AddProperty = () => {
     const handleAddProperty = async () => {
         const payload = {
             propertyname,
-            propertyCode,
+            propertycode,
             address,
             location,
             propertyType,
@@ -263,7 +263,7 @@ const AddProperty = () => {
     }
 
     console.log(utilities, modals, payment, extra, late, propertyname,
-        propertyCode,
+        propertycode,
         address,
         location,
         propertyType,
@@ -298,7 +298,7 @@ const AddProperty = () => {
                                 <br/>
                                 <FormControl isRequired>
                                 <Input type="text"
-                                value={propertyCode} onChange={(e)=> setPropertyCode(e.target.value)} placeholder='enter your property code' />
+                                value={propertycode} onChange={(e)=> setpropertycode(e.target.value)} placeholder='enter your property code' />
                                 </FormControl>
                                 <br/>
                                 <FormControl isRequired>

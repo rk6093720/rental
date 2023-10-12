@@ -7,7 +7,7 @@ const getTentants = () => async (dispatch) => {
     return await axios.get("http://localhost:8080/tentants/read")
         .then((r) => {
             console.log(r, "get")
-            dispatch({ type: types.GET_TENTANTS_SUCCESS, payload: r.data.TENTANTS })
+            dispatch({ type: types.GET_TENTANTS_SUCCESS, payload: r.data.Tentant })
         })
         .catch((e) => {
             return dispatch({ type: types.GET_TENTANTS_FAILURE, payload: e })
@@ -19,7 +19,7 @@ const postTentants = (payload) => async (dispatch) => {
     return await axios.post(`http://localhost:8080/tentants/create`, payload)
         .then((r) => {
             console.log(r)
-            dispatch({ type: types.POST_TENTANTS_SUCCESS, payload: r.data.AddTentants })
+            dispatch({ type: types.POST_TENTANTS_SUCCESS, payload: r.data.AddTentant })
         })
         .catch((e) => {
             dispatch({ type: types.POST_TENTANTS_FAILURE, payload: e })

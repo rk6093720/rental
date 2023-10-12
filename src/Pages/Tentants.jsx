@@ -10,6 +10,7 @@ const Tentants = () => {
   const dispatch = useDispatch();
   const [color, setColor] = useState(null);
   const [tentantsFilter, setTentantsFilter] = useState("");
+  const tentant = useSelector((state) => state.Tentants.tentants);
   const handleFilter = (e) => {
     setTentantsFilter(e.target.value)
   }
@@ -18,7 +19,7 @@ const Tentants = () => {
     dispatch(deleteTentants(item._id))
     setColor(item._id)
   }
-  const tentant = useSelector((state) => state.Tentants.tentants);
+  
   useEffect(() => {
     if (tentant?.length === 0) {
       dispatch(getTentants())
@@ -58,10 +59,10 @@ const Tentants = () => {
               {
                 tentant?.length > 0 && tentant?.map((item) => {
                   return <Tr key={item._id}>
-                    <Td>{item.propertycode}</Td>
-                    <Td>{item.propertyname}</Td>
-                    <Td>{item.location}</Td>
-                    <Td>{item.modals.map((e) => (e.totalRoom))}</Td>
+                    <Td>{item.firstName}</Td>
+                    <Td>{item.lastName}</Td>
+                    <Td>{item.gender}</Td>
+                    <Td>{item.phone}</Td>
                     <Flex>
                       <Td>
                         <Link to={`/viewTentants/${item._id}`}>
