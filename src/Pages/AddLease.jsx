@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Box, Button, FormControl, Input, Stack, Step, StepDescription, StepIcon, StepIndicator, StepNumber, StepSeparator, StepStatus, StepTitle, Stepper, Select
 } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getLease, postLease } from '../Redux/Lease/action';
+import { getProperty } from '../Redux/Property/action';
 const steps = [
     {title:"LeaseInfo", description:"lease Information"},
     { title: "LeaseDeposit", description: "leaseDeposit" },
@@ -16,6 +17,7 @@ const steps = [
 ]
 const AddLease = () => {
     const [property,setProperty]=useState("");
+    const [findProperty,setFindProperty]=useState("");
     const [unit,setUnit]=useState("");
     const [leaseType,setLeaseType]=useState("");
     const [amount,setAmount]=useState("");
@@ -212,17 +214,23 @@ const AddLease = () => {
         setActive((active) => active + 1) // Go to the next step
     };
     const handleProperty =(e)=>{
-         
+      const Name = e.target.value;
+      setFindProperty(Name) 
     }
+    const filteredProperties = properties.filter((item) =>
+        item.propertyname.toLowerCase().includes(findProperty.toLowerCase())
+    );
+    console.log(filteredProperties)
     const handleUnit =(e)=>{
-        const unit = e.target.value;
-        const findUnit = properties.modals.map((item)=>item.totalRoom === unit);
-        console.log(findUnit)
-        setUnit(findUnit.totalRoom)
+     
     }
     const handleTentant=()=>{
 
     }
+    useEffect(()=>{
+        dispatch(getProperty())
+    },[dispatch])
+    console.log(properties)
     return (
         <Stack style={{ width: "100%", height: "100vh", marginTop: "15px" }}>
             <Stepper size="lg" index={active} orientation='vertical' height='400px' gap='0' marginTop={"15px"} padding={"10px"}>
@@ -246,9 +254,16 @@ const AddLease = () => {
                         {active === 0 && index === active && (
                             <Box style={{ marginTop: "45px" }}>
                                 <FormControl isRequired>
-                                    <Input type='text'
-                                        value={property} onChange={handleProperty} placeholder='find property name ' />
+                
+                                    <Select value={property} onChange={handleProperty} placeholder='find property name ' >
+                                        {
+                                            filteredProperties.map((item) => {
+                                                <option key={item._id} value={item.propertyname}>{item.propertyname}</option>
+                                            })
+                                        }
+                                    </Select>   
                                 </FormControl>
+                                
                                 <br />
                                 <FormControl isRequired>
                                     <Input type="text"
