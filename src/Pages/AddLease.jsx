@@ -22,7 +22,7 @@ const AddLease = () => {
     const [leaseType,setLeaseType]=useState("");
     const [amount,setAmount]=useState("");
     const [startDate,setStartDate]=useState("");
-    const [lastDate,setLastDate]=useState("");
+    const [lastBill,setLastBill]=useState("");
     const [day,setDay]=useState("");
     const [leaseAmount,setLeaseAmount]=useState("");
     const [tentant,setTentant]=useState("");
@@ -195,7 +195,7 @@ const AddLease = () => {
             leaseType,
             amount,
             startDate,
-            lastDate,
+            lastBill,
             day,
             leaseAmount,
             tentant,
@@ -296,7 +296,7 @@ const AddLease = () => {
                                 </FormControl>
                                 <br/>
                                 <FormControl isRequired>
-                                    <Input type='datetime-local' value={lastDate} onChange={(e) => setLastDate(e.target.value)} placeholder='enter your Last Billing' />
+                                    <Input type='datetime-local' value={lastBill} onChange={(e) => setLastBill(e.target.value)} placeholder='enter your Last Billing' />
                                 </FormControl>
                                 <br />
                                 <FormControl isRequired>
