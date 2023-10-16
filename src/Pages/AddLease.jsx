@@ -17,10 +17,12 @@ const steps = [
 ]
 const AddLease = () => {
     const [property,setProperty]=useState("");
+    const [propertycode,setPropertyCode]=useState("");
     const [unit,setUnit]=useState("");
     const [leaseType,setLeaseType]=useState("");
     const [amount,setAmount]=useState("");
     const [startDate,setStartDate]=useState("");
+    const [lastDate,setLastDate]=useState("");
     const [day,setDay]=useState("");
     const [leaseAmount,setLeaseAmount]=useState("");
     const [tentant,setTentant]=useState("");
@@ -188,10 +190,12 @@ const AddLease = () => {
     const handleAddLease = async () => {
         const payload = {
             property,
+            propertycode,
             unit,
             leaseType,
             amount,
             startDate,
+            lastDate,
             day,
             leaseAmount,
             tentant,
@@ -252,6 +256,17 @@ const AddLease = () => {
                                         }
                                     </Select>   
                                 </FormControl>
+                                <br/>
+                                <FormControl isRequired>
+
+                                    <Select value={propertycode} onChange={(e) => setPropertyCode(e.target.value)} placeholder='find property code ' >
+                                        {
+                                            properties.map((item,index) => (
+                                                <option key={index} value={item.propertycode}>{item.propertycode}</option>
+                                            ))
+                                        }
+                                    </Select>
+                                </FormControl>
                                 
                                 <br />
                                 <FormControl isRequired>
@@ -278,6 +293,10 @@ const AddLease = () => {
                                 <br />
                                 <FormControl isRequired>
                                     <Input type='datetime-local' value={startDate} onChange={(e) => setStartDate(e.target.value)} placeholder='enter your start Date' />
+                                </FormControl>
+                                <br/>
+                                <FormControl isRequired>
+                                    <Input type='datetime-local' value={lastDate} onChange={(e) => setLastDate(e.target.value)} placeholder='enter your Last Billing' />
                                 </FormControl>
                                 <br />
                                 <FormControl isRequired>

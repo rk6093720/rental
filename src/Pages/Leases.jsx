@@ -19,6 +19,7 @@ const Leases = () => {
       .then(() => dispatch(getLease()))
     setColor(item._id)
   }
+  const property = useSelector((state) => state.Property.properties);
   const LandLord = useSelector((state) => state.App.landlord)
   const leases = useSelector((state) => state.Lease.leases);
   useEffect(() => {
@@ -64,7 +65,7 @@ const Leases = () => {
                 leases?.length > 0 && leases?.map((item) => {
                   return <Tr key={item._id}>
                     <Td>{item.leaseNumber}</Td>
-                    <Td>{item.LastName}</Td>
+                    <Td>propertycode</Td>
                     <Td>{item.unit}</Td>
                     <Td>{item.amount}</Td>
                     <Td>{item.startDate}</Td>
