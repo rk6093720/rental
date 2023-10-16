@@ -1,4 +1,4 @@
-import { Box, Input, Spacer } from '@chakra-ui/react'
+import { Box, Image, Input, Spacer } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { BsPersonFillAdd } from "react-icons/bs"
@@ -19,6 +19,7 @@ const Leases = () => {
       .then(() => dispatch(getLease()))
     setColor(item._id)
   }
+  const LandLord = useSelector((state) => state.App.landlord)
   const leases = useSelector((state) => state.Lease.leases);
   useEffect(() => {
     if (leases?.length === 0) {
@@ -48,21 +49,34 @@ const Leases = () => {
             <TableCaption></TableCaption>
             <Thead>
               <Tr>
-                <Th>FirstName</Th>
-                <Th>LastName</Th>
-                <Th>Email</Th>
-                <Th>PhoneNumber</Th>
-                <Th>Action</Th>
+                <Th>LeaseNumber</Th>
+                <Th>PropertyCode</Th>
+                <Th>Unit</Th>
+                <Th>Rent</Th>
+                <Th>StartDate</Th>
+                <Th>LastDate</Th>
+                <Th>Status</Th>
+                <Th>Statement</Th>
               </Tr>
             </Thead>
             <Tbody>
               {
                 leases?.length > 0 && leases?.map((item) => {
                   return <Tr key={item._id}>
-                    <Td>{item.firstName}</Td>
+                    <Td>{item.leaseNumber}</Td>
                     <Td>{item.LastName}</Td>
-                    <Td>{item.email}</Td>
-                    <Td>{item.phone}</Td>
+                    <Td>{item.unit}</Td>
+                    <Td>{item.amount}</Td>
+                    <Td>{item.startDate}</Td>
+                    <Td>lastDate</Td>
+                    <Td>Status</Td>
+                    {
+                      LandLord.map((item)=>(
+                        <Td key={item._id}>
+                          <Image src={`/images/${item.document}`} height="100px" />
+                        </Td>
+                      ))
+                      }
                     <Flex>
                       <Td>
                         <Link to={`/viewLease/${item._id}`}>

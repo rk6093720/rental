@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
-    Box, Button, FormControl, Input, Stack, Step, StepDescription, StepIcon, StepIndicator, StepNumber, StepSeparator, StepStatus, StepTitle, Stepper, Select
+    Box, Button, FormControl, Input, Stack, Step, StepDescription, StepIcon, StepIndicator, StepNumber, StepSeparator, StepStatus, StepTitle, Stepper, Select, Checkbox
 } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getLease, postLease } from '../Redux/Lease/action';
@@ -17,7 +17,6 @@ const steps = [
 ]
 const AddLease = () => {
     const [property,setProperty]=useState("");
-    const [findProperty,setFindProperty]=useState("");
     const [unit,setUnit]=useState("");
     const [leaseType,setLeaseType]=useState("");
     const [amount,setAmount]=useState("");
@@ -25,12 +24,13 @@ const AddLease = () => {
     const [day,setDay]=useState("");
     const [leaseAmount,setLeaseAmount]=useState("");
     const [tentant,setTentant]=useState("");
+    const [dayType,setDayType]=useState("")
     const [active, setActive] = useState(0);
     const dispatch = useDispatch();
-    const properties = useSelector((state) => state.Property.properties)
+    const properties = useSelector((state) => state.Property.properties);
+    const findtentant = useSelector((state) => state.Tentants.tentants)
     const [late, setLate] = useState([]);
     const [deposit,setDeposit]=useState([]);
-    const [leaseSetting,setLeaseSetting] = useState([]);
     const [payment, setPayment] = useState([]);
     const [extra, setExtra] = useState([]);
     const [utilities, setUtilities] = useState([]);
@@ -101,13 +101,13 @@ const AddLease = () => {
         const updateDeposit = [...deposit];
         updateDeposit.splice(index, 1);
         setDeposit(updateDeposit)
-     }
-  
+     }  
     const handlePaymentType = (index, value) => {
         const updatePayment = [...payment];
         updatePayment[index].paymentType = value;
         setPayment(updatePayment)
     }
+
     const handlePDescription = (index, value) => {
         const updatePayment = [...payment];
         updatePayment[index].pDescription = value;
@@ -180,11 +180,6 @@ const AddLease = () => {
         updateDeposit[index].utility=value;
         setDeposit(updateDeposit)
     }
-    const handleDayType =(index, value)=>{
-        const updateLeaseSetting=[...leaseSetting];
-        updateLeaseSetting[index].dayType = value;
-        setLeaseSetting(updateLeaseSetting)
-    }
     const handleAmount =(index, value)=>{
         const updateAmount =[...deposit];
         updateAmount[index].amount=value;
@@ -192,7 +187,15 @@ const AddLease = () => {
     }
     const handleAddLease = async () => {
         const payload = {
-            leaseSetting,
+            property,
+            unit,
+            leaseType,
+            amount,
+            startDate,
+            day,
+            leaseAmount,
+            tentant,
+            dayType,
             payment,
             extra,
             late,
@@ -213,20 +216,6 @@ const AddLease = () => {
     const handleNext = () => {
         setActive((active) => active + 1) // Go to the next step
     };
-    const handleProperty =(e)=>{
-      const Name = e.target.value;
-      setFindProperty(Name) 
-    }
-    const filteredProperties = properties.filter((item) =>
-        item.propertyname.toLowerCase().includes(findProperty.toLowerCase())
-    );
-    console.log(filteredProperties)
-    const handleUnit =(e)=>{
-     
-    }
-    const handleTentant=()=>{
-
-    }
     useEffect(()=>{
         dispatch(getProperty())
     },[dispatch])
@@ -255,19 +244,25 @@ const AddLease = () => {
                             <Box style={{ marginTop: "45px" }}>
                                 <FormControl isRequired>
                 
-                                    <Select value={property} onChange={handleProperty} placeholder='find property name ' >
+                                    <Select value={property} onChange={(e)=>setProperty(e.target.value)} placeholder='find property name ' >
                                         {
-                                            filteredProperties.map((item) => {
+                                            properties.map((item) => (
                                                 <option key={item._id} value={item.propertyname}>{item.propertyname}</option>
-                                            })
+                                            ))
                                         }
                                     </Select>   
                                 </FormControl>
                                 
                                 <br />
                                 <FormControl isRequired>
-                                    <Input type="text"
-                                        value={unit} onChange={handleUnit} placeholder='find unit' />
+                                    <Select value={unit} onChange={(e) => setUnit(e.target.value)} placeholder='find unit'>
+                                       {
+                                        properties.map((item,index)=>(
+                                            item.modals.map((subItem,subIndex)=>(
+                                               <option key={index+subIndex} value={subItem.totalRoom}>{subItem.totalRoom}</option>
+                                            ))))}
+
+                                    </Select>
                                 </FormControl>
                                 <br />
                                 <FormControl isRequired>
@@ -367,11 +362,15 @@ const AddLease = () => {
                         { active === 2 && index === active && (
                             <Box style={{ marginTop: "45px" }}>
                                 <FormControl isRequired>
-                                    <Input type="text"
-                                    value={tentant}
-                                    onChange={handleTentant}
-                                    placeholder='find tentant'
-                                    />   
+                                    <Select value={tentant}
+                                        onChange={(e)=>setTentant(e.target.value)}
+                                        placeholder='find tentant'>
+                                    {
+                                        findtentant.map((item,index)=>(
+                                            <option key={index} value={item.firstName + item.lastName}>{item.firstName + item.lastName}</option>
+                                        ))
+                                    }
+                                </Select> 
                                 </FormControl>
                                 <br/>
                                 <Button onClick={handlePrev} >Previous</Button>
@@ -549,64 +548,62 @@ const AddLease = () => {
                         )}
                         {active === 7 && index === active && (
                             <Box style={{ marginTop: "45px" }}>
-                                {leaseSetting.map((setting, index) => (
-                                    <div key={index}>
-                                        <FormControl isRequired>
-                                            <Select value={payment.dayType} onChange={(e) => handleDayType(index, e.target.value)} placeholder='payment method type'>
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                                <option value="5">5</option>
-                                                <option value="6">6</option>
-                                                <option value="7">7</option>
-                                                <option value="8">8</option>
-                                                <option value="9">9</option>
-                                                <option value="10">10</option>
-                                                <option value="11">11</option>
-                                                <option value="12">12</option>
-                                                <option value="13">13</option>
-                                                <option value="14">14</option>
-                                                <option value="15">15</option>
-                                                <option value="16">16</option>
-                                                <option value="17">17</option>
-                                                <option value="18">18</option>
-                                                <option value="19">19</option>
-                                                <option value="20">20</option>
-                                                <option value="21">21</option>
-                                                <option value="22">22</option>
-                                                <option value="23">23</option>
-                                                <option value="24">24</option>
-                                                <option value="25">25</option>
-                                                <option value="26">26</option>
-                                                <option value="27">27</option>
-                                                <option value="28">28</option>
-                                                <option value="29">29</option>
-                                                <option value="30">30</option>
-                                            </Select>
-                                        </FormControl>
-                                        <br />
-                                        <FormControl isRequired>
-                                            <Input type="text" value={payment.pDescription} onChange={(e) => handlePDescription(index, e.target.value)} placeholder='enter your payment description' />
-                                        </FormControl>
-                                        <Button onClick={() => handleDeletePayment(index)}>DeletePayment</Button>
-                                    </div>
-
-                                ))}
-                                <Button onClick={handlePayment}>AddPayment</Button>
-                                <br />
+                                <FormControl isRequired>
+                                    <Select value={dayType} onChange={(e) =>setDayType(e.target.value)} placeholder='Day month'>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                        <option value="11">11</option>
+                                        <option value="12">12</option>
+                                        <option value="13">13</option>
+                                        <option value="14">14</option>
+                                        <option value="15">15</option>
+                                        <option value="16">16</option>
+                                        <option value="17">17</option>
+                                        <option value="18">18</option>
+                                        <option value="19">19</option>
+                                        <option value="20">20</option>
+                                        <option value="21">21</option>
+                                        <option value="22">22</option>
+                                        <option value="23">23</option>
+                                        <option value="24">24</option>
+                                        <option value="25">25</option>
+                                        <option value="26">26</option>
+                                        <option value="27">27</option>
+                                        <option value="28">28</option>
+                                        <option value="29">29</option>
+                                        <option value="30">30</option>
+                                    </Select>
+                                </FormControl>
+                                <FormControl>
+                                    <Stack spacing={3} direction='column'>
+                                    <Checkbox defaultChecked>Next Period Billing (When billing, invoice period is set as next month.)</Checkbox>
+                                     <br/>
+                                    <Checkbox defaultChecked>Waive Penalty (For this lease, do not charge penalties.)</Checkbox>
+                                    <br/>
+                                    <Checkbox defaultChecked>Skip Starting Period (For this lease, do not bill the first period.)</Checkbox>
+                                    </Stack>
+                                </FormControl>
                                 <Button onClick={handlePrev}>Previous</Button>
                             </Box>
                         )}
                     </Step>
                 ))}
+                {active === steps.length - 1 && (
+                    <Button className='addPropertybutton' _hover={{ bg: "green", color: "white" }} style={{
+                        marginTop: "80%", width: "30%",
+                        margin: "auto", fontSize: "24px"
+                    }} onClick={handleAddLease}>Submit</Button>
+                )}
             </Stepper>
-            {active === steps.length - 1 && (
-                <Button className='addPropertybutton' _hover={{ bg: "green", color: "white" }} style={{
-                    marginTop: "40%", width: "30%",
-                    margin: "auto", fontSize: "24px"
-                }} onClick={handleAddLease}>Submit</Button>
-            )}
+           
         </Stack>
     );
 }
