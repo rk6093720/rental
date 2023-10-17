@@ -38,6 +38,7 @@ const EditLease = () => {
   const [payment, setPayment] = useState([]);
   const [extra, setExtra] = useState([]);
   const [utilities, setUtilities] = useState([]);
+  const [currentLease,setCurrentLease]=useState({});
   const handleDeposit = () => {
     const newDeposit = {
       utility: '',
@@ -230,19 +231,23 @@ const EditLease = () => {
   useEffect(() => {
     if (id) {
       const leaselandById = leaseland.find((item) => item._id === id);
-      leaselandById && setCurrentProperty(leaselandById);
+      leaselandById && setCurrentLease(leaselandById);
       leaselandById && setProperty(leaselandById.property);
-      leaselandById && setPropertyCode(leaselandById.propertyCode);
-      leaselandById && setPropertyType(leaselandById.propertyType);
-      leaselandById && setAddress(leaselandById.address);
-      leaselandById && setLocation(leaselandById.location);
-      leaselandById && setAgentCommission(leaselandById.agentCommission);
-      leaselandById && setAgentCommissionType(leaselandById.agentCommissionType);
-      leaselandById && setModals(leaselandById.modals);
+      leaselandById && setPropertyCode(leaselandById.propertycode);
+      leaselandById && setUnit(leaselandById.unit);
+      leaselandById && setLeaseType(leaselandById.leaseType);
+      leaselandById && setAmount(leaselandById.amount);
+      leaselandById && setStartDate(leaselandById.startDate);
+      leaselandById && setLastBill(leaselandById.lastBill);
+      leaselandById && setDay(leaselandById.day);
       leaselandById && setPayment(leaselandById.payment);
       leaselandById && setExtra(leaselandById.extra);
       leaselandById && setLate(leaselandById.late);
       leaselandById && setUtilities(leaselandById.utilities);
+      leaselandById && setDeposit(leaselandById.deposit);
+      leaselandById && setLeaseAmount(leaselandById.leaseAmount);
+      leaselandById && setTentant(leaselandById.tentant);
+      leaselandById && setDayType(leaselandById.dayType);
     }
   }, [id, property])
   return (

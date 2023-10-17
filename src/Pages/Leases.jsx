@@ -20,7 +20,6 @@ const Leases = () => {
     setColor(item._id)
   }
   const isLoading = useSelector((state) => state.Lease.leases)
-  const property = useSelector((state) => state.Property.properties);
   const LandLord = useSelector((state) => state.App.landlord)
   const leases = useSelector((state) => state.Lease.leases);
   useEffect(() => {
@@ -69,8 +68,8 @@ const Leases = () => {
                     <Td>{item.propertycode}</Td>
                     <Td>{item.unit}</Td>
                     <Td>{item.amount}</Td>
-                    <Td>{item.startDate}</Td>
-                    <Td>{item.lastBill}</Td>
+                    <Td>{item.startDate.split("T")[0]}</Td>
+                    <Td>{item.lastBill.split("T")[0]}</Td>
                     <Td>{!isLoading ? "inActive": "Active" }</Td>
                     {
                       LandLord.map((item)=>(
