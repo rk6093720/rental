@@ -19,13 +19,13 @@ const Utlility = () => {
       .then(() => dispatch(getUtility()))
     setColor(item._id)
   }
-  const land = useSelector((state) => state.App.landlord);
+  const utilitiesLand = useSelector((state) => state.Utility.utilities);
   useEffect(() => {
-    if (land?.length === 0) {
+    if (utilitiesLand?.length === 0) {
       dispatch(getUtility())
     }
-  }, [land.length, dispatch])
-  console.log(land);
+  }, [utilitiesLand.length, dispatch])
+  console.log(utilitiesLand);
   console.log(color)
   return (
     <div>
@@ -48,18 +48,19 @@ const Utlility = () => {
             <TableCaption></TableCaption>
             <Thead>
               <Tr>
-                <Th>FirstName</Th>
-                <Th>LastName</Th>
-                <Th>Email</Th>
-                <Th>PhoneNumber</Th>
+                <Th>Reading</Th>
+                <Th>Utility</Th>
+                <Th>Reading Date</Th>
+                <Th>propertyname</Th>
+                <Th>unit</Th>
                 <Th>Action</Th>
               </Tr>
             </Thead>
             <Tbody>
               {
-                land?.length > 0 && land?.map((item) => {
+                utilitiesLand?.length > 0 && utilitiesLand?.map((item) => {
                   return <Tr key={item._id}>
-                    <Td>{item.firstName}</Td>
+                    <Td>{item._id}</Td>
                     <Td>{item.LastName}</Td>
                     <Td>{item.email}</Td>
                     <Td>{item.phone}</Td>
