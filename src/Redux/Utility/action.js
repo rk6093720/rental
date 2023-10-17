@@ -7,7 +7,7 @@ const getUtility = () => async (dispatch) => {
     return await axios.get("http://localhost:8080/utility/read")
         .then((r) => {
             console.log(r, "get")
-            dispatch({ type: types.GET_UTILITY_SUCCESS, payload: r.data.utility })
+            dispatch({ type: types.GET_UTILITY_SUCCESS, payload: r.data.Utility })
         })
         .catch((e) => {
             return dispatch({ type: types.GET_UTILITY_FAILURE, payload: e })

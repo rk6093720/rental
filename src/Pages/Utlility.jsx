@@ -24,7 +24,7 @@ const Utlility = () => {
     if (utilitiesLand?.length === 0) {
       dispatch(getUtility())
     }
-  }, [utilitiesLand.length, dispatch])
+  }, [utilitiesLand?.length, dispatch])
   console.log(utilitiesLand);
   console.log(color)
   return (
@@ -60,10 +60,40 @@ const Utlility = () => {
               {
                 utilitiesLand?.length > 0 && utilitiesLand?.map((item) => {
                   return <Tr key={item._id}>
-                    <Td>{item._id}</Td>
-                    <Td>{item.LastName}</Td>
-                    <Td>{item.email}</Td>
-                    <Td>{item.phone}</Td>
+                    <Td>
+                    {
+                      utilitiesLand.map((item,index)=>(
+                        item.manual.map((secondItem,secondIndex)=>(
+                          <div key={index + secondIndex}>
+                               <div>{secondItem.reading}</div>
+                           </div>
+                        ))
+                      ))
+                    }
+                    </Td>
+                    <Td>{item.utilityname}</Td>
+                   <Td> {
+                      utilitiesLand.map((item, index) => (
+                        item.manual.map((secondItem, secondIndex) => (
+                          <div key={index + secondIndex}>
+                            <div>{secondItem.date.split("T")[0]}</div>
+                          </div>
+                        ))
+                      ))
+                    }</Td>
+                    <Td>{item.propertyname}</Td>
+                    <Td>
+                      {
+                        utilitiesLand.map((item, index) => (
+                          item.manual.map((secondItem, secondIndex) => (
+                            <div key={index + secondIndex}>
+                              <div>{secondItem.unit}</div>
+                            </div>
+                          ))
+                        ))
+                      }
+                    </Td>
+                    
                     <Flex>
                       <Td>
                         <Link to={`/viewUtility/${item._id}`}>
