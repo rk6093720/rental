@@ -4,7 +4,7 @@ import axios from "axios";
 
 const SignupAuth = (e)=>async (dispatch)=>{
   dispatch({ type: types.SIGNUP_REQUEST})
-    return await axios.post(`http://localhost:8080/admin/signup`,e)
+    return await axios.post(`https://apartment-c6n9.onrender.com/admin/signup`,e)
     .then((r)=>{
         return dispatch({type:types.SIGNUP_SUCCESS, payload:r.data.msg})
     })
@@ -15,7 +15,7 @@ const SignupAuth = (e)=>async (dispatch)=>{
 
 const  LoginAuth = (e)=> async(dispatch)=>{
     dispatch({type:types.LOGIN_REQUEST})
-    return await axios.post(`http://localhost:8080/admin/login`,e) 
+    return await axios.post(`https://apartment-c6n9.onrender.com/admin/login`,e) 
     .then((r)=>{
        console.log(r);
        return dispatch({type:types.LOGIN_SUCCESS, payload:{token:r.data.data,status:r.data.status}})
@@ -26,7 +26,7 @@ const  LoginAuth = (e)=> async(dispatch)=>{
 }
 const forgetPassword =(el)=> async(dispatch)=>{
     dispatch({type:types.FORGET_PASSWORD_REQUEST})
-    return await axios.post(`http://localhost:8080/admin/forget-password`,el)
+    return await axios.post(`https://apartment-c6n9.onrender.com/admin/forget-password`,el)
     .then((r)=>{
         return dispatch({type:types.FORGET_PASSWORD_SUCCESS, payload:r.data.msg})
     })
@@ -38,7 +38,7 @@ const forgetPassword =(el)=> async(dispatch)=>{
 
 const getResetPwd =(id,token)=>async(dispatch)=>{
 dispatch({type:types.GET_RESET_PASSWORD_REQUEST})
-    return await axios.get(`http://localhost:8080/admin/reset-password/${id}/${token}`)
+    return await axios.get(`https://apartment-c6n9.onrender.com/admin/reset-password/${id}/${token}`)
     .then((r)=>{
         console.log(r)
       return dispatch({type:types.GET_RESET_PASSWORD_SUCCESS,payload:r.data.status})
@@ -51,7 +51,7 @@ dispatch({type:types.GET_RESET_PASSWORD_REQUEST})
 }
 const postResetPwd=(id,token,password)=> async(dispatch)=>{
    dispatch({type:types.POST_RESET_PASSWORD_REQUEST})
-    return await axios.post(`http://localhost:8080/admin/reset-password/${id}/${token}`,{
+    return await axios.post(`https://apartment-c6n9.onrender.com/admin/reset-password/${id}/${token}`,{
         password
     })
     .then((r)=>{

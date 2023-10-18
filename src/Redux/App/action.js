@@ -4,7 +4,7 @@ import axios from "axios";
 
 const getLandlord = ()=> async(dispatch)=>{
   dispatch({type:types.GET_LANDLORD_REQUEST})
-    return await axios.get("http://localhost:8080/landlord/read")
+    return await axios.get("https://apartment-c6n9.onrender.com/landlord/read")
     .then((r)=>{
         console.log(r,"get")
      dispatch({type:types.GET_LANDLORD_SUCCESS, payload:r.data.Landlords})
@@ -16,7 +16,7 @@ const getLandlord = ()=> async(dispatch)=>{
 const postLandlord = (payload)=>async(dispatch)=>{
     dispatch({type:types.POST_LANDLORD_REQUEST})
     console.log(payload)  
-    return await axios.post(`http://localhost:8080/landlord/create`,payload,{
+    return await axios.post(`https://apartment-c6n9.onrender.com/landlord/create`,payload,{
         headers: { "Content-Type": "multipart/form-data" },
     })
     .then((r)=>{
@@ -30,7 +30,7 @@ const postLandlord = (payload)=>async(dispatch)=>{
 
 const editLandLord = (id,payload) =>async(dispatch)=>{
     dispatch({type:types.EDIT_LANDLORD_REQUEST});
-    return await axios.put(`http://localhost:8080/landlord/update/${id}`,payload)
+    return await axios.put(`https://apartment-c6n9.onrender.com/landlord/update/${id}`,payload)
     .then((r)=>{
         console.log(r);
          dispatch({ type: types.EDIT_LANDLORD_SUCCESS, payload: r.data.editLandlord })
@@ -42,7 +42,7 @@ const editLandLord = (id,payload) =>async(dispatch)=>{
 
 const deleteLandLord = (id) => async(dispatch)=>{
       dispatch({type:types.DELETE_LANDLORD_REQUEST});
-    return await axios.delete(`http://localhost:8080/landlord/remove/${id}`)
+    return await axios.delete(`https://apartment-c6n9.onrender.com/landlord/remove/${id}`)
     .then((r)=>{
         console.log(r);
          dispatch({type:types.DELETE_LANDLORD_SUCCESS,payload:id})

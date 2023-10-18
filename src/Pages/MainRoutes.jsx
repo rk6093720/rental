@@ -30,6 +30,7 @@ import EditLease from './EditLease';
 import AddUtility from './AddUtility';
 import ViewUtility from './ViewUtility';
 import EditUtility from './EditUtility';
+import AddPayment from './AddPayment';
 const MainRoutes = () => {
     return (
         <div>
@@ -51,6 +52,7 @@ const MainRoutes = () => {
                 <Route path='/dashboard' element={<Dashboard/>}/>
                 <Route path='/AddLandLord' element={<AddLandlord/>}/>
                 <Route path='/AddProperty' element={<AddProperty/>}/>
+                <Route path='/AddPayment' element={<AddPayment/>}/>
                 <Route path='/AddTentants' element={<AddTentants/>}/>
                 <Route path='/AddLease' element={<AddLease/>}/>
                 <Route path='/AddUtility' element={<AddUtility/>}/>
