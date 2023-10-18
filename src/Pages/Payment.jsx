@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { BsPersonFillAdd } from "react-icons/bs"
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteLandLord, getLandlord } from '../Redux/App/action';
 import { ChevronDownIcon, DeleteIcon, EditIcon } from '@chakra-ui/icons';
 import { Button, Flex, Table, TableCaption, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 import { deletePayment, getPayment } from '../Redux/Payment/action';
