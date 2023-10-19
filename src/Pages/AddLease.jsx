@@ -16,6 +16,7 @@ const steps = [
     { title:"Lease Setting", description:"Lease Setting"},   
 ]
 const AddLease = () => {
+    const [image,setImage]=useState("");
     const [property,setProperty]=useState("");
     const [propertycode,setPropertyCode]=useState("");
     const [unit,setUnit]=useState("");
@@ -43,6 +44,8 @@ const AddLease = () => {
         }
         setDeposit([...deposit, newDeposit])
     }
+    const land = useSelector((state) => state.App.landlord);
+
     const handlePayment = () => {
         const newPayment = {
             paymentType: "",
@@ -246,8 +249,18 @@ const AddLease = () => {
                         {/* Add input fields and buttons for each step */}
                         {active === 0 && index === active && (
                             <Box style={{ marginTop: "45px" }}>
+                                <FormControl>
+                                    <Select value={image} onChange={(e)=>setImage(e.target.value)} placeholder="image">
+                                        {
+                                            land.map((item,index) => (
+                                                <option key={index} value={item.document}>
+                                                    {item.document} 
+                                                </option>
+                                            ))
+                                        }
+                                    </Select>
+                                </FormControl>
                                 <FormControl isRequired>
-                
                                     <Select value={property} onChange={(e)=>setProperty(e.target.value)} placeholder='find property name ' >
                                         {
                                             properties.map((item) => (
