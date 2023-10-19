@@ -1,7 +1,6 @@
 import * as types from "./actionTypes";
 import axios from "axios";
 
-
 const SignupAuth = (e)=>async (dispatch)=>{
   dispatch({ type: types.SIGNUP_REQUEST})
     return await axios.post(`https://apartment-c6n9.onrender.com/admin/signup`,e)
