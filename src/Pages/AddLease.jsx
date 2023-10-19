@@ -267,7 +267,6 @@ const AddLease = () => {
                                         }
                                     </Select>
                                 </FormControl>
-                                
                                 <br />
                                 <FormControl isRequired>
                                     <Select value={unit} onChange={(e) => setUnit(e.target.value)} placeholder='find unit'>

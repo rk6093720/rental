@@ -73,7 +73,7 @@ const Payment = () => {
                     <Td>Status</Td>
                     <Flex>
                       <Td>
-                        <Link to={`/viewLandlord/${item._id}`}>
+                        <Link to={`/viewPayment/${item._id}`}>
                           <ChevronDownIcon />
                         </Link>
                       </Td>

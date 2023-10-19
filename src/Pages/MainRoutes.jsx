@@ -31,6 +31,7 @@ import AddUtility from './AddUtility';
 import ViewUtility from './ViewUtility';
 import EditUtility from './EditUtility';
 import AddPayment from './AddPayment';
+import ViewPayment from './ViewPayment';
 const MainRoutes = () => {
     return (
         <div>
@@ -58,6 +59,7 @@ const MainRoutes = () => {
                 <Route path='/AddUtility' element={<AddUtility/>}/>
                 <Route path='/viewUtility/:id' element={<ViewUtility/>}/>
                 <Route path='/viewLease/:id' element={<ViewLease/>}/>
+                <Route path='/viewPayment/:id' element={<ViewPayment/>}/>
                 <Route path='/viewTentants/:id' element={<ViewTentant/>}/>
                 <Route path='/viewLandlord/:id' element={<ViewLandLord/>}/>
                 <Route path='/viewProperty/:id' element={<ViewProperties/>}/> 

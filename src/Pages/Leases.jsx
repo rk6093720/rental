@@ -72,8 +72,8 @@ const Leases = () => {
                     <Td>{item.lastBill.split("T")[0]}</Td>
                     <Td>{!isLoading ? "inActive": "Active" }</Td>
                     {
-                      LandLord.map((item)=>(
-                        <Td key={item._id}>
+                      LandLord.map((item,index)=>(
+                        <Td key={index}>
                           <Image src={`/images/${item.document}`} height="100px" />
                         </Td>
                       ))

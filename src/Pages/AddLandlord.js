@@ -49,21 +49,8 @@ const AddLandlord = () => {
    await dispatch(postLandlord(formData))
      .then(()=> dispatch(getLandlord()))
     .then((r)=>{
-      console.log(r);
-      if (r.type === "POST_LANDLORD_SUCCESS"){
-        toast({
-          title: 'new Landlord added successfully',
-          duration: 5000,
-          position: 'top',
-          isClosable: true,
-          colorScheme: 'green',
-          status: 'success',
-        })
-        window.location.reload();
-        navigate("/landlords")
-        
-      }
-    })
+        // navigate("/landlords")
+      })
   }
   return (
     <div>
