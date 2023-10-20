@@ -32,6 +32,9 @@ import ViewUtility from './ViewUtility';
 import EditUtility from './EditUtility';
 import AddPayment from './AddPayment';
 import ViewPayment from './ViewPayment';
+import AddVacateNotice from './AddVacateNotice';
+import ViewVacateNotice from './ViewVacateNotice';
+import EditVacateNotice from './EditVacateNotice';
 const MainRoutes = () => {
     return (
         <div>
@@ -57,17 +60,20 @@ const MainRoutes = () => {
                 <Route path='/AddTentants' element={<AddTentants/>}/>
                 <Route path='/AddLease' element={<AddLease/>}/>
                 <Route path='/AddUtility' element={<AddUtility/>}/>
+                <Route path='/AddVacateNotice' element={<AddVacateNotice/>}/>
                 <Route path='/viewUtility/:id' element={<ViewUtility/>}/>
                 <Route path='/viewLease/:id' element={<ViewLease/>}/>
                 <Route path='/viewPayment/:id' element={<ViewPayment/>}/>
                 <Route path='/viewTentants/:id' element={<ViewTentant/>}/>
                 <Route path='/viewLandlord/:id' element={<ViewLandLord/>}/>
-                <Route path='/viewProperty/:id' element={<ViewProperties/>}/> 
+                <Route path='/viewProperty/:id' element={<ViewProperties/>}/>
+                <Route path='/viewVacateNotice/:id' element={<ViewVacateNotice/>}/> 
                 <Route path='/tentant/:id/edit' element={<EditTentant/>}/>
                 <Route path='/landlord/:id/edit' element={<EditLandLord/>}/>  
                 <Route path='/property/:id/edit' element={<EditProperty/>}/> 
                 <Route path='/lease/:id/edit' element={<EditLease/>}/>
-                <Route path='/utility/:id/edit' element={<EditUtility/>}/>    
+                <Route path='/utility/:id/edit' element={<EditUtility/>}/>
+                <Route path='/vacatenotice/:id/edit' element={<EditVacateNotice/>}/>    
             </Routes>
         </div>
     )

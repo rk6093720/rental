@@ -30,7 +30,7 @@ const forgetPassword =(el)=> async(dispatch)=>{
         return dispatch({type:types.FORGET_PASSWORD_SUCCESS, payload:r.data.msg})
     })
     .catch((e)=>{
-        return dispatch({type:types.FORGET_PASSWORD_FAILURE, payload:e.data.msg})
+        return dispatch({type:types.FORGET_PASSWORD_FAILURE, payload:e})
     })
 
 }

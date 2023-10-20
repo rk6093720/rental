@@ -7,6 +7,7 @@ import {reducer as Tentants} from "../Redux/Tentants/reducer";
 import {reducer as Lease} from "../Redux/Lease/reducer";
 import {reducer as Utility} from "../Redux/Utility/reducer";
 import {reducer as Payment} from "../Redux/Payment/reducer";
-const rootReducer = combineReducers({Payment,Utility,Lease,Tentants,Property,App,Auth})
+import {reducer as VacateNotice} from "../Redux/VacateNotice/reducer";
+const rootReducer = combineReducers({VacateNotice,Payment,Utility,Lease,Tentants,Property,App,Auth})
 const store = legacy_createStore(rootReducer,applyMiddleware(thunk));
 export { store }
