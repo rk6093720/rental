@@ -60,10 +60,12 @@ const VacateNotices = () => {
                 {
                   vacateland?.length > 0 && vacateland?.map((item) => {
                     return <Tr key={item._id}>
-                      <Td>{item.firstName}</Td>
-                      <Td>{item.LastName}</Td>
-                      <Td>{item.email}</Td>
-                      <Td>{item.phone}</Td>
+                      <Td>{item.vacateDate.split("T")[0]}</Td>
+                      <Td>{item.vacateTentant}</Td>
+                      <Td>{item.vacateLease}</Td>
+                      <Td>{item.vacateProperty}</Td>
+                      <Td>{item.vacateUnit}</Td>       
+                      
                       <Flex>
                         <Td>
                           <Link to={`/viewVacateNotice/${item._id}`}>

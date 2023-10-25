@@ -7,7 +7,7 @@ const getVacateNotice = () => async (dispatch) => {
     return await axios.get("https://apartment-c6n9.onrender.com/vacatenotices/read")
         .then((r) => {
             console.log(r, "get")
-            dispatch({ type: types.GET_VACATENOTICE_SUCCESS, payload: r.data.VACATENOTICEs })
+            dispatch({ type: types.GET_VACATENOTICE_SUCCESS, payload: r.data.vacate })
         })
         .catch((e) => {
             return dispatch({ type: types.GET_VACATENOTICE_FAILURE, payload: e })
@@ -16,12 +16,10 @@ const getVacateNotice = () => async (dispatch) => {
 const postVacateNotice = (payload) => async (dispatch) => {
     dispatch({ type: types.POST_VACATENOTICE_REQUEST })
     console.log(payload)
-    return await axios.post(`https://apartment-c6n9.onrender.com/vacatenotices/create`, payload, {
-        headers: { "Content-Type": "multipart/form-data" },
-    })
+    return await axios.post(`https://apartment-c6n9.onrender.com/vacatenotices/create`, payload)
         .then((r) => {
             console.log(r)
-            dispatch({ type: types.POST_VACATENOTICE_SUCCESS, payload: r.data.VACATENOTICE })
+            dispatch({ type: types.POST_VACATENOTICE_SUCCESS, payload: r.data.AddVacate })
         })
         .catch((e) => {
             dispatch({ type: types.POST_VACATENOTICE_FAILURE, payload: e })
@@ -33,7 +31,7 @@ const editVacateNotice = (id, payload) => async (dispatch) => {
     return await axios.put(`https://apartment-c6n9.onrender.com/vacatenotices/update/${id}`, payload)
         .then((r) => {
             console.log(r);
-            dispatch({ type: types.EDIT_VACATENOTICE_SUCCESS, payload: r.data.editVACATENOTICE })
+            dispatch({ type: types.EDIT_VACATENOTICE_SUCCESS, payload: r.data.editVacate })
         })
         .catch((e) => {
             dispatch({ type: types.EDIT_VACATENOTICE_FAILURE, payload: e })

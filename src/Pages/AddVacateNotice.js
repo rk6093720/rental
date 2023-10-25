@@ -1,6 +1,8 @@
 import { Box, Button, FormControl, Heading, Input, Select, Stack } from '@chakra-ui/react'
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { getVacateNotice, postVacateNotice } from '../Redux/VacateNotice/action';
+import { useNavigate } from 'react-router-dom';
 
 const AddVacateNotice = () => {
   const [vacateDate,setVacateDate]=useState("");
@@ -8,11 +10,28 @@ const AddVacateNotice = () => {
   const [vacateLease, setVacateLease] = useState("");
   const [vacateProperty, setVacateProperty] = useState("");
   const [vacateUnit,setVacateUnit]=useState("");
+  const [reason,setReason]=useState("");
+  const dispatch = useDispatch();
+  const navigate= useNavigate();
   const tentant = useSelector((state) => state.Tentants.tentants);
   const leases = useSelector((state) => state.Lease.leases);
   const property = useSelector((state) => state.Property.properties);
-  const handleAddVacantNotice=()=>{
-    
+  const handleAddVacantNotice= async()=>{
+    const payload ={
+      vacateDate,
+      vacateLease,
+      vacateProperty,
+      vacateTentant,
+      vacateUnit,
+      reason
+    }
+    try {
+      await dispatch(postVacateNotice(payload));
+      await dispatch(getVacateNotice());
+      navigate("/vacateNotices")
+    } catch (error) {
+      console.log(error);
+    }
   }
   return (
     <div>
@@ -62,6 +81,10 @@ const AddVacateNotice = () => {
             ))
           }
         </Select>
+      </FormControl>
+      <br/>
+      <FormControl>
+        <Input type='text' value={reason} onChange={(e)=>setReason(e.target.value)} placeholder='VacateReason'/>
       </FormControl>
       <br/>
       <Box style={{ width:"50%", height:"50px",margin:"auto"}}>
