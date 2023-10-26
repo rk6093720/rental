@@ -26,31 +26,39 @@ const AddLandlord = () => {
   const toast = useToast();
   const handleChangeFile = (e) =>{
     setImage(e.target.files[0])
-    // setDocument(image)
   }
   const handleForm = async (e) =>{
      e.preventDefault();
-    const formData = new FormData();
-    formData.append("document", image); // Use "document" as the key
-    formData.append("firstName", firstName);
-    formData.append("LastName", LastName);
-    formData.append("email", email);
-    formData.append("phone", phone);
-    formData.append("city", city);
-    formData.append("country", country);
-    formData.append("state", state);
-    formData.append("postalCode", postalCode);
-    formData.append("address", address);
-    formData.append("adharCard", adharCard);
-    formData.append("countApartment", countApartment);
-    formData.append("propertyName", propertyName);
-    formData.append("propertyCode", propertyCode);
-    formData.append("registerDate", registerDate)
-   await dispatch(postLandlord(formData))
-     .then(()=> dispatch(getLandlord()))
-    .then((r)=>{
-        // navigate("/landlords")
-      })
+     try {
+       let filename = null
+       if (image) {
+         const formData = new FormData();
+         filename = crypto.randomUUID() + image.name;
+         formData.append('filename', filename)
+         formData.append("document", image); // Use "document" as the key
+         formData.append("firstName", firstName);
+         formData.append("LastName", LastName);
+         formData.append("email", email);
+         formData.append("phone", phone);
+         formData.append("city", city);
+         formData.append("country", country);
+         formData.append("state", state);
+         formData.append("postalCode", postalCode);
+         formData.append("address", address);
+         formData.append("adharCard", adharCard);
+         formData.append("countApartment", countApartment);
+         formData.append("propertyName", propertyName);
+         formData.append("propertyCode", propertyCode);
+         formData.append("registerDate", registerDate)
+         await dispatch(postLandlord(formData))
+           .then(() => dispatch(getLandlord()))
+           .then((r) => {
+             // navigate("/landlords")
+           })
+       }
+     } catch (error) {
+      console.log(error);
+     }
   }
   return (
     <div>
@@ -190,8 +198,8 @@ const AddLandlord = () => {
             <InputGroup className='inputFordocument' style={{ width: "100%", height: "5"}}>
               <Input placeholder='enter your Document'
                 type="file"
-                accept="image/*" 
-                name="document"
+                id="image" 
+                name='document'
                 _hover={{ bg: "green", color: "white" }}
                 style={{ fontSize: "24px" }}
                 onChange={handleChangeFile} />

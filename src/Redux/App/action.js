@@ -16,9 +16,7 @@ const getLandlord = ()=> async(dispatch)=>{
 const postLandlord = (payload)=>async(dispatch)=>{
     dispatch({type:types.POST_LANDLORD_REQUEST})
     console.log(payload)  
-    return await axios.post(`https://apartment-c6n9.onrender.com/landlord/create`,payload,{
-        headers: { "Content-Type": "multipart/form-data" },
-    })
+    return await axios.post(`https://apartment-c6n9.onrender.com/landlord/create`,payload)
     .then((r)=>{
         console.log(r)
      dispatch({ type: types.POST_LANDLORD_SUCCESS, payload: r.data.Landlord })
