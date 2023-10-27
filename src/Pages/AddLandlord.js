@@ -25,17 +25,18 @@ const AddLandlord = () => {
   const navigate = useNavigate();
   const toast = useToast();
   const handleChangeFile = (e) =>{
+    console.log(e.target.files[0]);
     setImage(e.target.files[0])
   }
   const handleForm = async (e) =>{
      e.preventDefault();
      try {
-       let filename = null
+      //  let filename = null
        if (image) {
          const formData = new FormData();
-         filename = crypto.randomUUID() + image.name;
-         formData.append('filename', filename)
-         formData.append("document", image); // Use "document" as the key
+        //  filename = crypto.randomUUID() + image.name;
+        //  formData.append('filename', filename)
+         formData.append("photo", image); // Use "document" as the key
          formData.append("firstName", firstName);
          formData.append("LastName", LastName);
          formData.append("email", email);
@@ -196,10 +197,10 @@ const AddLandlord = () => {
           <FormControl >
             <FormLabel>Document</FormLabel>
             <InputGroup className='inputFordocument' style={{ width: "100%", height: "5"}}>
-              <Input placeholder='enter your Document'
+              <Input placeholder="Select an image"
                 type="file"
-                id="image" 
-                name='document'
+                id="image"
+                name="photo"
                 _hover={{ bg: "green", color: "white" }}
                 style={{ fontSize: "24px" }}
                 onChange={handleChangeFile} />

@@ -4,7 +4,7 @@ import axios from "axios";
 
 const getTentants = () => async (dispatch) => {
     dispatch({ type: types.GET_TENTANTS_REQUEST })
-    return await axios.get("https://apartment-c6n9.onrender.com/tentants/read")
+    return await axios.get("https://repulsive-ruby-snail.cyclic.app/tentants/read")
         .then((r) => {
             console.log(r, "get")
             dispatch({ type: types.GET_TENTANTS_SUCCESS, payload: r.data.Tentant })
@@ -16,7 +16,7 @@ const getTentants = () => async (dispatch) => {
 const postTentants = (payload) => async (dispatch) => {
     dispatch({ type: types.POST_TENTANTS_REQUEST })
     console.log(payload)
-    return await axios.post(`https://apartment-c6n9.onrender.com/tentants/create`, payload)
+    return await axios.post(`https://repulsive-ruby-snail.cyclic.app/tentants/create`, payload)
         .then((r) => {
             console.log(r)
             dispatch({ type: types.POST_TENTANTS_SUCCESS, payload: r.data.AddTentant })
@@ -28,7 +28,7 @@ const postTentants = (payload) => async (dispatch) => {
 
 const editTentants = (id, payload) => async (dispatch) => {
     dispatch({ type: types.EDIT_TENTANTS_REQUEST });
-    return await axios.put(`https://apartment-c6n9.onrender.com/tentants/update/${id}`, payload)
+    return await axios.put(`https://repulsive-ruby-snail.cyclic.app/tentants/update/${id}`, payload)
         .then((r) => {
             console.log(r);
             dispatch({ type: types.EDIT_TENTANTS_SUCCESS, payload: r.data.editTentants })
@@ -40,7 +40,7 @@ const editTentants = (id, payload) => async (dispatch) => {
 
 const deleteTentants = (id) => async (dispatch) => {
     dispatch({ type: types.DELETE_TENTANTS_REQUEST });
-    return await axios.delete(`https://apartment-c6n9.onrender.com/tentants/remove/${id}`)
+    return await axios.delete(`https://repulsive-ruby-snail.cyclic.app/tentants/remove/${id}`)
         .then((r) => {
             console.log(r);
             dispatch({ type: types.DELETE_TENTANTS_SUCCESS, payload: id })

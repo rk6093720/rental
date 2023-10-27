@@ -48,11 +48,15 @@ const Invoices = () => {
             <TableCaption></TableCaption>
             <Thead>
               <Tr>
-                <Th>FirstName</Th>
-                <Th>LastName</Th>
-                <Th>Email</Th>
-                <Th>PhoneNumber</Th>
-                <Th>Action</Th>
+                <Th>Invoice Number</Th>
+                <Th>Invoice Date</Th>
+                <Th>Lease</Th>
+                <Th>Period</Th>
+                <Th>Amount</Th>
+                <Th>Paid</Th>
+                <Th>Balance</Th>
+                <Th>DueOn</Th>
+                <Th>Status</Th>
               </Tr>
             </Thead>
             <Tbody>
