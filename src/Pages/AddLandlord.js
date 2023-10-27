@@ -36,7 +36,7 @@ const AddLandlord = () => {
          const formData = new FormData();
         //  filename = crypto.randomUUID() + image.name;
         //  formData.append('filename', filename)
-         formData.append("photo", image); // Use "document" as the key
+         formData.append("document", image); // Use "document" as the key
          formData.append("firstName", firstName);
          formData.append("LastName", LastName);
          formData.append("email", email);
@@ -200,7 +200,8 @@ const AddLandlord = () => {
               <Input placeholder="Select an image"
                 type="file"
                 id="image"
-                name="photo"
+                accept='image/*'
+                name="document"
                 _hover={{ bg: "green", color: "white" }}
                 style={{ fontSize: "24px" }}
                 onChange={handleChangeFile} />

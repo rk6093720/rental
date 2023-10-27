@@ -4,7 +4,7 @@ import axios from "axios";
 
 const getLease = () => async (dispatch) => {
     dispatch({ type: types.GET_LEASE_REQUEST })
-    return await axios.get("https://repulsive-ruby-snail.cyclic.app/leases/read")
+    return await axios.get("http://localhost:8080/leases/read")
         .then((r) => {
             console.log(r, "get")
             dispatch({ type: types.GET_LEASE_SUCCESS, payload: r.data.Lease })
@@ -16,7 +16,7 @@ const getLease = () => async (dispatch) => {
 const postLease = (payload) => async (dispatch) => {
     dispatch({ type: types.POST_LEASE_REQUEST })
     console.log(payload)
-    return await axios.post(`https://repulsive-ruby-snail.cyclic.app/leases/create`, payload)
+    return await axios.post(`http://localhost:8080/leases/create`, payload)
         .then((r) => {
             console.log(r)
             dispatch({ type: types.POST_LEASE_SUCCESS, payload: r.data.AddLease })
@@ -28,7 +28,7 @@ const postLease = (payload) => async (dispatch) => {
 
 const editLease = (id, payload) => async (dispatch) => {
     dispatch({ type: types.EDIT_LEASE_REQUEST });
-    return await axios.put(`https://repulsive-ruby-snail.cyclic.app/leases/update/${id}`, payload)
+    return await axios.put(`http://localhost:8080/leases/update/${id}`, payload)
         .then((r) => {
             console.log(r);
             dispatch({ type: types.EDIT_LEASE_SUCCESS, payload: r.data.editLease })
@@ -40,7 +40,7 @@ const editLease = (id, payload) => async (dispatch) => {
 
 const deleteLease = (id) => async (dispatch) => {
     dispatch({ type: types.DELETE_LEASE_REQUEST });
-    return await axios.delete(`https://repulsive-ruby-snail.cyclic.app/leases/remove/${id}`)
+    return await axios.delete(`http://localhost:8080/leases/remove/${id}`)
         .then((r) => {
             console.log(r);
             dispatch({ type: types.DELETE_LEASE_SUCCESS, payload: id })

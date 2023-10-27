@@ -4,7 +4,7 @@ import axios from "axios";
 
 const getPayment = () => async (dispatch) => {
     dispatch({ type: types.GET_PAYMENT_REQUEST })
-    return await axios.get("https://repulsive-ruby-snail.cyclic.app/payment/read")
+    return await axios.get("http://localhost:8080/payment/read")
         .then((r) => {
             console.log(r, "get")
             dispatch({ type: types.GET_PAYMENT_SUCCESS, payload: r.data.Payment })
@@ -16,7 +16,7 @@ const getPayment = () => async (dispatch) => {
 const postPayment = (payload) => async (dispatch) => {
     dispatch({ type: types.POST_PAYMENT_REQUEST })
     console.log(payload)
-    return await axios.post(`https://repulsive-ruby-snail.cyclic.app/payment/create`, payload)
+    return await axios.post(`http://localhost:8080/payment/create`, payload)
         .then((r) => {
             console.log(r)
             dispatch({ type: types.POST_PAYMENT_SUCCESS, payload: r.data.AddPayment })
@@ -28,7 +28,7 @@ const postPayment = (payload) => async (dispatch) => {
 
 const editPayment = (id, payload) => async (dispatch) => {
     dispatch({ type: types.EDIT_PAYMENT_REQUEST });
-    return await axios.put(`https://repulsive-ruby-snail.cyclic.app/payment/update/${id}`, payload)
+    return await axios.put(`http://localhost:8080/payment/update/${id}`, payload)
         .then((r) => {
             console.log(r);
             dispatch({ type: types.EDIT_PAYMENT_SUCCESS, payload: r.data.editPayment })
@@ -40,7 +40,7 @@ const editPayment = (id, payload) => async (dispatch) => {
 
 const deletePayment = (id) => async (dispatch) => {
     dispatch({ type: types.DELETE_PAYMENT_REQUEST });
-    return await axios.delete(`https://repulsive-ruby-snail.cyclic.app/payment/remove/${id}`)
+    return await axios.delete(`http://localhost:8080/payment/remove/${id}`)
         .then((r) => {
             console.log(r);
             dispatch({ type: types.DELETE_PAYMENT_SUCCESS, payload: id })
