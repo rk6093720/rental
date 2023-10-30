@@ -7,6 +7,7 @@ import { ChevronDownIcon, DeleteIcon, EditIcon } from '@chakra-ui/icons';
 import { Button, Flex, Table, TableCaption, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 import { deleteLease, getLease } from '../Redux/Lease/action';
 const Leases = () => {
+  const base = "http://localhost:8080/";
   const dispatch = useDispatch();
   const [color, setColor] = useState(null);
   const [landlordFilter, setLandlordFilter] = useState("");
@@ -74,7 +75,7 @@ const Leases = () => {
                     {
                       LandLord.map((item,index)=>(
                         <Td key={index}>
-                          <Image src={`/images/${item.document}`} height="100px" />
+                          <Image src={base + `${item.document}`} height="100px" />
                         </Td>
                       ))
                       }

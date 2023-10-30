@@ -11,6 +11,8 @@ const System = () => {
             <br/>
         <Input placeholder='phone number' />
         <br />
+        <Input placeholder='upload file'/>
+        <br/>
         <Input placeholder='Default Currency' />
         <br />
         <Input placeholder=' Theme Color' />
@@ -27,11 +29,11 @@ const System = () => {
         <br />
         <Input placeholder='Date Format' />
         <br />
-        <Input placeholder='seperator amounting thousands' />
+        <Input placeholder='amount thousands separator' />
         <br />
-        <Input placeholder='seperateur montant  decimal' />
+        <Input placeholder='Amount decimal separator' />
         <br />
-        <Input placeholder='Language' />
+        <Input placeholder='Amount Decimal' />
         <br />
         <Button>update parameter</Button> 
         <br />

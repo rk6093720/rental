@@ -25,7 +25,7 @@ const AddLandlord = () => {
   const navigate = useNavigate();
   const toast = useToast();
   const handleChangeFile = (e) =>{
-    console.log(e.target.files[0]);
+    console.log(e.target.files[0],"emage");
     setImage(e.target.files[0])
   }
   const handleForm = async (e) =>{
@@ -61,6 +61,7 @@ const AddLandlord = () => {
       console.log(error);
      }
   }
+  console.log(image)
   return (
     <div>
          <Box style={{width:"50%",height:"100vh",margin:"auto",marginTop:"15px"}}>

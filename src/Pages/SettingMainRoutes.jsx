@@ -10,7 +10,7 @@ import UsersRole from '../Component/UsersRole';
 const SettingMainRoutes = () => {
   return (
     <Routes>
-        <Route path='/setting' element={<System/>}/>
+        <Route path='/setting/' element={<System/>}/>
         <Route path='/setting/property' element={<Property/>}/>
        <Route path='/setting/payments' element={<Payments/>}/>
       <Route path='/setting/email' element={<Notification/>}/>

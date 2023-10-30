@@ -8,7 +8,7 @@ const Setting = () => {
       <Flex className='box' style={{ border:"1px solid grey", width: '100%', height: "100vh" }}>
         <Box className='sidebarBox' style={{ width: "20%" }}>
           <Box style={{  width: "100%", height:"50px" , fontSize:"24px", marginTop:"15px"}}>
-              <Link to='/setting'>
+              <Link to='/setting/'>
                 System
               </Link>
             </Box>

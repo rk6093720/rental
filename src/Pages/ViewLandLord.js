@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom'
 import { getLandlord } from '../Redux/App/action';
 const ViewLandLord = () => {
+    const base = "http://localhost:8080/";
     const {id} = useParams();
     const dispatch = useDispatch();
     const landlord = useSelector((state)=> state.App.landlord);
@@ -82,7 +83,7 @@ const ViewLandLord = () => {
                               <Tbody>
                                   <Tr>
                                       <Td>{currentLandLord.registerDate}</Td>
-                                      <Td>  <Image src={`/images/${currentLandLord.document}`} height="100px"/>
+                                      <Td>  <Image src={ base + `${currentLandLord.document}`} height="100px"/>
                                         </Td>
                                         
                                   </Tr>
