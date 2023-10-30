@@ -82,7 +82,7 @@ const ViewLandLord = () => {
                               <Tbody>
                                   <Tr>
                                       <Td>{currentLandLord.registerDate}</Td>
-                                      <Td>  <Image src={`/ImageFolder/${currentLandLord.document}`} height="100px"/>
+                                      <Td>  <Image src={`/images/${currentLandLord.document}`} height="100px"/>
                                         </Td>
                                         
                                   </Tr>

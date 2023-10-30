@@ -1,4 +1,4 @@
-import { Box, Input } from '@chakra-ui/react'
+import { Box, Button, Input } from '@chakra-ui/react'
 import React from 'react'
 
 const System = () => {
@@ -33,7 +33,7 @@ const System = () => {
         <br />
         <Input placeholder='Language' />
         <br />
-        <Input placeholder='Language' />
+        <Button>update parameter</Button> 
         <br />
          </Box>
     </div>
