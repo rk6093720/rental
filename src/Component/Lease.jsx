@@ -1,4 +1,4 @@
-import { Input, Select, Tab, TabList, TabPanel, TabPanels, Table, TableCaption, TableContainer, Tabs, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react'
+import { Button, Checkbox, Input, Select, Tab, TabList, TabPanel, TabPanels, Table, TableCaption, TableContainer, Tabs, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react'
 import React from 'react'
 
 const Lease= () => {
@@ -55,7 +55,15 @@ const Lease= () => {
               <option value="29">29</option>
               <option value="30">30</option>
               </Select>
-              
+              <br/>
+              <Checkbox>
+              Show Payment Methods On Invoice,Next Period Billing
+              When billing, invoice period is set as next month.,Skip Starting Period
+              For new lease, do not bill the first period.
+
+              </Checkbox>
+              <br/>
+              <Button>Update Setting</Button>
           </TabPanel>
           <TabPanel>
             <TableContainer>
