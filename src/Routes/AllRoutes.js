@@ -4,8 +4,7 @@ import { useSelector } from 'react-redux';
 import Login from '../Pages/Login';
 import RoutesApp from '../MainAppRoutes/RoutesApp';
 import ForgetPassword from '../Pages/ForgetPassword';
-import ResetPassword from '../Pages/ResetPassword';
-
+import ResetPassword from "../Pages/ResetPassword";
 const AllRoutes = () => {
     const isAuth = useSelector((state) => state.Auth.isAuth);
 
@@ -28,8 +27,9 @@ const AllRoutes = () => {
             />
 
             {/* Protected routes for authenticated users */}
-            {isAuth ? (
+            {isAuth ? ( 
                 <Route path="/*" element={<RoutesApp />} />
+            
             ) : null}
         </Routes>
     );
