@@ -13,6 +13,28 @@ const System = () => {
         <br />
         <Input placeholder='Default Currency' />
         <br />
+        <Input placeholder=' Theme Color' />
+        <br /> 
+        <Input placeholder='Language' />
+        <br /> 
+        <Input placeholder='Physical address' />
+        <br />
+        <Input placeholder='Postal Address' />
+        <br />
+        <Input placeholder='Website link' />
+        <br />
+        <Input placeholder='postal code' />
+        <br />
+        <Input placeholder='Date Format' />
+        <br />
+        <Input placeholder='seperator amounting thousands' />
+        <br />
+        <Input placeholder='seperateur montant  decimal' />
+        <br />
+        <Input placeholder='Language' />
+        <br />
+        <Input placeholder='Language' />
+        <br />
          </Box>
     </div>
   )
