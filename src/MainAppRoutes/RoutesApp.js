@@ -11,12 +11,12 @@ const RoutesApp = () => {
   const isSettingRoute = location.pathname.startsWith("/setting");
   return (
     <div>
-              <Flex className='box' style={{ width: '100%', height: "100vh" }}>
+              <Flex className='box' style={{ width: '100%', height: "740px",overflowX:"hidden",overflowY:"scroll" }}>
                   <Box className='sidebarBox' style={{ width: "20%" }}>
                       <Sidebar />
                   </Box>
                   <Spacer className='space' style={{ width: "1%" }} />
-                  <Box className='NavbarBox' style={{ width: "79%" }}>
+                  <Box className='NavbarBox' style={{ width: "79%", height:"100%"}}>
                     <Navbar/>
                     {!isSettingRoute ? (<MainRoutes />) : (<Setting />)}
                     <Outlet/>

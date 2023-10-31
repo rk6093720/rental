@@ -64,7 +64,7 @@ const AddLandlord = () => {
   console.log(image)
   return (
     <div>
-         <Box style={{width:"50%",height:"100vh",margin:"auto",marginTop:"15px"}}>
+         <Box style={{width:"50%",height:"700px",margin:"auto",marginTop:"15px",overflowX:"hidden",overflowY:"scroll"}}>
           <Heading>Add LandLord</Heading>
            <form onSubmit={handleForm}>
             <FormControl isRequired>

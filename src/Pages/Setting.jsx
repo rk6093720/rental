@@ -5,7 +5,7 @@ import SettingMainRoutes from './SettingMainRoutes'
 const Setting = () => {
   return (
     <div>
-      <Flex className='box' style={{ border:"1px solid grey", width: '100%', height: "100vh" }}>
+      <Flex className='box' style={{  width: '100%', height: "100vh" }}>
         <Box className='sidebarBox' style={{ width: "20%" }}>
           <Box style={{  width: "100%", height:"50px" , fontSize:"24px", marginTop:"15px"}}>
               <Link to='/setting/'>
@@ -43,8 +43,8 @@ const Setting = () => {
               </Link>
             </Box>
         </Box>
-        <Spacer className='space' style={{ border: "1px solid black", width: "1%" }} />
-        <Box className='NavbarBox' style={{ border: "1px solid blue", width: "79%" }}>
+        <Spacer className='space' style={{border:"1px solid black", width: "0.5%" }} />
+        <Box className='NavbarBox' style={{ width: "79%", height:"100%" ,overflowX:"scroll",overflowY:"scroll"}}>
           <SettingMainRoutes />
           <Outlet />
         </Box>

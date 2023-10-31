@@ -14,7 +14,7 @@ const Sidebar = () => {
             <Box>
                 <Heading style={{ fontSize: "24px", marginTop: "15px", alignItems: "center" }}> Apartment </Heading>
                 <hr style={{ marginTop: "10px" }} />
-                <Stack marginTop={"15px"} style={{width:"100%",height:"100%",overflow:"scroll"}}>
+                <Stack marginTop={"15px"} style={{width:"100%",height:"100%",overflowX:"hidden",overflowY:"scroll"}}>
                     {/* 1 */}
                     <Link to="/dashboard" >
                         <Flex _hover={{ color: "white", bg: "green" }} alignItems={"start"} justify={"space-evenly"} style={{ height:"50px", border: "1px solid black", marginTop: "45x", padding: "2px" }}>
