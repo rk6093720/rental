@@ -15,10 +15,16 @@ const System = () => {
   const [postalAddress,setPostalAddress]=useState("");
   const [postalCode,setPostalCode]=useState("");
   const [date,setDate]=useState("");
+  const [separator,setSeparator]=useState("");
+  const [separatorDot, setSeparatorDot] = useState("");
+  const [separatorDate, setSeparatorDate] = useState("")
   const [country,setCountry]=useState([])
   const getCountry = async()=>{
     const res = await axios.get("https://restcountries.com/v3.1/all");
     setCountry(res.data)
+  }
+  const handleUpdate=()=>{
+    
   }
 console.log(country)
   useEffect(()=>{
@@ -96,19 +102,30 @@ console.log(country)
         </FormControl>
         <br />
         <FormControl>
-        <Input placeholder='amount thousands separator' />
+        <Select placeholder='Amount decimal separator' value={separator} onChange={(e)=>setSeparator(e.target.value)}>
+              <option value="1,000-comma Separator">1,000-comma Separator</option>
+              <option value="1,000-Dot separator">1,000-Dot separator</option>
+        </Select>
         </FormControl>
         <br />
         <FormControl>
-        <Input placeholder='Amount decimal separator' />
+            <Select placeholder='Amount decimal separator' value={separatorDot} onChange={(e) => setSeparatorDot(e.target.value)}>
+              <option value="1,000-comma">1,000-comma</option>
+              <option value="1,000-Dot">1,000-Dot</option>
+            </Select>
         </FormControl>
         <br />
         <FormControl>
-        <Input placeholder='Amount Decimal' />
+            <Select placeholder='Amount decimal' value={separatorDate} onChange={(e) => setSeparatorDate(e.target.value)}>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+            </Select>
         </FormControl>
         <br />
         <FormControl>
-        <Button>update parameter</Button> 
+        <Button onClick={handleUpdate}>update parameter</Button> 
         </FormControl>
         </form>
          </Box>
