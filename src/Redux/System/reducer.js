@@ -2,6 +2,9 @@ import * as types from "./actionTypes"
 const initialState = {
     system: [],
     properties:[],
+    amenities:[],
+    utilities:[],
+    unit:[],
     isLoading: false,
     isError: false
 }
@@ -149,6 +152,222 @@ const reducer = (state = initialState, action) => {
                 isError: false,
             }
         case types.DELETE_PROPERTIES_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                isError: true
+            }
+        case types.GET_AMENITIES_REQUEST:
+            return {
+                ...state,
+                isLoading: true
+            }
+        case types.GET_AMENITIES_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                amenities: payload,
+                isError: false,
+            }
+        case types.GET_AMENITIES_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                isError: true,
+            }
+        case types.POST_AMENITIES_REQUEST:
+            return {
+                ...state,
+                isLoading: true,
+            }
+        case types.POST_AMENITIES_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                amenities: [...state.amenities, payload],
+                isError: false,
+            }
+        case types.POST_AMENITIES_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                isError: true
+            }
+        case types.EDIT_AMENITIES_REQUEST:
+            return {
+                ...state,
+                isLoading: true,
+            }
+        case types.EDIT_AMENITIES_SUCCESS:
+            return {
+                ...state,
+                amenities: state.amenities.map((item) => item._id === payload.id ? payload : item),
+                isLoading: false,
+                isError: false,
+            }
+        case types.EDIT_AMENITIES_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                isError: true,
+            }
+        case types.DELETE_AMENITIES_REQUEST:
+            return {
+                ...state,
+                isLoading: true,
+            }
+        case types.DELETE_AMENITIES_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                amenities: state.amenities.filter((land) => land._id !== payload),
+                isError: false,
+            }
+        case types.DELETE_AMENITIES_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                isError: true
+            }
+        case types.GET_UTILITIES_REQUEST:
+            return {
+                ...state,
+                isLoading: true
+            }
+        case types.GET_UTILITIES_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                utilities: payload,
+                isError: false,
+            }
+        case types.GET_UTILITIES_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                isError: true,
+            }
+        case types.POST_UTILITIES_REQUEST:
+            return {
+                ...state,
+                isLoading: true,
+            }
+        case types.POST_UTILITIES_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                utilities: [...state.utilities, payload],
+                isError: false,
+            }
+        case types.POST_UTILITIES_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                isError: true
+            }
+        case types.EDIT_UTILITIES_REQUEST:
+            return {
+                ...state,
+                isLoading: true,
+            }
+        case types.EDIT_UTILITIES_SUCCESS:
+            return {
+                ...state,
+                utilities: state.utilities.map((item) => item._id === payload.id ? payload : item),
+                isLoading: false,
+                isError: false,
+            }
+        case types.EDIT_UTILITIES_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                isError: true,
+            }
+        case types.DELETE_UTILITIES_REQUEST:
+            return {
+                ...state,
+                isLoading: true,
+            }
+        case types.DELETE_UTILITIES_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                utilities: state.utilities.filter((land) => land._id !== payload),
+                isError: false,
+            }
+        case types.DELETE_UTILITIES_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                isError: true
+            }
+        case types.GET_UNIT_REQUEST:
+            return {
+                ...state,
+                isLoading: true
+            }
+        case types.GET_UNIT_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                unit: payload,
+                isError: false,
+            }
+        case types.GET_UNIT_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                isError: true,
+            }
+        case types.POST_UNIT_REQUEST:
+            return {
+                ...state,
+                isLoading: true,
+            }
+        case types.POST_UNIT_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                unit: [...state.unit, payload],
+                isError: false,
+            }
+        case types.POST_UNIT_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                isError: true
+            }
+        case types.EDIT_UNIT_REQUEST:
+            return {
+                ...state,
+                isLoading: true,
+            }
+        case types.EDIT_UNIT_SUCCESS:
+            return {
+                ...state,
+                unit: state.unit.map((item) => item._id === payload.id ? payload : item),
+                isLoading: false,
+                isError: false,
+            }
+        case types.EDIT_UNIT_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                isError: true,
+            }
+        case types.DELETE_UNIT_REQUEST:
+            return {
+                ...state,
+                isLoading: true,
+            }
+        case types.DELETE_UNIT_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                unit: state.unit.filter((land) => land._id !== payload),
+                isError: false,
+            }
+        case types.DELETE_UNIT_FAILURE:
             return {
                 ...state,
                 isLoading: false,

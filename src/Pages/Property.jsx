@@ -180,6 +180,36 @@ const Property = () => {
             </TableContainer>
           </TabPanel>
           <TabPanel>
+            <Button onClick={onOpen}>AddAmenities</Button>
+            <Modal isOpen={isOpen} onClose={onClose}>
+              <ModalOverlay />
+              <ModalContent>
+                <ModalHeader>Add Amenities</ModalHeader>
+                <ModalCloseButton />
+                <form onSubmit={handleAdd}>
+                  <ModalBody>
+
+                    <FormControl>
+                      <Input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder='name' />
+                    </FormControl>
+                    <br />
+                    <FormControl>
+                      <Input type='text' value={display} onChange={(e) => setDisplay(e.target.value)} placeholder='Displayname' />
+                    </FormControl>
+                    <br />
+                    <FormControl>
+                      <Input type='text' value={description} onChange={(e) => setDescription(e.target.value)} placeholder='Description' />
+                    </FormControl>
+                  </ModalBody>
+                  <ModalFooter>
+                    <Button colorScheme='blue' mr={3} onClick={onClose}>
+                      Close
+                    </Button>
+                    <Button type="submit" variant='ghost'>AddProperty</Button>
+                  </ModalFooter>
+                </form>
+              </ModalContent>
+            </Modal>
             <TableContainer>
               <Table variant='striped' colorScheme='teal'>
                 <TableCaption></TableCaption>
@@ -192,17 +222,92 @@ const Property = () => {
                   </Tr>
                 </Thead>
                 <Tbody>
-                  <Tr>
-                    <Td>Name</Td>
-                    <Td>DisplayName</Td>
-                    <Td>Description</Td>
-                    <Td>Action</Td>
-                  </Tr>
+                  {
+                    properties?.length > 0 && properties?.map((item) => (
+                      <Tr key={item._id}>
+                        <Td>{item.name}</Td>
+                        <Td>{item.display}</Td>
+                        <Td>{item.description}</Td>
+                        <Flex>
+                          <Td>
+                            <Button onClick={onOpen}>
+                              <EditIcon />
+                            </Button>
+                            <Modal isOpen={isOpen} onClose={onClose}>
+                              <ModalOverlay />
+                              <ModalContent>
+                                <ModalHeader>Edit Property</ModalHeader>
+                                <ModalCloseButton />
+
+                                <ModalBody>
+
+                                  <FormControl>
+                                    <Input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder='name' />
+                                  </FormControl>
+                                  <br />
+                                  <FormControl>
+                                    <Input type='text' value={display} onChange={(e) => setDisplay(e.target.value)} placeholder='Displayname' />
+                                  </FormControl>
+                                  <br />
+                                  <FormControl>
+                                    <Input type='text' value={description} onChange={(e) => setDescription(e.target.value)} placeholder='Description' />
+                                  </FormControl>
+                                </ModalBody>
+                                <ModalFooter>
+                                  <Button colorScheme='blue' mr={3} onClick={onClose}>
+                                    Close
+                                  </Button>
+                                  <Button type="submit" onClick={() => handleEdit(item._id)} variant='ghost'>EditProperty</Button>
+                                </ModalFooter>
+
+                              </ModalContent>
+                            </Modal>
+                          </Td>
+                          <Td>
+                            <Button onClick={() => handleDelete(item)}>
+                              <DeleteIcon style={{ color: color === item._id ? "green" : "red" }} />
+                            </Button>
+                          </Td>
+                        </Flex>
+                      </Tr>
+                    ))
+                  }
+
                 </Tbody>
               </Table>
             </TableContainer>
           </TabPanel>
           <TabPanel>
+            <Button onClick={onOpen}>Add Utility</Button>
+            <Modal isOpen={isOpen} onClose={onClose}>
+              <ModalOverlay />
+              <ModalContent>
+                <ModalHeader>Add Utility</ModalHeader>
+                <ModalCloseButton />
+                <form onSubmit={handleAdd}>
+                  <ModalBody>
+
+                    <FormControl>
+                      <Input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder='name' />
+                    </FormControl>
+                    <br />
+                    <FormControl>
+                      <Input type='text' value={display} onChange={(e) => setDisplay(e.target.value)} placeholder='Displayname' />
+                    </FormControl>
+                    <br />
+                    <FormControl>
+                      <Input type='text' value={description} onChange={(e) => setDescription(e.target.value)} placeholder='Description' />
+                    </FormControl>
+                  </ModalBody>
+                  <ModalFooter>
+                    <Button colorScheme='blue' mr={3} onClick={onClose}>
+                      Close
+                    </Button>
+                    <Button type="submit" variant='ghost'>AddProperty</Button>
+                  </ModalFooter>
+                </form>
+              </ModalContent>
+            </Modal>
             <TableContainer>
               <Table variant='striped' colorScheme='teal'>
                 <TableCaption></TableCaption>
@@ -215,17 +320,92 @@ const Property = () => {
                   </Tr>
                 </Thead>
                 <Tbody>
-                  <Tr>
-                    <Td>Name</Td>
-                    <Td>DisplayName</Td>
-                    <Td>Description</Td>
-                    <Td>Action</Td>
-                  </Tr>
+                  {
+                    properties?.length > 0 && properties?.map((item) => (
+                      <Tr key={item._id}>
+                        <Td>{item.name}</Td>
+                        <Td>{item.display}</Td>
+                        <Td>{item.description}</Td>
+                        <Flex>
+                          <Td>
+                            <Button onClick={onOpen}>
+                              <EditIcon />
+                            </Button>
+                            <Modal isOpen={isOpen} onClose={onClose}>
+                              <ModalOverlay />
+                              <ModalContent>
+                                <ModalHeader>Edit Property</ModalHeader>
+                                <ModalCloseButton />
+
+                                <ModalBody>
+
+                                  <FormControl>
+                                    <Input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder='name' />
+                                  </FormControl>
+                                  <br />
+                                  <FormControl>
+                                    <Input type='text' value={display} onChange={(e) => setDisplay(e.target.value)} placeholder='Displayname' />
+                                  </FormControl>
+                                  <br />
+                                  <FormControl>
+                                    <Input type='text' value={description} onChange={(e) => setDescription(e.target.value)} placeholder='Description' />
+                                  </FormControl>
+                                </ModalBody>
+                                <ModalFooter>
+                                  <Button colorScheme='blue' mr={3} onClick={onClose}>
+                                    Close
+                                  </Button>
+                                  <Button type="submit" onClick={() => handleEdit(item._id)} variant='ghost'>EditProperty</Button>
+                                </ModalFooter>
+
+                              </ModalContent>
+                            </Modal>
+                          </Td>
+                          <Td>
+                            <Button onClick={() => handleDelete(item)}>
+                              <DeleteIcon style={{ color: color === item._id ? "green" : "red" }} />
+                            </Button>
+                          </Td>
+                        </Flex>
+                      </Tr>
+                    ))
+                  }
+
                 </Tbody>
               </Table>
             </TableContainer>
           </TabPanel>
           <TabPanel>
+            <Button onClick={onOpen}>AddUnitTypes</Button>
+            <Modal isOpen={isOpen} onClose={onClose}>
+              <ModalOverlay />
+              <ModalContent>
+                <ModalHeader>AddUnitTypes</ModalHeader>
+                <ModalCloseButton />
+                <form onSubmit={handleAdd}>
+                  <ModalBody>
+
+                    <FormControl>
+                      <Input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder='name' />
+                    </FormControl>
+                    <br />
+                    <FormControl>
+                      <Input type='text' value={display} onChange={(e) => setDisplay(e.target.value)} placeholder='Displayname' />
+                    </FormControl>
+                    <br />
+                    <FormControl>
+                      <Input type='text' value={description} onChange={(e) => setDescription(e.target.value)} placeholder='Description' />
+                    </FormControl>
+                  </ModalBody>
+                  <ModalFooter>
+                    <Button colorScheme='blue' mr={3} onClick={onClose}>
+                      Close
+                    </Button>
+                    <Button type="submit" variant='ghost'>AddProperty</Button>
+                  </ModalFooter>
+                </form>
+              </ModalContent>
+            </Modal>
             <TableContainer>
               <Table variant='striped' colorScheme='teal'>
                 <TableCaption></TableCaption>
@@ -238,12 +418,57 @@ const Property = () => {
                   </Tr>
                 </Thead>
                 <Tbody>
-                  <Tr>
-                    <Td>Name</Td>
-                    <Td>DisplayName</Td>
-                    <Td>Description</Td>
-                    <Td>Action</Td>
-                  </Tr>
+                  {
+                    properties?.length > 0 && properties?.map((item) => (
+                      <Tr key={item._id}>
+                        <Td>{item.name}</Td>
+                        <Td>{item.display}</Td>
+                        <Td>{item.description}</Td>
+                        <Flex>
+                          <Td>
+                            <Button onClick={onOpen}>
+                              <EditIcon />
+                            </Button>
+                            <Modal isOpen={isOpen} onClose={onClose}>
+                              <ModalOverlay />
+                              <ModalContent>
+                                <ModalHeader>Edit Property</ModalHeader>
+                                <ModalCloseButton />
+
+                                <ModalBody>
+
+                                  <FormControl>
+                                    <Input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder='name' />
+                                  </FormControl>
+                                  <br />
+                                  <FormControl>
+                                    <Input type='text' value={display} onChange={(e) => setDisplay(e.target.value)} placeholder='Displayname' />
+                                  </FormControl>
+                                  <br />
+                                  <FormControl>
+                                    <Input type='text' value={description} onChange={(e) => setDescription(e.target.value)} placeholder='Description' />
+                                  </FormControl>
+                                </ModalBody>
+                                <ModalFooter>
+                                  <Button colorScheme='blue' mr={3} onClick={onClose}>
+                                    Close
+                                  </Button>
+                                  <Button type="submit" onClick={() => handleEdit(item._id)} variant='ghost'>EditProperty</Button>
+                                </ModalFooter>
+
+                              </ModalContent>
+                            </Modal>
+                          </Td>
+                          <Td>
+                            <Button onClick={() => handleDelete(item)}>
+                              <DeleteIcon style={{ color: color === item._id ? "green" : "red" }} />
+                            </Button>
+                          </Td>
+                        </Flex>
+                      </Tr>
+                    ))
+                  }
+
                 </Tbody>
               </Table>
             </TableContainer>
