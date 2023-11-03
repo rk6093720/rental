@@ -1,7 +1,20 @@
-import { Button, Input,  Tab, TabList, TabPanel, TabPanels, Table, TableCaption, TableContainer, Tabs, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react'
-import React from 'react'
-
+import { AddIcon } from '@chakra-ui/icons';
+import { Button, FormControl, Input,  Select,  Tab, TabList, TabPanel, TabPanels, Table, TableCaption, TableContainer, Tabs, Tbody, Td, Th, Thead, Tr, useDisclosure } from '@chakra-ui/react'
+import React, { useState } from 'react'
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+} from '@chakra-ui/react'
 const UsersRole = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [role,setRole]=useState("");
+  const [firstName,setFirstName]=useState("");
+  const [lastName,setLastName]=useState("");
   return (
     <div>
       <Tabs>
@@ -12,9 +25,66 @@ const UsersRole = () => {
         </TabList>
         <TabPanels>
           <TabPanel>
-            <Input placeholder='UsersRole number prefix' />
-            <br />
-            <Button>Update Setting</Button>
+            <Button onClick={onOpen} ><AddIcon/>User</Button>
+            <Modal isOpen={isOpen} onClose={onClose}>
+              <ModalOverlay />
+              <form>
+              <ModalContent>
+                <ModalHeader>Add User</ModalHeader>
+                <ModalCloseButton />
+                <ModalBody>
+                  <FormControl>
+                    <Select placeholder='role'>
+                      <option value="Admin">Admin</option>
+                      <option value="Landlord">Landlord</option>
+                      <option value="office">Office</option>
+                    </Select>
+                  </FormControl>
+                  <br/>
+                 <FormControl>
+                  <Input placeholder='firstName'/>
+                 </FormControl>
+                  <br />
+                  <FormControl>
+                    <Input placeholder='LastName' />
+                  </FormControl>
+                  <br />
+                  <FormControl>
+                    <Input placeholder='email' />
+                  </FormControl>
+                </ModalBody>
+                <ModalFooter>
+                  <Button colorScheme='blue' mr={3} onClick={onClose}>
+                    Close
+                  </Button>
+                  <Button type="submit" colorScheme='red'>Add User</Button>
+                </ModalFooter>
+              </ModalContent>
+              </form>
+            </Modal>
+            <br/>
+            <TableContainer>
+              <Table variant='striped' colorScheme='teal'>
+                <TableCaption></TableCaption>
+                <Thead>
+                  <Tr>
+                    <Th>Role</Th>
+                    <Th>firstName</Th>
+                    <Th>LastName</Th>
+                    <Th>Email</Th>
+                    <Th>Action</Th>
+                  </Tr>
+                </Thead>
+                <Tbody>
+                  <Tr>
+                    <Td>Name</Td>
+                    <Td>DisplayName</Td>
+                    <Td>Description</Td>
+                    <Td>Action</Td>
+                  </Tr>
+                </Tbody>
+              </Table>
+            </TableContainer>
           </TabPanel>
           <TabPanel>
             <TableContainer>

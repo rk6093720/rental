@@ -237,6 +237,53 @@ const deleteUnit = (id) => async (dispatch) => {
             dispatch({ type: types.DELETE_UNIT_FAILURE, payload: e })
         })
 }
+const getAmount = () => async (dispatch) => {
+    dispatch({ type: types.GET_AMOUNT_REQUEST })
+    return await axios.get("http://localhost:8080/amount/read")
+        .then((r) => {
+            console.log(r, "get")
+            dispatch({ type: types.GET_AMOUNT_SUCCESS, payload: r.data.Amount })
+        })
+        .catch((e) => {
+            return dispatch({ type: types.GET_AMOUNT_FAILURE, payload: e })
+        })
+}
+const postAmount = (payload) => async (dispatch) => {
+    dispatch({ type: types.POST_AMOUNT_REQUEST })
+    console.log(payload)
+    return await axios.post(`http://localhost:8080/amount/create`, payload)
+        .then((r) => {
+            console.log(r)
+            dispatch({ type: types.POST_AMOUNT_SUCCESS, payload: r.data.AddAmount })
+        })
+        .catch((e) => {
+            dispatch({ type: types.POST_AMOUNT_FAILURE, payload: e })
+        })
+}
+
+const editAmount = (id, payload) => async (dispatch) => {
+    dispatch({ type: types.EDIT_AMOUNT_REQUEST });
+    return await axios.put(`http://localhost:8080/amount/update/${id}`, payload)
+        .then((r) => {
+            console.log(r);
+            dispatch({ type: types.EDIT_AMOUNT_SUCCESS, payload: r.data.editAmount })
+        })
+        .catch((e) => {
+            dispatch({ type: types.EDIT_AMOUNT_FAILURE, payload: e })
+        })
+}
+
+const deleteAmount = (id) => async (dispatch) => {
+    dispatch({ type: types.DELETE_AMOUNT_REQUEST });
+    return await axios.delete(`http://localhost:8080/amount/remove/${id}`)
+        .then((r) => {
+            console.log(r);
+            dispatch({ type: types.DELETE_AMOUNT_SUCCESS, payload: id })
+        })
+        .catch((e) => {
+            dispatch({ type: types.DELETE_AMOUNT_FAILURE, payload: e })
+        })
+}
 export {
     getSystem,
     postSystem,
@@ -258,4 +305,8 @@ export {
     postUnit,
     editUnit,
     deleteUnit,
+    getAmount,
+    postAmount,
+    editAmount,
+    deleteAmount
 }
