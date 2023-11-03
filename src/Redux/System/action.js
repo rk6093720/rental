@@ -113,7 +113,7 @@ const postAmenities = (payload) => async (dispatch) => {
     return await axios.post(`http://localhost:8080/amenities/create`, payload)
         .then((r) => {
             console.log(r)
-            dispatch({ type: types.POST_AMENITIES_SUCCESS, payload: r.data.newAMENITIES })
+            dispatch({ type: types.POST_AMENITIES_SUCCESS, payload: r.data.AddAmenities })
         })
         .catch((e) => {
             dispatch({ type: types.POST_AMENITIES_FAILURE, payload: e })
@@ -125,7 +125,7 @@ const editAmenities = (id, payload) => async (dispatch) => {
     return await axios.put(`http://localhost:8080/amenities/update/${id}`, payload)
         .then((r) => {
             console.log(r);
-            dispatch({ type: types.EDIT_AMENITIES_SUCCESS, payload: r.data.editAMENITIES })
+            dispatch({ type: types.EDIT_AMENITIES_SUCCESS, payload: r.data.editAmenities })
         })
         .catch((e) => {
             dispatch({ type: types.EDIT_AMENITIES_FAILURE, payload: e })
@@ -148,7 +148,7 @@ const getUtilities = () => async (dispatch) => {
     return await axios.get("http://localhost:8080/utilities/read")
         .then((r) => {
             console.log(r, "get")
-            dispatch({ type: types.GET_UTILITIES_SUCCESS, payload: r.data.UTILITIES })
+            dispatch({ type: types.GET_UTILITIES_SUCCESS, payload: r.data.Utilities })
         })
         .catch((e) => {
             return dispatch({ type: types.GET_UTILITIES_FAILURE, payload: e })
@@ -160,7 +160,7 @@ const postUtilities = (payload) => async (dispatch) => {
     return await axios.post(`http://localhost:8080/utilities/create`, payload)
         .then((r) => {
             console.log(r)
-            dispatch({ type: types.POST_UTILITIES_SUCCESS, payload: r.data.AddUTILITIES })
+            dispatch({ type: types.POST_UTILITIES_SUCCESS, payload: r.data.AddUtilities })
         })
         .catch((e) => {
             dispatch({ type: types.POST_UTILITIES_FAILURE, payload: e })
@@ -172,7 +172,7 @@ const editUtilities = (id, payload) => async (dispatch) => {
     return await axios.put(`http://localhost:8080/utilities/update/${id}`, payload)
         .then((r) => {
             console.log(r);
-            dispatch({ type: types.EDIT_UTILITIES_SUCCESS, payload: r.data.editUTILITIES })
+            dispatch({ type: types.EDIT_UTILITIES_SUCCESS, payload: r.data.editUtilities })
         })
         .catch((e) => {
             dispatch({ type: types.EDIT_UTILITIES_FAILURE, payload: e })
@@ -195,7 +195,7 @@ const getUnit = () => async (dispatch) => {
     return await axios.get("http://localhost:8080/unit/read")
         .then((r) => {
             console.log(r, "get")
-            dispatch({ type: types.GET_UNIT_SUCCESS, payload: r.data.UNIT })
+            dispatch({ type: types.GET_UNIT_SUCCESS, payload: r.data.Unit })
         })
         .catch((e) => {
             return dispatch({ type: types.GET_UNIT_FAILURE, payload: e })
@@ -207,7 +207,7 @@ const postUnit = (payload) => async (dispatch) => {
     return await axios.post(`http://localhost:8080/unit/create`, payload)
         .then((r) => {
             console.log(r)
-            dispatch({ type: types.POST_UNIT_SUCCESS, payload: r.data.AddUNIT })
+            dispatch({ type: types.POST_UNIT_SUCCESS, payload: r.data.AddUnit })
         })
         .catch((e) => {
             dispatch({ type: types.POST_UNIT_FAILURE, payload: e })
@@ -219,7 +219,7 @@ const editUnit = (id, payload) => async (dispatch) => {
     return await axios.put(`http://localhost:8080/unit/update/${id}`, payload)
         .then((r) => {
             console.log(r);
-            dispatch({ type: types.EDIT_UNIT_SUCCESS, payload: r.data.editUNIT })
+            dispatch({ type: types.EDIT_UNIT_SUCCESS, payload: r.data.editUnit })
         })
         .catch((e) => {
             dispatch({ type: types.EDIT_UNIT_FAILURE, payload: e })
