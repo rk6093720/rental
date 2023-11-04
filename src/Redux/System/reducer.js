@@ -6,6 +6,7 @@ const initialState = {
     utilities:[],
     unit:[],
     payment:[],
+    users:[],
     isLoading: false,
     isError: false
 }
@@ -369,6 +370,78 @@ const reducer = (state = initialState, action) => {
                 isError: false,
             }
         case types.DELETE_UNIT_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                isError: true
+            }
+        case types.GET_AMOUNT_REQUEST:
+            return {
+                ...state,
+                isLoading: true
+            }
+        case types.GET_AMOUNT_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                payment: payload,
+                isError: false,
+            }
+        case types.GET_AMOUNT_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                isError: true,
+            }
+        case types.POST_AMOUNT_REQUEST:
+            return {
+                ...state,
+                isLoading: true,
+            }
+        case types.POST_AMOUNT_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                payment: [...state.payment, payload],
+                isError: false,
+            }
+        case types.POST_AMOUNT_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                isError: true
+            }
+        case types.EDIT_AMOUNT_REQUEST:
+            return {
+                ...state,
+                isLoading: true,
+            }
+        case types.EDIT_AMOUNT_SUCCESS:
+            return {
+                ...state,
+                payment: state.payment.map((item) => item._id === payload.id ? payload : item),
+                isLoading: false,
+                isError: false,
+            }
+        case types.EDIT_AMOUNT_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                isError: true,
+            }
+        case types.DELETE_AMOUNT_REQUEST:
+            return {
+                ...state,
+                isLoading: true,
+            }
+        case types.DELETE_AMOUNT_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                payment: state.payment.filter((land) => land._id !== payload),
+                isError: false,
+            }
+        case types.DELETE_AMOUNT_FAILURE:
             return {
                 ...state,
                 isLoading: false,
