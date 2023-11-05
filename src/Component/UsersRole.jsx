@@ -1,5 +1,5 @@
-import { AddIcon } from '@chakra-ui/icons';
-import { Button, FormControl, Input ,  Select,  Tab, TabList, TabPanel, TabPanels, Table, TableCaption, TableContainer, Tabs, Tbody, Td, Th, Thead, Tr, useDisclosure } from '@chakra-ui/react'
+import { AddIcon, DeleteIcon, EditIcon } from '@chakra-ui/icons';
+import { Button, Flex, FormControl, Input ,  Select,  Tab, TabList, TabPanel, TabPanels, Table, TableCaption, TableContainer, Tabs, Tbody, Td, Th, Thead, Tr, useDisclosure } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import {
   Modal,
@@ -11,9 +11,10 @@ import {
   ModalCloseButton,
 } from '@chakra-ui/react'
 import { useDispatch, useSelector } from 'react-redux';
-import { getUserRole, postUserRole } from '../Redux/System/action';
+import { getUserRole, postUserRole, putUserRole } from '../Redux/System/action';
 import { useParams } from 'react-router-dom';
 const UsersRole = () => {
+  const { id } = useParams();
   const { isOpen:isOpenAddUser, onOpen:onOpenAddUser, onClose:onCloseAddUser } = useDisclosure();
   const { isOpen:isOpenEditUser, onOpen:onOpenEditUser, onClose:onCloseEditUser } = useDisclosure();
   const [role,setRole]=useState("");
@@ -24,7 +25,6 @@ const UsersRole = () => {
   const [currentSystem,setCurrentSystem]=useState({});
   const dispatch = useDispatch();
   const userRole = useSelector((state)=>state.System.users);
-  const {id} = useParams();
   const handleAddUser = async(e) =>{
     e.preventDefault();
     try {
@@ -41,11 +41,25 @@ const UsersRole = () => {
       console.log(error);
     }
   }
+  const handleEditUser=async(id)=>{
+    try {
+      const payload = {
+        role,
+        firstName,
+        lastName,
+        email
+      }
+      await dispatch(putUserRole(id,payload))
+      .then(()=>dispatch(getUserRole()))
+    } catch (error) {
+      console.log(error);
+    }
+  }
   useEffect(()=>{
-    if(userRole.length === 0){
+    if(userRole?.length === 0){
       dispatch(getUserRole())
     }
-  },[dispatch, userRole.length]);
+  },[dispatch, userRole?.length]);
   useEffect(()=>{
     if (id) {
       const userRoledById = userRole.find((item) => item._id === id);
@@ -121,12 +135,58 @@ const UsersRole = () => {
                   </Tr>
                 </Thead>
                 <Tbody>
-                  <Tr>
-                    <Td>Name</Td>
-                    <Td>DisplayName</Td>
-                    <Td>Description</Td>
-                    <Td>Action</Td>
-                  </Tr>
+                  {
+                    userRole?.length > 0 && userRole?.map((item) =>(
+                      <Tr key={item._id}>
+                        <Td>{item.role}</Td>
+                        <Td>{item.firstName}</Td>
+                        <Td>{item.lastName}</Td>
+                        <Td>{item.email}</Td>
+                        <Flex>
+                          <Td>
+                            <Button onClick={onOpenEditUser}><EditIcon/></Button>
+                            <Modal isOpen={isOpenEditUser} onClose={onCloseEditUser}>
+                              <ModalOverlay />
+                              <ModalContent>
+                                <ModalHeader>Edit User</ModalHeader>
+                                <ModalCloseButton />
+                                <ModalBody>
+                                  <FormControl>
+                                    <Select value={role} onChange={(e) => setRole(e.target.value)} placeholder='role'>
+                                      <option value="Admin">Admin</option>
+                                      <option value="Landlord">Landlord</option>
+                                      <option value="office">Office</option>
+                                    </Select>
+                                  </FormControl>
+                                  <br />
+                                  <FormControl>
+                                    <Input type='text' value={firstName} onChange={(e) => setFirstName(e.target.value)} placeholder='firstName' />
+                                  </FormControl>
+                                  <br />
+                                  <FormControl>
+                                    <Input type='text' value={lastName} onChange={(e) => setLastName(e.target.value)} placeholder='LastName' />
+                                  </FormControl>
+                                  <br />
+                                  <FormControl>
+                                    <Input type='email' value={email} onChange={(e) => setEmail(e.target.value)} placeholder='email' />
+                                  </FormControl>
+                                </ModalBody>
+                                <ModalFooter>
+                                  <Button colorScheme='blue' mr={3} onClick={onCloseEditUser}>
+                                    Close
+                                  </Button>
+                                  <Button variant='ghost' colorScheme='red' onClick={()=> handleEditUser(item._id)}>Edit User</Button>
+                                </ModalFooter>
+                              </ModalContent>
+                            </Modal>
+                          </Td>
+                          <Td>
+                            <Button><DeleteIcon/></Button>
+                          </Td>
+                        </Flex>
+                      </Tr>
+                    ))
+                  }
                 </Tbody>
               </Table>
             </TableContainer>

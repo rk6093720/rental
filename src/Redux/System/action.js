@@ -286,7 +286,7 @@ const deleteAmount = (id) => async (dispatch) => {
 }
 const getUserRole = () => async (dispatch) => {
     dispatch({ type: types.GET_USER_ROLE_REQUEST })
-    return await axios.get("http://localhost:8080/UserRole/read")
+    return await axios.get("http://localhost:8080/user-Role/read")
         .then((r) => {
             console.log(r, "get")
             dispatch({ type: types.GET_USER_ROLE_SUCCESS, payload: r.data.UserRole })
@@ -298,7 +298,7 @@ const getUserRole = () => async (dispatch) => {
 const postUserRole = (payload) => async (dispatch) => {
     dispatch({ type: types.POST_USER_ROLE_REQUEST })
     console.log(payload)
-    return await axios.post(`http://localhost:8080/UserRole/create`, payload)
+    return await axios.post(`http://localhost:8080/user-Role/create`, payload)
         .then((r) => {
             console.log(r)
             dispatch({ type: types.POST_USER_ROLE_SUCCESS, payload: r.data.AddUserRole })
@@ -310,7 +310,7 @@ const postUserRole = (payload) => async (dispatch) => {
 
 const putUserRole = (id, payload) => async (dispatch) => {
     dispatch({ type: types.EDIT_USER_ROLE_REQUEST });
-    return await axios.put(`http://localhost:8080/UserRole/update/${id}`, payload)
+    return await axios.put(`http://localhost:8080/user-Role/update/${id}`, payload)
         .then((r) => {
             console.log(r);
             dispatch({ type: types.EDIT_USER_ROLE_SUCCESS, payload: r.data.editUserRole })
@@ -322,7 +322,7 @@ const putUserRole = (id, payload) => async (dispatch) => {
 
 const deleteUserRole = (id) => async (dispatch) => {
     dispatch({ type: types.DELETE_USER_ROLE_REQUEST });
-    return await axios.delete(`http://localhost:8080/amount/remove/${id}`)
+    return await axios.delete(`http://localhost:8080/user-Role/remove/${id}`)
         .then((r) => {
             console.log(r);
             dispatch({ type: types.DELETE_USER_ROLE_SUCCESS, payload: id })
