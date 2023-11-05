@@ -1,6 +1,6 @@
 import { AddIcon } from '@chakra-ui/icons';
 import { Button, FormControl, Input ,  Select,  Tab, TabList, TabPanel, TabPanels, Table, TableCaption, TableContainer, Tabs, Tbody, Td, Th, Thead, Tr, useDisclosure } from '@chakra-ui/react'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Modal,
   ModalOverlay,
@@ -10,17 +10,52 @@ import {
   ModalBody,
   ModalCloseButton,
 } from '@chakra-ui/react'
+import { useDispatch, useSelector } from 'react-redux';
+import { getUserRole, postUserRole } from '../Redux/System/action';
+import { useParams } from 'react-router-dom';
 const UsersRole = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen:isOpenAddUser, onOpen:onOpenAddUser, onClose:onCloseAddUser } = useDisclosure();
+  const { isOpen:isOpenEditUser, onOpen:onOpenEditUser, onClose:onCloseEditUser } = useDisclosure();
   const [role,setRole]=useState("");
   const [firstName,setFirstName]=useState("");
   const [lastName,setLastName]=useState("");
   const [email,setEmail]=useState("");
   const [password,setPassword]=useState("");
-  const handleAddUser = (e) =>{
+  const [currentSystem,setCurrentSystem]=useState({});
+  const dispatch = useDispatch();
+  const userRole = useSelector((state)=>state.System.users);
+  const {id} = useParams();
+  const handleAddUser = async(e) =>{
     e.preventDefault();
-
+    try {
+      const payload = {
+        role,
+        firstName,
+        lastName,
+        email,
+        password
+      }
+      await dispatch(postUserRole(payload))
+      .then(()=> dispatch(getUserRole()));
+    } catch (error) {
+      console.log(error);
+    }
   }
+  useEffect(()=>{
+    if(userRole.length === 0){
+      dispatch(getUserRole())
+    }
+  },[dispatch, userRole.length]);
+  useEffect(()=>{
+    if (id) {
+      const userRoledById = userRole.find((item) => item._id === id);
+      userRoledById && setCurrentSystem(userRoledById);
+      userRoledById && setRole(userRoledById.role);
+      userRoledById && setEmail(userRoledById.email);
+      userRoledById && setFirstName(userRoledById.firstName);
+      userRoledById && setLastName(userRoledById.lastName);
+    }
+  },[id, userRole])
   return (
     <div>
       <Tabs>
@@ -31,8 +66,8 @@ const UsersRole = () => {
         </TabList>
         <TabPanels>
           <TabPanel>
-            <Button onClick={onOpen} ><AddIcon/>User</Button>
-            <Modal isOpen={isOpen} onClose={onClose}>
+            <Button onClick={onOpenAddUser} ><AddIcon/>User</Button>
+            <Modal isOpen={isOpenAddUser} onClose={onCloseAddUser}>
               <ModalOverlay />
               <form onSubmit={handleAddUser}>
               <ModalContent>
@@ -64,7 +99,7 @@ const UsersRole = () => {
                     </FormControl>
                 </ModalBody>
                 <ModalFooter>
-                  <Button colorScheme='blue' mr={3} onClick={onClose}>
+                  <Button colorScheme='blue' mr={3} onClick={onCloseAddUser}>
                     Close
                   </Button>
                   <Button type="submit" colorScheme='red'>Add User</Button>

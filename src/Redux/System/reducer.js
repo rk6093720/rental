@@ -447,73 +447,73 @@ const reducer = (state = initialState, action) => {
                 isLoading: false,
                 isError: true
             }
-        case types.GET_AMOUNT_REQUEST:
+        case types.GET_USER_ROLE_REQUEST:
             return {
                 ...state,
                 isLoading: true
             }
-        case types.GET_AMOUNT_SUCCESS:
+        case types.GET_USER_ROLE_SUCCESS:
             return {
                 ...state,
                 isLoading: false,
-                payment: payload,
+                users: payload,
                 isError: false,
             }
-        case types.GET_AMOUNT_FAILURE:
+        case types.GET_USER_ROLE_FAILURE:
             return {
                 ...state,
                 isLoading: false,
                 isError: true,
             }
-        case types.POST_AMOUNT_REQUEST:
+        case types.POST_USER_ROLE_REQUEST:
             return {
                 ...state,
                 isLoading: true,
             }
-        case types.POST_AMOUNT_SUCCESS:
+        case types.POST_USER_ROLE_SUCCESS:
             return {
                 ...state,
                 isLoading: false,
-                payment: [...state.payment, payload],
+                users: [...state.users, payload],
                 isError: false,
             }
-        case types.POST_AMOUNT_FAILURE:
+        case types.POST_USER_ROLE_FAILURE:
             return {
                 ...state,
                 isLoading: false,
                 isError: true
             }
-        case types.EDIT_AMOUNT_REQUEST:
+        case types.EDIT_USER_ROLE_REQUEST:
             return {
                 ...state,
                 isLoading: true,
             }
-        case types.EDIT_AMOUNT_SUCCESS:
+        case types.EDIT_USER_ROLE_SUCCESS:
             return {
                 ...state,
-                payment: state.payment.map((item) => item._id === payload.id ? payload : item),
+                users: state.users.map((item) => item._id === payload.id ? payload : item),
                 isLoading: false,
                 isError: false,
             }
-        case types.EDIT_AMOUNT_FAILURE:
+        case types.EDIT_USER_ROLE_FAILURE:
             return {
                 ...state,
                 isLoading: false,
                 isError: true,
             }
-        case types.DELETE_AMOUNT_REQUEST:
+        case types.DELETE_USER_ROLE_REQUEST:
             return {
                 ...state,
                 isLoading: true,
             }
-        case types.DELETE_AMOUNT_SUCCESS:
+        case types.DELETE_USER_ROLE_SUCCESS:
             return {
                 ...state,
                 isLoading: false,
-                payment: state.payment.filter((land) => land._id !== payload),
+                users: state.users.filter((land) => land._id !== payload),
                 isError: false,
             }
-        case types.DELETE_AMOUNT_FAILURE:
+        case types.DELETE_USER_ROLE_FAILURE:
             return {
                 ...state,
                 isLoading: false,
