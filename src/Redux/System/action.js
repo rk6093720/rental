@@ -427,7 +427,7 @@ const deletePermission = (id) => async (dispatch) => {
 }
 const getTentants = () => async (dispatch) => {
     dispatch({ type: types.GET_TENTANTS_REQUEST })
-    return await axios.get("http://localhost:8080/tentants/read")
+    return await axios.get("http://localhost:8080/tentantsSystem/read")
         .then((r) => {
             console.log(r, "get")
             dispatch({ type: types.GET_TENTANTS_SUCCESS, payload: r.data.Tentants })
@@ -439,7 +439,7 @@ const getTentants = () => async (dispatch) => {
 const postTentants = (payload) => async (dispatch) => {
     dispatch({ type: types.POST_TENTANTS_REQUEST })
     console.log(payload)
-    return await axios.post(`http://localhost:8080/tentants/create`, payload)
+    return await axios.post(`http://localhost:8080/tentantsSystem/create`, payload)
         .then((r) => {
             console.log(r)
             dispatch({ type: types.POST_TENTANTS_SUCCESS, payload: r.data.AddTentants })
@@ -451,7 +451,7 @@ const postTentants = (payload) => async (dispatch) => {
 
 const editTentants = (id, payload) => async (dispatch) => {
     dispatch({ type: types.EDIT_TENTANTS_REQUEST });
-    return await axios.put(`http://localhost:8080/tentants/update/${id}`, payload)
+    return await axios.put(`http://localhost:8080/tentantsSystem/update/${id}`, payload)
         .then((r) => {
             console.log(r);
             dispatch({ type: types.EDIT_TENTANTS_SUCCESS, payload: r.data.editTentants })
@@ -463,13 +463,107 @@ const editTentants = (id, payload) => async (dispatch) => {
 
 const deleteTentants = (id) => async (dispatch) => {
     dispatch({ type: types.DELETE_TENTANTS_REQUEST });
-    return await axios.delete(`http://localhost:8080/tentants/remove/${id}`)
+    return await axios.delete(`http://localhost:8080/tentantsSystem/remove/${id}`)
         .then((r) => {
             console.log(r);
             dispatch({ type: types.DELETE_TENTANTS_SUCCESS, payload: id })
         })
         .catch((e) => {
             dispatch({ type: types.DELETE_TENTANTS_FAILURE, payload: e })
+        })
+}
+const getLease = () => async (dispatch) => {
+    dispatch({ type: types.GET_LEASETYPES_REQUEST })
+    return await axios.get("http://localhost:8080/system_lease/read")
+        .then((r) => {
+            console.log(r, "get")
+            dispatch({ type: types.GET_LEASETYPES_SUCCESS, payload: r.data.Lease })
+        })
+        .catch((e) => {
+            return dispatch({ type: types.GET_LEASETYPES_FAILURE, payload: e })
+        })
+}
+const postLease = (payload) => async (dispatch) => {
+    dispatch({ type: types.POST_LEASETYPES_REQUEST })
+    console.log(payload)
+    return await axios.post(`http://localhost:8080/system_lease/create`, payload)
+        .then((r) => {
+            console.log(r)
+            dispatch({ type: types.POST_LEASETYPES_SUCCESS, payload: r.data.AddLease })
+        })
+        .catch((e) => {
+            dispatch({ type: types.POST_LEASETYPES_FAILURE, payload: e })
+        })
+}
+
+const editLease = (id, payload) => async (dispatch) => {
+    dispatch({ type: types.EDIT_LEASETYPES_REQUEST });
+    return await axios.put(`http://localhost:8080/system_lease/update/${id}`, payload)
+        .then((r) => {
+            console.log(r);
+            dispatch({ type: types.EDIT_LEASETYPES_SUCCESS, payload: r.data.editLease })
+        })
+        .catch((e) => {
+            dispatch({ type: types.EDIT_LEASETYPES_FAILURE, payload: e })
+        })
+}
+
+const deleteLease = (id) => async (dispatch) => {
+    dispatch({ type: types.DELETE_LEASETYPES_REQUEST });
+    return await axios.delete(`http://localhost:8080/system_lease/remove/${id}`)
+        .then((r) => {
+            console.log(r);
+            dispatch({ type: types.DELETE_LEASETYPES_SUCCESS, payload: id })
+        })
+        .catch((e) => {
+            dispatch({ type: types.DELETE_LEASETYPES_FAILURE, payload: e })
+        })
+}
+const getExtraCharge = () => async (dispatch) => {
+    dispatch({ type: types.GET_EXTRACHARGE_REQUEST })
+    return await axios.get("http://localhost:8080/system_extra_charge/read")
+        .then((r) => {
+            console.log(r, "get")
+            dispatch({ type: types.GET_EXTRACHARGE_SUCCESS, payload: r.data.ExtraCharge })
+        })
+        .catch((e) => {
+            return dispatch({ type: types.GET_EXTRACHARGE_FAILURE, payload: e })
+        })
+}
+const postExtraCharge = (payload) => async (dispatch) => {
+    dispatch({ type: types.POST_EXTRACHARGE_REQUEST })
+    console.log(payload)
+    return await axios.post(`http://localhost:8080/system_extra_charge/create`, payload)
+        .then((r) => {
+            console.log(r)
+            dispatch({ type: types.POST_EXTRACHARGE_SUCCESS, payload: r.data.AddExtraCharge })
+        })
+        .catch((e) => {
+            dispatch({ type: types.POST_EXTRACHARGE_FAILURE, payload: e })
+        })
+}
+
+const editExtraCharge = (id, payload) => async (dispatch) => {
+    dispatch({ type: types.EDIT_EXTRACHARGE_REQUEST });
+    return await axios.put(`http://localhost:8080/system_extra_charge/update/${id}`, payload)
+        .then((r) => {
+            console.log(r);
+            dispatch({ type: types.EDIT_EXTRACHARGE_SUCCESS, payload: r.data.editExtraCharge })
+        })
+        .catch((e) => {
+            dispatch({ type: types.EDIT_EXTRACHARGE_FAILURE, payload: e })
+        })
+}
+
+const deleteExtraCharge = (id) => async (dispatch) => {
+    dispatch({ type: types.DELETE_EXTRACHARGE_REQUEST });
+    return await axios.delete(`http://localhost:8080/system_extra_charge/remove/${id}`)
+        .then((r) => {
+            console.log(r);
+            dispatch({ type: types.DELETE_EXTRACHARGE_SUCCESS, payload: id })
+        })
+        .catch((e) => {
+            dispatch({ type: types.DELETE_EXTRACHARGE_FAILURE, payload: e })
         })
 }
 export {
@@ -512,5 +606,13 @@ export {
     getTentants,
     postTentants,
     editTentants,
-    deleteTentants
+    deleteTentants,
+    getLease,
+    postLease,
+    editLease,
+    deleteLease,
+    getExtraCharge,
+    postExtraCharge,
+    editExtraCharge,
+    deleteExtraCharge
 }

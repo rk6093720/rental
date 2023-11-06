@@ -57,8 +57,8 @@ const Tentants = () => {
             </Thead>
             <Tbody>
               {
-                tentant?.length > 0 && tentant?.map((item) => {
-                  return <Tr key={item._id}>
+                tentant?.length > 0 && tentant?.map((item) => (
+                   <Tr key={item._id}>
                     <Td>{item.firstName}</Td>
                     <Td>{item.lastName}</Td>
                     <Td>{item.gender}</Td>
@@ -81,7 +81,7 @@ const Tentants = () => {
                       </Td>
                     </Flex>
                   </Tr>
-                })
+                ))
               }
             </Tbody>
           </Table>

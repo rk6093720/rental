@@ -10,6 +10,8 @@ const initialState = {
     usersRoles:[],
     permission:[],
     tentants:[],
+    lease_types:[],
+    extra_charge:[],
     isLoading: false,
     isError: false
 }
@@ -733,6 +735,150 @@ const reducer = (state = initialState, action) => {
                 isError: false,
             }
         case types.DELETE_TENTANTS_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                isError: true
+            }
+        case types.GET_LEASETYPES_REQUEST:
+            return {
+                ...state,
+                isLoading: true
+            }
+        case types.GET_LEASETYPES_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                lease_types: payload,
+                isError: false,
+            }
+        case types.GET_LEASETYPES_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                isError: true,
+            }
+        case types.POST_LEASETYPES_REQUEST:
+            return {
+                ...state,
+                isLoading: true,
+            }
+        case types.POST_LEASETYPES_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                lease_types: [...state.lease_types, payload],
+                isError: false,
+            }
+        case types.POST_LEASETYPES_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                isError: true
+            }
+        case types.EDIT_LEASETYPES_REQUEST:
+            return {
+                ...state,
+                isLoading: true,
+            }
+        case types.EDIT_LEASETYPES_SUCCESS:
+            return {
+                ...state,
+                lease_types: state.lease_types.map((item) => item._id === payload.id ? payload : item),
+                isLoading: false,
+                isError: false,
+            }
+        case types.EDIT_LEASETYPES_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                isError: true,
+            }
+        case types.DELETE_LEASETYPES_REQUEST:
+            return {
+                ...state,
+                isLoading: true,
+            }
+        case types.DELETE_LEASETYPES_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                lease_types: state.lease_types.filter((land) => land._id !== payload),
+                isError: false,
+            }
+        case types.DELETE_LEASETYPES_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                isError: true
+            }
+        case types.GET_EXTRACHARGE_REQUEST:
+            return {
+                ...state,
+                isLoading: true
+            }
+        case types.GET_EXTRACHARGE_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                extra_charge: payload,
+                isError: false,
+            }
+        case types.GET_EXTRACHARGE_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                isError: true,
+            }
+        case types.POST_EXTRACHARGE_REQUEST:
+            return {
+                ...state,
+                isLoading: true,
+            }
+        case types.POST_EXTRACHARGE_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                extra_charge: [...state.extra_charge, payload],
+                isError: false,
+            }
+        case types.POST_EXTRACHARGE_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                isError: true
+            }
+        case types.EDIT_EXTRACHARGE_REQUEST:
+            return {
+                ...state,
+                isLoading: true,
+            }
+        case types.EDIT_EXTRACHARGE_SUCCESS:
+            return {
+                ...state,
+                extra_charge: state.extra_charge.map((item) => item._id === payload.id ? payload : item),
+                isLoading: false,
+                isError: false,
+            }
+        case types.EDIT_EXTRACHARGE_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                isError: true,
+            }
+        case types.DELETE_EXTRACHARGE_REQUEST:
+            return {
+                ...state,
+                isLoading: true,
+            }
+        case types.DELETE_EXTRACHARGE_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                extra_charge: state.extra_charge.filter((land) => land._id !== payload),
+                isError: false,
+            }
+        case types.DELETE_EXTRACHARGE_FAILURE:
             return {
                 ...state,
                 isLoading: false,

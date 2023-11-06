@@ -1,7 +1,109 @@
-import { Button, Checkbox, Input, Select, Tab, TabList, TabPanel, TabPanels, Table, TableCaption, TableContainer, Tabs, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react'
-import React from 'react'
-
+import React, { useEffect, useState } from 'react';
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  Checkbox,
+} from '@chakra-ui/react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { AddIcon, DeleteIcon, EditIcon } from '@chakra-ui/icons';
+import {
+  Button,
+  Flex,
+  FormControl,
+  Input,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Table,
+  TableCaption,
+  TableContainer,
+  Tabs,
+  Tbody,
+  Td,
+  Th,
+  Thead,
+  Tr,
+  Select,
+  useDisclosure,
+} from '@chakra-ui/react';
+import { deleteLease, editLease, getLease, postLease } from '../Redux/System/action';
 const Lease= () => {
+  const {id} = useParams();
+  const { isOpen: isOpenAddLease, onOpen: onOpenAddLease, onClose: onCloseAddLease } = useDisclosure();
+  const { isOpen: isOpenEditLease, onOpen: onOpenEditLease, onClose: onCloseEditLease } = useDisclosure();
+  const { isOpen: isOpenAddExtraCharge, onOpen: onOpenAddExtraCharge, onClose: onCloseAddExtraCharge } = useDisclosure();
+  const { isOpen: isOpenEditExtraCharge, onOpen: onOpenEditExtraCharge, onClose: onCloseEditExtraCharge } = useDisclosure();
+  const [editLeaseId, setEditLeaseId] = useState(null);
+  const [name, setName] = useState("");
+  const [displayName, setDisplayName] = useState("");
+  const [description, setDescription] = useState("");
+  const [currentLease, setCurrentLease] = useState({});
+  const lease = useSelector((state) => state.System.lease_types)
+  const dispatch = useDispatch();
+  const [color, setColor] = useState(null);
+  const handleOpenEditLease = (item) => {
+    setEditLeaseId(item._id);
+    setName(item.name);
+    setDisplayName(item.displayName);
+    setDescription(item.description);
+    onOpenEditLease();
+  }
+  const handleEditLease = async () => {
+    try {
+      const payload = {
+        name,
+        displayName,
+        description,
+      };
+      await dispatch(editLease(editLeaseId, payload))
+        .then(() => dispatch(getLease()));
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  const handleAdd = async (e) => {
+    e.preventDefault();
+    try {
+      const payload = {
+        name,
+        displayName,
+        description
+      }
+      await dispatch(postLease(payload))
+        .then(() => dispatch(getLease()))
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const handleDeleteLease = (item) => {
+    dispatch(deleteLease(item._id));
+    setColor(item._id);
+  }
+
+  useEffect(() => {
+    if (lease?.length === 0) {
+      dispatch(getLease());
+    }
+  }, [dispatch, lease?.length]);
+
+  useEffect(() => {
+    if (id) {
+      const LeaseById = lease.find((item) => item._id === id);
+      LeaseById && setCurrentLease(LeaseById);
+      LeaseById && setName(LeaseById.name);
+      LeaseById && setDisplayName(LeaseById.displayName);
+      LeaseById && setDescription(LeaseById.description);
+    }
+  }, [id, lease]);
+
   return (
     <div>
       <Tabs>
@@ -66,6 +168,36 @@ const Lease= () => {
               <Button>Update Setting</Button>
           </TabPanel>
           <TabPanel>
+            <Button onClick={onOpenAddLease}><AddIcon />Lease</Button>
+            <Modal isOpen={isOpenAddLease} onClose={onCloseAddLease}>
+              <ModalOverlay />
+              <form onSubmit={handleAdd}>
+                <ModalContent>
+                  <ModalHeader>Add Lease</ModalHeader>
+                  <ModalCloseButton />
+                  <ModalBody>
+                    <FormControl>
+                      <Input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder='name' />
+                    </FormControl>
+                    <br />
+                    <FormControl>
+                      <Input type='text' value={displayName} onChange={(e) => setDisplayName(e.target.value)} placeholder='Displayname' />
+                    </FormControl>
+                    <br />
+                    <FormControl>
+                      <Input type='text' value={description} onChange={(e) => setDescription(e.target.value)} placeholder='Description' />
+                    </FormControl>
+                  </ModalBody>
+                  <ModalFooter>
+                    <Button colorScheme='blue' mr={3} onClick={onCloseAddLease}>
+                      Close
+                    </Button>
+                    <Button variant='ghost' type='submit' colorScheme='red'>Add Lease</Button>
+                  </ModalFooter>
+                </ModalContent>
+              </form>
+            </Modal>
+            <br />
             <TableContainer>
               <Table variant='striped' colorScheme='teal'>
                 <TableCaption></TableCaption>
@@ -78,17 +210,88 @@ const Lease= () => {
                   </Tr>
                 </Thead>
                 <Tbody>
-                  <Tr>
-                    <Td>Name</Td>
-                    <Td>DisplayName</Td>
-                    <Td>Description</Td>
-                    <Td>Action</Td>
-                  </Tr>
+                  {
+                    lease?.length > 0 && lease.map((item, index) => (
+                      <Tr key={item._id}>
+                        <Td>{item.name}</Td>
+                        <Td>{item.displayName}</Td>
+                        <Td>{item.description}</Td>
+                        <Flex>
+                          <Td>
+                            <Button onClick={() => handleOpenEditLease(item)}>
+                              <EditIcon />
+                            </Button>
+                            <Modal isOpen={isOpenEditLease} onClose={onCloseEditLease}>
+                              <ModalOverlay />
+                              <ModalContent>
+                                <ModalHeader>Edit Lease</ModalHeader>
+                                <ModalCloseButton />
+                                <ModalBody>
+                                  <FormControl>
+                                    <Input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder='name' />
+                                  </FormControl>
+                                  <br />
+                                  <FormControl>
+                                    <Input type='text' value={displayName} onChange={(e) => setDisplayName(e.target.value)} placeholder='Displayname' />
+                                  </FormControl>
+                                  <br />
+                                  <FormControl>
+                                    <Input type='text' value={description} onChange={(e) => setDescription(e.target.value)} placeholder='Description' />
+                                  </FormControl>
+                                </ModalBody>
+                                <ModalFooter>
+                                  <Button colorScheme='blue' mr={3} onClick={onCloseEditLease}>
+                                    Close
+                                  </Button>
+                                  <Button type="submit" onClick={handleEditLease} variant='ghost'>EditLeases</Button>
+                                </ModalFooter>
+                              </ModalContent>
+                            </Modal>
+                          </Td>
+                          <Td>
+                            <Button onClick={() => handleDeleteLease(item)}>
+                              <DeleteIcon style={{ color: color === item._id ? "green" : "red" }} />
+                            </Button>
+                          </Td>
+                        </Flex>
+                      </Tr>
+                    ))
+                  }
                 </Tbody>
               </Table>
             </TableContainer>
           </TabPanel>
           <TabPanel>
+            <Button onClick={onOpenAddExtraCharge}><AddIcon />ExtraCharge</Button>
+            <Modal isOpen={isOpenAddExtraCharge} onClose={onCloseAddExtraCharge}>
+              <ModalOverlay />
+              <form onSubmit={handleAdd}>
+                <ModalContent>
+                  <ModalHeader>AddExtraCharge</ModalHeader>
+                  <ModalCloseButton />
+                  <ModalBody>
+                    <FormControl>
+                      <Input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder='name' />
+                    </FormControl>
+                    <br />
+                    <FormControl>
+                      <Input type='text' value={displayName} onChange={(e) => setDisplayName(e.target.value)} placeholder='Displayname' />
+                    </FormControl>
+                    <br />
+                    <FormControl>
+                      <Input type='text' value={description} onChange={(e) => setDescription(e.target.value)} placeholder='Description' />
+                    </FormControl>
+                  </ModalBody>
+                  <ModalFooter>
+                    <Button colorScheme='blue' mr={3} onClick={onCloseAddExtraCharge}>
+                      Close
+                    </Button>
+                    <Button variant='ghost' type='submit' colorScheme='red'>AddExtraCharge</Button>
+                  </ModalFooter>
+                </ModalContent>
+              </form>
+            </Modal>
+            <br />
             <TableContainer>
               <Table variant='striped' colorScheme='teal'>
                 <TableCaption></TableCaption>
@@ -101,12 +304,53 @@ const Lease= () => {
                   </Tr>
                 </Thead>
                 <Tbody>
-                  <Tr>
-                    <Td>Name</Td>
-                    <Td>DisplayName</Td>
-                    <Td>Description</Td>
-                    <Td>Action</Td>
-                  </Tr>
+                  {
+                    lease?.length > 0 && lease.map((item, index) => (
+                      <Tr key={item._id}>
+                        <Td>{item.name}</Td>
+                        <Td>{item.displayName}</Td>
+                        <Td>{item.description}</Td>
+                        <Flex>
+                          <Td>
+                            <Button onClick={() => handleOpenEditLease(item)}>
+                              <EditIcon />
+                            </Button>
+                            <Modal isOpen={isOpenEditExtraCharge} onClose={onCloseEditExtraCharge}>
+                              <ModalOverlay />
+                              <ModalContent>
+                                <ModalHeader>Edit Lease</ModalHeader>
+                                <ModalCloseButton />
+                                <ModalBody>
+                                  <FormControl>
+                                    <Input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder='name' />
+                                  </FormControl>
+                                  <br />
+                                  <FormControl>
+                                    <Input type='text' value={displayName} onChange={(e) => setDisplayName(e.target.value)} placeholder='Displayname' />
+                                  </FormControl>
+                                  <br />
+                                  <FormControl>
+                                    <Input type='text' value={description} onChange={(e) => setDescription(e.target.value)} placeholder='Description' />
+                                  </FormControl>
+                                </ModalBody>
+                                <ModalFooter>
+                                  <Button colorScheme='blue' mr={3} onClick={onCloseEditExtraCharge}>
+                                    Close
+                                  </Button>
+                                  <Button type="submit" onClick={handleEditLease} variant='ghost'>EditExtraCharge</Button>
+                                </ModalFooter>
+                              </ModalContent>
+                            </Modal>
+                          </Td>
+                          <Td>
+                            <Button onClick={() => handleDeleteLease(item)}>
+                              <DeleteIcon style={{ color: color === item._id ? "green" : "red" }} />
+                            </Button>
+                          </Td>
+                        </Flex>
+                      </Tr>
+                    ))
+                  }
                 </Tbody>
               </Table>
             </TableContainer>
