@@ -58,8 +58,8 @@ const Utlility = () => {
             </Thead>
             <Tbody>
               {
-                utilitiesLand?.length > 0 && utilitiesLand?.map((item) => {
-                  return <Tr key={item._id}>
+                utilitiesLand?.length > 0 && utilitiesLand?.map((item) => (
+               <Tr key={item._id}>
                     <Td>
                     {
                       utilitiesLand.map((item,index)=>(
@@ -112,7 +112,7 @@ const Utlility = () => {
                       </Td>
                     </Flex>
                   </Tr>
-                })
+                ))
               }
             </Tbody>
           </Table>
