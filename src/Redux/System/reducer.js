@@ -7,6 +7,9 @@ const initialState = {
     unit:[],
     payment:[],
     users:[],
+    usersRoles:[],
+    permission:[],
+    tentants:[],
     isLoading: false,
     isError: false
 }
@@ -514,6 +517,222 @@ const reducer = (state = initialState, action) => {
                 isError: false,
             }
         case types.DELETE_USER_ROLE_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                isError: true
+            }
+        case types.GET_ROLE_REQUEST:
+            return {
+                ...state,
+                isLoading: true
+            }
+        case types.GET_ROLE_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                usersRoles: payload,
+                isError: false,
+            }
+        case types.GET_ROLE_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                isError: true,
+            }
+        case types.POST_ROLE_REQUEST:
+            return {
+                ...state,
+                isLoading: true,
+            }
+        case types.POST_ROLE_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                usersRoles: [...state.usersRoles, payload],
+                isError: false,
+            }
+        case types.POST_ROLE_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                isError: true
+            }
+        case types.EDIT_ROLE_REQUEST:
+            return {
+                ...state,
+                isLoading: true,
+            }
+        case types.EDIT_ROLE_SUCCESS:
+            return {
+                ...state,
+                usersRoles: state.usersRoles.map((item) => item._id === payload.id ? payload : item),
+                isLoading: false,
+                isError: false,
+            }
+        case types.EDIT_ROLE_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                isError: true,
+            }
+        case types.DELETE_ROLE_REQUEST:
+            return {
+                ...state,
+                isLoading: true,
+            }
+        case types.DELETE_ROLE_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                usersRoles: state.usersRoles.filter((land) => land._id !== payload),
+                isError: false,
+            }
+        case types.DELETE_ROLE_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                isError: true
+            }
+        case types.GET_PERMISSION_REQUEST:
+            return {
+                ...state,
+                isLoading: true
+            }
+        case types.GET_PERMISSION_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                permission: payload,
+                isError: false,
+            }
+        case types.GET_PERMISSION_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                isError: true,
+            }
+        case types.POST_PERMISSION_REQUEST:
+            return {
+                ...state,
+                isLoading: true,
+            }
+        case types.POST_PERMISSION_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                permission: [...state.permission, payload],
+                isError: false,
+            }
+        case types.POST_PERMISSION_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                isError: true
+            }
+        case types.EDIT_PERMISSION_REQUEST:
+            return {
+                ...state,
+                isLoading: true,
+            }
+        case types.EDIT_PERMISSION_SUCCESS:
+            return {
+                ...state,
+                permission: state.permission.map((item) => item._id === payload.id ? payload : item),
+                isLoading: false,
+                isError: false,
+            }
+        case types.EDIT_PERMISSION_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                isError: true,
+            }
+        case types.DELETE_PERMISSION_REQUEST:
+            return {
+                ...state,
+                isLoading: true,
+            }
+        case types.DELETE_PERMISSION_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                permission: state.permission.filter((land) => land._id !== payload),
+                isError: false,
+            }
+        case types.DELETE_PERMISSION_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                isError: true
+            }
+        case types.GET_TENTANTS_REQUEST:
+            return {
+                ...state,
+                isLoading: true
+            }
+        case types.GET_TENTANTS_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                tentants: payload,
+                isError: false,
+            }
+        case types.GET_TENTANTS_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                isError: true,
+            }
+        case types.POST_TENTANTS_REQUEST:
+            return {
+                ...state,
+                isLoading: true,
+            }
+        case types.POST_TENTANTS_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                tentants: [...state.tentants, payload],
+                isError: false,
+            }
+        case types.POST_TENTANTS_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                isError: true
+            }
+        case types.EDIT_TENTANTS_REQUEST:
+            return {
+                ...state,
+                isLoading: true,
+            }
+        case types.EDIT_TENTANTS_SUCCESS:
+            return {
+                ...state,
+                tentants: state.tentants.map((item) => item._id === payload.id ? payload : item),
+                isLoading: false,
+                isError: false,
+            }
+        case types.EDIT_TENTANTS_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                isError: true,
+            }
+        case types.DELETE_TENTANTS_REQUEST:
+            return {
+                ...state,
+                isLoading: true,
+            }
+        case types.DELETE_TENTANTS_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                tentants: state.tentants.filter((land) => land._id !== payload),
+                isError: false,
+            }
+        case types.DELETE_TENTANTS_FAILURE:
             return {
                 ...state,
                 isLoading: false,

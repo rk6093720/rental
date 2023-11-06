@@ -13,14 +13,14 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserRole, putUserRole } from '../Redux/System/action';
 import { useParams } from 'react-router-dom';
-const EditUserRole = () => {
+const EditUserRole = ({item}) => {
     const { id } = useParams();
     const [role, setRole] = useState("");
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
     const [currentSystem, setCurrentSystem] = useState({});
+    const dispatch = useDispatch();
     const userRole = useSelector((state) => state.System.users);
     const { isOpen: isOpenEditUser, onOpen: onOpenEditUser, onClose: onCloseEditUser } = useDisclosure();
     const handleEditUser = async (id) => {

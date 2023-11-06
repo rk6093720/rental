@@ -331,6 +331,147 @@ const deleteUserRole = (id) => async (dispatch) => {
             dispatch({ type: types.DELETE_USER_ROLE_FAILURE, payload: e })
         })
 }
+const getRole = () => async (dispatch) => {
+    dispatch({ type: types.GET_ROLE_REQUEST })
+    return await axios.get("http://localhost:8080/role/read")
+        .then((r) => {
+            console.log(r, "get")
+            dispatch({ type: types.GET_ROLE_SUCCESS, payload: r.data.Role })
+        })
+        .catch((e) => {
+            return dispatch({ type: types.GET_ROLE_FAILURE, payload: e })
+        })
+}
+const postRole = (payload) => async (dispatch) => {
+    dispatch({ type: types.POST_ROLE_REQUEST })
+    console.log(payload)
+    return await axios.post(`http://localhost:8080/role/create`, payload)
+        .then((r) => {
+            console.log(r)
+            dispatch({ type: types.POST_ROLE_SUCCESS, payload: r.data.AddRole })
+        })
+        .catch((e) => {
+            dispatch({ type: types.POST_ROLE_FAILURE, payload: e })
+        })
+}
+
+const putRole = (id, payload) => async (dispatch) => {
+    dispatch({ type: types.EDIT_ROLE_REQUEST });
+    return await axios.put(`http://localhost:8080/role/update/${id}`, payload)
+        .then((r) => {
+            console.log(r);
+            dispatch({ type: types.EDIT_ROLE_SUCCESS, payload: r.data.editRole })
+        })
+        .catch((e) => {
+            dispatch({ type: types.EDIT_ROLE_FAILURE, payload: e })
+        })
+}
+
+const deleteRole = (id) => async (dispatch) => {
+    dispatch({ type: types.DELETE_ROLE_REQUEST });
+    return await axios.delete(`http://localhost:8080/role/remove/${id}`)
+        .then((r) => {
+            console.log(r);
+            dispatch({ type: types.DELETE_ROLE_SUCCESS, payload: id })
+        })
+        .catch((e) => {
+            dispatch({ type: types.DELETE_ROLE_FAILURE, payload: e })
+        })
+}
+const getPermission = () => async (dispatch) => {
+    dispatch({ type: types.GET_PERMISSION_REQUEST })
+    return await axios.get("http://localhost:8080/permission/read")
+        .then((r) => {
+            console.log(r, "get")
+            dispatch({ type: types.GET_PERMISSION_SUCCESS, payload: r.data.Permission })
+        })
+        .catch((e) => {
+            return dispatch({ type: types.GET_PERMISSION_FAILURE, payload: e })
+        })
+}
+const postPermission = (payload) => async (dispatch) => {
+    dispatch({ type: types.POST_PERMISSION_REQUEST })
+    console.log(payload)
+    return await axios.post(`http://localhost:8080/permission/create`, payload)
+        .then((r) => {
+            console.log(r)
+            dispatch({ type: types.POST_PERMISSION_SUCCESS, payload: r.data.AddPermission })
+        })
+        .catch((e) => {
+            dispatch({ type: types.POST_PERMISSION_FAILURE, payload: e })
+        })
+}
+
+const putPermission = (id, payload) => async (dispatch) => {
+    dispatch({ type: types.EDIT_PERMISSION_REQUEST });
+    return await axios.put(`http://localhost:8080/permission/update/${id}`, payload)
+        .then((r) => {
+            console.log(r);
+            dispatch({ type: types.EDIT_PERMISSION_SUCCESS, payload: r.data.editPermission })
+        })
+        .catch((e) => {
+            dispatch({ type: types.EDIT_PERMISSION_FAILURE, payload: e })
+        })
+}
+
+const deletePermission = (id) => async (dispatch) => {
+    dispatch({ type: types.DELETE_PERMISSION_REQUEST });
+    return await axios.delete(`http://localhost:8080/permission/remove/${id}`)
+        .then((r) => {
+            console.log(r);
+            dispatch({ type: types.DELETE_PERMISSION_SUCCESS, payload: id })
+        })
+        .catch((e) => {
+            dispatch({ type: types.DELETE_PERMISSION_FAILURE, payload: e })
+        })
+}
+const getTentants = () => async (dispatch) => {
+    dispatch({ type: types.GET_TENTANTS_REQUEST })
+    return await axios.get("http://localhost:8080/tentants/read")
+        .then((r) => {
+            console.log(r, "get")
+            dispatch({ type: types.GET_TENTANTS_SUCCESS, payload: r.data.Tentants })
+        })
+        .catch((e) => {
+            return dispatch({ type: types.GET_TENTANTS_FAILURE, payload: e })
+        })
+}
+const postTentants = (payload) => async (dispatch) => {
+    dispatch({ type: types.POST_TENTANTS_REQUEST })
+    console.log(payload)
+    return await axios.post(`http://localhost:8080/tentants/create`, payload)
+        .then((r) => {
+            console.log(r)
+            dispatch({ type: types.POST_TENTANTS_SUCCESS, payload: r.data.AddTentants })
+        })
+        .catch((e) => {
+            dispatch({ type: types.POST_TENTANTS_FAILURE, payload: e })
+        })
+}
+
+const editTentants = (id, payload) => async (dispatch) => {
+    dispatch({ type: types.EDIT_TENTANTS_REQUEST });
+    return await axios.put(`http://localhost:8080/tentants/update/${id}`, payload)
+        .then((r) => {
+            console.log(r);
+            dispatch({ type: types.EDIT_TENTANTS_SUCCESS, payload: r.data.editTentants })
+        })
+        .catch((e) => {
+            dispatch({ type: types.EDIT_TENTANTS_FAILURE, payload: e })
+        })
+}
+
+const deleteTentants = (id) => async (dispatch) => {
+    dispatch({ type: types.DELETE_TENTANTS_REQUEST });
+    return await axios.delete(`http://localhost:8080/tentants/remove/${id}`)
+        .then((r) => {
+            console.log(r);
+            dispatch({ type: types.DELETE_TENTANTS_SUCCESS, payload: id })
+        })
+        .catch((e) => {
+            dispatch({ type: types.DELETE_TENTANTS_FAILURE, payload: e })
+        })
+}
 export {
     getSystem,
     postSystem,
@@ -359,5 +500,17 @@ export {
     getUserRole,
     postUserRole,
     putUserRole,
-    deleteUserRole
+    deleteUserRole,
+    getRole,
+    postRole,
+    putRole,
+    deleteRole,
+    getPermission,
+    postPermission,
+    putPermission,
+    deletePermission,
+    getTentants,
+    postTentants,
+    editTentants,
+    deleteTentants
 }
