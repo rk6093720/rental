@@ -8,7 +8,6 @@ import Profile from './Profile';
 import Landlord from './Landlord';
 import Tentants from './Tentants';
 import Leases from './Leases';
-import Logout from './Logout';
 import Utlility from './Utlility';
 import Invoices from './Invoices';
 import Payment from './Payment';
@@ -47,7 +46,6 @@ const MainRoutes = () => {
                 <Route path='/landlords' element={<Landlord />} />
                 <Route path='/tentants' element={<Tentants />} />
                 <Route path='/leases' element={<Leases />} />
-                <Route path='/logout' element={<Logout />} />
                 <Route path='/utilities' element={<Utlility/>}/>
                 <Route path='/invoices' element={<Invoices/>}/>
                 <Route path='/payment' element={<Payment/>}/>

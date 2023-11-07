@@ -1,15 +1,17 @@
+import { appData, saveData } from "../../Component/LocalStorage";
 import * as types from "./actionTypes";
 
+
 const initialState = {
-    isAuth:false,
-    token:"",
+    isAuth: false,
+    token: appData("token") || "",
     isLoading:false,
     isError:false,
     status:false,
     msg:"",
     forgetPasswordStatus:false,
     passwordUpdate:false,
-    admin:[],
+    admin:[] ,
 }
 
 const reducer = (state = initialState, action) => {
@@ -38,10 +40,12 @@ const reducer = (state = initialState, action) => {
             isLoading:true,
         }
     case types.LOGIN_SUCCESS:
+            let newLogin = saveData("token", payload)
         return {
             ...state,
             isLoading:false,
-            token:payload,
+            token:newLogin,
+            admin:payload,
             isAuth:true,
             isError:false,
             msg:payload

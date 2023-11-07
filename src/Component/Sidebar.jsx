@@ -1,6 +1,6 @@
-import { Box, Flex, Heading, Stack } from '@chakra-ui/react';
+import { Box, Button,Flex, Heading, Stack } from '@chakra-ui/react';
 import React from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Icon } from '@chakra-ui/icons';
 import { RiDashboardLine, RiLogoutCircleRLine, RiHomeWifiFill } from "react-icons/ri";
 import { LuTableProperties } from "react-icons/lu";
@@ -9,6 +9,11 @@ import { FcHome } from "react-icons/fc";
 import { TbHomeCheck, TbHomeMove, TbReport } from "react-icons/tb";
 import { MdSettings, MdPayment } from "react-icons/md";
 const Sidebar = () => {
+    const navigate= useNavigate();
+    const handleLogout = ()=>{
+        localStorage.removeItem("token")
+        navigate("/adminLogin")
+    }
     return (
         <div>
             <Box>
@@ -93,13 +98,10 @@ const Sidebar = () => {
                     </Link>
                     {/* 11 */}
                     <hr style={{ marginTop: "25px" }} />
-                    <Link to="/logout" >
-                        <Flex _hover={{ color: "white", bg: "green" }} alignItems={"start"} justify={"space-evenly"} style={{ height:"50px",border: "1px solid black", marginTop: "10%", padding: "2px" }}>
+                    <Button onClick={handleLogout} _hover={{ color: "white", bg: "green" }} alignItems={"start"} justify={"space-evenly"} style={{ height:"50px",border: "1px solid black", marginTop: "10%", padding: "2px" }} >
                             <Box style={{ fontSize: "30px", width: "48%" }}><RiLogoutCircleRLine style={{ marginLeft: "40%", alignItems: "center" }} /></Box>
                             <Box style={{ fontSize: "20px", width: "50%", textAlign: "start", alignItems: "center" }}>Logout</Box>
-                        </Flex>
-                    </Link>
-
+                    </Button>
                 </Stack>
             </Box>
         </div>

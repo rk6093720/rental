@@ -6,6 +6,7 @@ import { getProfile, postProfile } from '../Redux/Auth/action';
 
 const Profile = () => {
   const {id} = useParams();
+  console.log(id)
   const [email,setEmail]=useState("");
   const [firstname,setFirstName]=useState("");
   const [lastname,setLastName]=useState("");
@@ -58,35 +59,35 @@ const Profile = () => {
         <Heading>Profile</Heading>
        <form onSubmit={handleProfile}>
          <FormControl>
-          <Input value={firstname} onChange={(e)=>setFirstName(e.target.value)} placeholder='enter your firstName'/>
+          <Input type='text' value={firstname} onChange={(e)=>setFirstName(e.target.value)} placeholder='enter your firstName'/>
          </FormControl>
          <br/>
        <FormControl>
-          <Input value={lastname} onChange={(e) => setLastName(e.target.value)} placeholder='enter your lastName' />
+            <Input type='text' value={lastname} onChange={(e) => setLastName(e.target.value)} placeholder='enter your lastName' />
       </FormControl>
       <br/>
       <FormControl>
-          <Input value={email} onChange={(e) => setEmail(e.target.value)} placeholder='enter your email' />
+          <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder='enter your email' />
       </FormControl>
       <br/>
         <FormControl>
-          <Input value={userType ? "Admin" : userType} onChange={(e) => setUserType(e.target.value)} placeholder='enter your userType' />
+            <Input type='text' value={userType ? "Admin" : userType} onChange={(e) => setUserType(e.target.value)} placeholder='enter your userType' />
         </FormControl>
         <br/>
         <FormControl>
-          <Input value={country} onChange={(e) => setCountry(e.target.value)} placeholder='enter your country' />
+            <Input type='text' value={country} onChange={(e) => setCountry(e.target.value)} placeholder='enter your country' />
         </FormControl>
         <br />
         <FormControl>
-          <Input value={city} onChange={(e) => setCity(e.target.value)} placeholder='enter your city' />
+            <Input type='text' value={city} onChange={(e) => setCity(e.target.value)} placeholder='enter your city' />
         </FormControl>
         <br />
         <FormControl>
-          <Input value={state} onChange={(e) => setState(e.target.value)} placeholder='enter your state' />
+            <Input type='text' value={state} onChange={(e) => setState(e.target.value)} placeholder='enter your state' />
         </FormControl>
         <br />
         <FormControl>
-          <Input value={password} onChange={(e) => setPassword(e.target.value)} placeholder='enter your password' />
+            <Input  type='password' value={password} onChange={(e) => setPassword(e.target.value)} placeholder='enter your password' />
         </FormControl>
         <br/>
         <Button type="submit">Update Profile</Button>
