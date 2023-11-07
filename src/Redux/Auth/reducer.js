@@ -9,6 +9,7 @@ const initialState = {
     msg:"",
     forgetPasswordStatus:false,
     passwordUpdate:false,
+    admin:[],
 }
 
 const reducer = (state = initialState, action) => {
@@ -112,6 +113,44 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 isLoading: false,
                 forgetPasswordStatus: false, // Set forget password failure status
+                isError: true,
+            };
+        case types.GET_PROFILE_REQUEST:
+            return {
+                ...state,
+                isLoading: true,
+            };
+        case types.GET_PROFILE_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                admin:payload,
+                isError:false
+            };
+        case types.GET_PROFILE_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                isError: true,
+            };
+
+        case types.POST_PROFILE_REQUEST:
+            return {
+                ...state,
+                isLoading: true,
+            };
+        case types.POST_PROFILE_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                passwordUpdate: true, // Set forget password success status
+                admin:[...state.admin,payload],
+
+            };
+        case types.POST_PROFILE_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
                 isError: true,
             };
         case types.SIGNOUT_REQUEST: return {

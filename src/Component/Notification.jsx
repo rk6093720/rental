@@ -25,10 +25,10 @@ const Notification = () => {
                 </Thead>
                 <Tbody>
                   <Tr>
-                    <Td>NotificationCode</Td>
-                    <Td>NotificationName</Td>
-                    <Td>city</Td>
-                    <Td>countApartment</Td>
+                    <Td>event</Td>
+                    <Td>sms</Td>
+                    <Td>email</Td>
+                    <Td></Td>
                   </Tr>
                 </Tbody>
               </Table>
