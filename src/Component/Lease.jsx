@@ -33,7 +33,7 @@ import {
   Select,
   useDisclosure,
 } from '@chakra-ui/react';
-import { deleteLease, editLease, getLease, postLease } from '../Redux/System/action';
+import { deleteExtraCharge, deleteLease, editExtraCharge, editLease, getExtraCharge, getLease, postExtraCharge, postLease } from '../Redux/System/action';
 const Lease= () => {
   const {id} = useParams();
   const { isOpen: isOpenAddLease, onOpen: onOpenAddLease, onClose: onCloseAddLease } = useDisclosure();
@@ -41,11 +41,14 @@ const Lease= () => {
   const { isOpen: isOpenAddExtraCharge, onOpen: onOpenAddExtraCharge, onClose: onCloseAddExtraCharge } = useDisclosure();
   const { isOpen: isOpenEditExtraCharge, onOpen: onOpenEditExtraCharge, onClose: onCloseEditExtraCharge } = useDisclosure();
   const [editLeaseId, setEditLeaseId] = useState(null);
+  const [editExtraId, setEditExtraId] = useState(null);
   const [name, setName] = useState("");
   const [displayName, setDisplayName] = useState("");
   const [description, setDescription] = useState("");
   const [currentLease, setCurrentLease] = useState({});
+  const [currentExtra,setCurrentExtra]=useState({});
   const lease = useSelector((state) => state.System.lease_types)
+  const extra = useSelector((state) => state.System.extra_charge)
   const dispatch = useDispatch();
   const [color, setColor] = useState(null);
   const handleOpenEditLease = (item) => {
@@ -54,6 +57,13 @@ const Lease= () => {
     setDisplayName(item.displayName);
     setDescription(item.description);
     onOpenEditLease();
+  }
+  const handleOpenEditExtra = (item) => {
+    setEditExtraId(item._id);
+    setName(item.name);
+    setDisplayName(item.displayName);
+    setDescription(item.description);
+    onOpenEditExtraCharge();
   }
   const handleEditLease = async () => {
     try {
@@ -64,6 +74,19 @@ const Lease= () => {
       };
       await dispatch(editLease(editLeaseId, payload))
         .then(() => dispatch(getLease()));
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  const handleEditExtra = async () => {
+    try {
+      const payload = {
+        name,
+        displayName,
+        description,
+      };
+      await dispatch(editExtraCharge(editExtraId, payload))
+        .then(() => dispatch(getExtraCharge()));
     } catch (error) {
       console.log(error);
     }
@@ -82,9 +105,27 @@ const Lease= () => {
       console.log(error);
     }
   }
-
+  const handleAddExtra = async (e) => {
+    e.preventDefault();
+    try {
+      const payload = {
+        name,
+        displayName,
+        description
+      }
+      await dispatch(postExtraCharge(payload)) 
+        .then(() => dispatch(getExtraCharge()))
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  
   const handleDeleteLease = (item) => {
     dispatch(deleteLease(item._id));
+    setColor(item._id);
+  }
+  const handleDeleteExtra = (item) => {
+    dispatch(deleteExtraCharge(item._id));
     setColor(item._id);
   }
 
@@ -95,6 +136,12 @@ const Lease= () => {
   }, [dispatch, lease?.length]);
 
   useEffect(() => {
+     if (extra?.length === 0) {
+      dispatch(getExtraCharge());
+    }
+  }, [dispatch, extra?.length]);
+
+  useEffect(() => {
     if (id) {
       const LeaseById = lease.find((item) => item._id === id);
       LeaseById && setCurrentLease(LeaseById);
@@ -103,18 +150,27 @@ const Lease= () => {
       LeaseById && setDescription(LeaseById.description);
     }
   }, [id, lease]);
+  useEffect(() => {
+    if (id) {
+      const extraById = extra.find((item) => item._id === id);
+      extraById && setCurrentExtra(extraById);
+      extraById && setName(extraById.name);
+      extraById && setDisplayName(extraById.displayName);
+      extraById && setDescription(extraById.description);
+    }
+  }, [id, extra]);
 
   return (
     <div>
       <Tabs>
         <TabList>
-          <Tab>Lease</Tab>
+          {/* <Tab>Lease</Tab> */}
           <Tab>Lease Types</Tab>
           <Tab>Extra charges</Tab>
           <Tab>Contract document</Tab>
         </TabList>
         <TabPanels>
-          <TabPanel>
+          {/* <TabPanel>
             <Input placeholder='Lease number prefix'/>
             <br/>
             <Input placeholder='Invoice number prefix'/>
@@ -166,7 +222,7 @@ const Lease= () => {
               </Checkbox>
               <br/>
               <Button>Update Setting</Button>
-          </TabPanel>
+          </TabPanel> */}
           <TabPanel>
             <Button onClick={onOpenAddLease}><AddIcon />Lease</Button>
             <Modal isOpen={isOpenAddLease} onClose={onCloseAddLease}>
@@ -265,7 +321,7 @@ const Lease= () => {
             <Button onClick={onOpenAddExtraCharge}><AddIcon />ExtraCharge</Button>
             <Modal isOpen={isOpenAddExtraCharge} onClose={onCloseAddExtraCharge}>
               <ModalOverlay />
-              <form onSubmit={handleAdd}>
+              <form onSubmit={handleAddExtra}>
                 <ModalContent>
                   <ModalHeader>AddExtraCharge</ModalHeader>
                   <ModalCloseButton />
@@ -305,14 +361,14 @@ const Lease= () => {
                 </Thead>
                 <Tbody>
                   {
-                    lease?.length > 0 && lease.map((item, index) => (
+                    extra?.length > 0 && extra.map((item, index) => (
                       <Tr key={item._id}>
                         <Td>{item.name}</Td>
                         <Td>{item.displayName}</Td>
                         <Td>{item.description}</Td>
                         <Flex>
                           <Td>
-                            <Button onClick={() => handleOpenEditLease(item)}>
+                            <Button onClick={() => handleOpenEditExtra(item)}>
                               <EditIcon />
                             </Button>
                             <Modal isOpen={isOpenEditExtraCharge} onClose={onCloseEditExtraCharge}>
@@ -337,13 +393,13 @@ const Lease= () => {
                                   <Button colorScheme='blue' mr={3} onClick={onCloseEditExtraCharge}>
                                     Close
                                   </Button>
-                                  <Button type="submit" onClick={handleEditLease} variant='ghost'>EditExtraCharge</Button>
+                                  <Button type="submit" onClick={handleEditExtra} variant='ghost'>EditExtraCharge</Button>
                                 </ModalFooter>
                               </ModalContent>
                             </Modal>
                           </Td>
                           <Td>
-                            <Button onClick={() => handleDeleteLease(item)}>
+                            <Button onClick={() => handleDeleteExtra(item)}>
                               <DeleteIcon style={{ color: color === item._id ? "green" : "red" }} />
                             </Button>
                           </Td>

@@ -60,7 +60,19 @@ const Invoices = () => {
               </Tr>
             </Thead>
             <Tbody>
-              {
+              <Tr>
+                <Td>Invoice Number</Td>
+                <Td>Invoice Date</Td>
+                <Td>Lease</Td>
+                <Td>Period</Td>
+                <Td>Amount</Td>
+                <Td>Paid</Td>
+                <Td>Balance</Td>
+                <Td>DueOn</Td>
+                <Td>Status</Td>
+              </Tr>
+
+              {/* {
                 land?.length > 0 && land?.map((item) => {
                   return <Tr key={item._id}>
                     <Td>{item.firstName}</Td>
@@ -86,7 +98,7 @@ const Invoices = () => {
                     </Flex>
                   </Tr>
                 })
-              }
+              } */}
             </Tbody>
           </Table>
         </TableContainer>

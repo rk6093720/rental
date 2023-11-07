@@ -114,6 +114,9 @@ const reducer = (state = initialState, action) => {
                 forgetPasswordStatus: false, // Set forget password failure status
                 isError: true,
             };
+        case types.SIGNOUT_REQUEST: return {
+            ...state
+        }
 
     default:
         return state
