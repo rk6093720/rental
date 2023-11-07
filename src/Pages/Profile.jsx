@@ -6,7 +6,6 @@ import { getProfile, postProfile } from '../Redux/Auth/action';
 
 const Profile = () => {
   const {id} = useParams();
-  console.log(id)
   const [email,setEmail]=useState("");
   const [firstname,setFirstName]=useState("");
   const [lastname,setLastName]=useState("");
