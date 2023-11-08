@@ -62,30 +62,6 @@ const postResetPwd=(id,token,password)=> async(dispatch)=>{
     })
 }
 
-const getProfile = () => async (dispatch) => {
-    dispatch({ type: types.GET_PROFILE_REQUEST })
-    return await axios.get(`http://localhost:8080/admin/profile-data`)
-        .then((r) => {
-            console.log(r)
-            return dispatch({ type: types.GET_PROFILE_SUCCESS, payload: r.data.Admin })
-        })
-        .catch((e) => {
-            dispatch({ type: types.GET_PROFILE_FAILURE, payload: e })
-        })
-
-
-}
-const postProfile = (id, payload) => async (dispatch) => {
-    dispatch({ type: types.POST_PROFILE_REQUEST })
-    return await axios.put(`http://localhost:8080/admin/profile/${id}`,payload)
-        .then((r) => {
-            console.log(r);
-            return dispatch({ type: types.POST_PROFILE_SUCCESS, payload: r.data.AddAdmin })
-        })
-        .catch((e) => {
-            return dispatch({ type: types.POST_PROFILE_FAILURE, payload: e })
-        })
-}
 
 export {
     SignupAuth,
@@ -93,7 +69,5 @@ export {
     forgetPassword,
     getResetPwd,
     postResetPwd,
-    getProfile,
-    postProfile
 
 }

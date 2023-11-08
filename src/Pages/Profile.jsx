@@ -1,13 +1,13 @@
 import { Box, Button, FormControl, Heading, Input } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom'
-import { getProfile, postProfile } from '../Redux/Auth/action';
+import { getProfile, postProfile } from '../Redux/profile/action';
+// import { useParams } from 'react-router-dom'
 
 const Profile = () => {
-  const {id} = useParams();
+  // const {id} = useParams();
   const [email,setEmail]=useState("");
-  const [firstname,setFirstName]=useState("");
+  const [firstName,setFirstName]=useState("");
   const [lastname,setLastName]=useState("");
   const [password,setPassword]=useState("");
   const [country,setCountry]=useState("");
@@ -15,21 +15,21 @@ const Profile = () => {
   const [city,setCity]=useState("");
   const [userType,setUserType]=useState("");
   const dispatch = useDispatch();
-  const [currentAdmin,setCurrentAdmin]= useState({})
-  const admin = useSelector((state)=>state.Auth.admin)
+  // const [currentAdmin,setCurrentAdmin]= useState({})
+  const admin = useSelector((state)=>state.profile.admin)
   const handleProfile= async(e)=>{
     e.preventDefault();
     try {
       const payload={
-        firstname,
+        firstName,
         lastname,
         country,
         state,
         password,
         city
       }
-      await dispatch(postProfile(id,payload))
-      .then(()=>getProfile())
+      await dispatch(postProfile(payload))
+      .then(()=> dispatch(getProfile()))
     } catch (error) {
       console.log(error);
     }
@@ -40,32 +40,32 @@ const Profile = () => {
       dispatch(getProfile())
     }
   },[dispatch,admin?.length]);
-  useEffect(()=>{
-    if(id){
-      const adminById = admin.find((item)=> item._id === id);
-        adminById && setCurrentAdmin(adminById);
-      adminById && setFirstName(adminById.firstname);
-      adminById && setLastName(adminById.lastname);
-      adminById && setCity(adminById.city);
-      adminById && setCountry(adminById.country);
-      adminById && setState(adminById.state);
-      adminById && setPassword(adminById.password);
-    }
-  },[id, admin])
+  // useEffect(()=>{
+  //   if(id){
+  //     const adminById = admin.find((item)=> item._id === id);
+  //       adminById && setCurrentAdmin(adminById);
+  //     adminById && setFirstName(adminById.firstname);
+  //     adminById && setLastName(adminById.lastname);
+  //     adminById && setCity(adminById.city);
+  //     adminById && setCountry(adminById.country);
+  //     adminById && setState(adminById.state);
+  //     adminById && setPassword(adminById.password);
+  //   }
+  // },[id, admin])
   return (
     <div>
       <Box>
         <Heading>Profile</Heading>
        <form onSubmit={handleProfile}>
          <FormControl>
-          <Input type='text' value={firstname} onChange={(e)=>setFirstName(e.target.value)} placeholder='enter your firstName'/>
+          <Input type='text' value={firstName} onChange={(e)=>setFirstName(e.target.value)} placeholder='enter your firstName'/>
          </FormControl>
          <br/>
        <FormControl>
             <Input type='text' value={lastname} onChange={(e) => setLastName(e.target.value)} placeholder='enter your lastName' />
       </FormControl>
       <br/>
-      <FormControl>
+      <FormControl isRequired>
           <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder='enter your email' />
       </FormControl>
       <br/>
@@ -85,11 +85,11 @@ const Profile = () => {
             <Input type='text' value={state} onChange={(e) => setState(e.target.value)} placeholder='enter your state' />
         </FormControl>
         <br />
-        <FormControl>
+        <FormControl isRequired>
             <Input  type='password' value={password} onChange={(e) => setPassword(e.target.value)} placeholder='enter your password' />
         </FormControl>
         <br/>
-        <Button type="submit">Update Profile</Button>
+        <Button type="submit">Add Profile</Button>
         </form> 
       </Box>
     </div>
