@@ -1,17 +1,16 @@
 import { appData, saveData } from "../../Component/LocalStorage";
 import * as types from "./actionTypes";
-
-
+const superadmin = JSON.parse(localStorage.getItem("token"));
 const initialState = {
-    isAuth: false,
-    token: appData("token") || "",
+    isAuth:superadmin ? true : false,
+    token: appData("token") || superadmin?.token?.token,
     isLoading:false,
     isError:false,
     status:false,
     msg:"",
+    roles:"",
     forgetPasswordStatus:false,
     passwordUpdate:false,
-   
 }
 
 const reducer = (state = initialState, action) => {
@@ -44,8 +43,9 @@ const reducer = (state = initialState, action) => {
         return {
             ...state,
             isLoading:false,
-            token:newLogin,
+            token:newLogin || payload.token,
             admin:payload,
+            roles:payload,
             isAuth:true,
             isError:false,
             msg:payload
@@ -120,9 +120,13 @@ const reducer = (state = initialState, action) => {
                 isError: true,
             };
             case types.SIGNOUT_REQUEST: return {
-            ...state
-        }
-
+                ...state
+            }
+            case types.ROLES:
+                return {
+                    ...state,
+                    roles:payload
+                }
     default:
         return state
     }

@@ -24,7 +24,7 @@ const Tentants = () => {
     if (tentant?.length === 0) {
       dispatch(getTentants())
     }
-  }, [tentant.length, dispatch])
+  }, [tentant?.length, dispatch])
   console.log(tentant, "tentant");
   console.log(color)
   return (

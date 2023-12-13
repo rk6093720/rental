@@ -49,10 +49,33 @@ const deleteLandLord = (id) => async(dispatch)=>{
         dispatch({type:types.DELETE_LANDLORD_FAILURE,payload:e})
     })
 }
+const filterLandlord = (filters, sort, pagination) => async(dispatch)=>{
+    try {
+        dispatch({ type: types.FETCH_LANDLORDS_REQUEST, payload: { filters, sort, pagination } });
 
+        const response = await axios.get("http://localhost:8080/landlord/land-filter", {
+            params: { filters, sort, pagination }
+        });
+
+        dispatch({
+            type: types.FETCH_LANDLORDS_SUCCESS,
+            payload: { FilterData: response.data.results, page: response.data.paginationInfo, filters, sort, pagination },
+        });
+    } catch (error) {
+        dispatch({
+            type: types.FETCH_LANDLORDS_FAILURE,
+            payload: { error },
+        });
+    }
+}
+export const setPagination = (pagination) => ({
+    type: types.SET_PAGINATION,
+    payload: pagination,
+});
 export{
     getLandlord,
     postLandlord,
     editLandLord,
-    deleteLandLord
+    deleteLandLord,
+    filterLandlord
 }

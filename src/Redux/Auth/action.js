@@ -62,6 +62,10 @@ const postResetPwd=(id,token,password)=> async(dispatch)=>{
     })
 }
 
+export const rolesData=(payload)=>({
+    type:types.ROLES,
+    payload
+})
 
 export {
     SignupAuth,

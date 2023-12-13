@@ -3,13 +3,15 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { BsPersonFillAdd } from "react-icons/bs"
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteLandLord, getLandlord } from '../Redux/App/action';
+import { deleteLandLord, filterLandlord, getLandlord, setPagination } from '../Redux/App/action';
 import { ChevronDownIcon, DeleteIcon, EditIcon } from '@chakra-ui/icons';
 import { Button, Flex, Table, TableCaption, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 const Landlord = () => {
   const dispatch = useDispatch();
   const [color,setColor]= useState(null);
   const [landlordFilter,setLandlordFilter]= useState("");
+  const {pagination,sort,filters} = useSelector((state)=>state.App)
+  console.log(pagination, sort, filters)
   const handleFilter=(e)=>{
     setLandlordFilter(e.target.value)
   }
@@ -19,15 +21,21 @@ const Landlord = () => {
       .then(()=> dispatch(getLandlord()))
     setColor(item._id)
   }
+  const handlePaginationChange = (newPage) => {
+    // Update Redux state when local state changes
+    dispatch(setPagination({ ...pagination, page: newPage }));
+  };
+
   const land = useSelector((state) => state.App.landlord);
   useEffect(()=>{
     if(land?.length === 0)
     {
     dispatch(getLandlord())
     }
-  },[land.length, dispatch])
-console.log(land);
-console.log(color)
+    dispatch(filterLandlord(filters, sort, pagination));
+  }, [land.length, dispatch, filters, sort, pagination])
+// console.log(land);
+// console.log(color)
   return (
     <div>
       <Flex minWidth='max-content' alignItems='center' gap='2'>
@@ -86,8 +94,14 @@ console.log(color)
               }
             </Tbody>
           </Table>
-        </TableContainer>
-        
+        </TableContainer> 
+      </Box>
+      <Box>
+        {Array.from({ length: pagination.totalPages }).map((_, index) => (
+          <button key={index + 1} onClick={() => handlePaginationChange(index + 1)}>
+            {index + 1}
+          </button>
+        ))}
       </Box>
     </div>
   )

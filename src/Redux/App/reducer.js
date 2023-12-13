@@ -2,7 +2,23 @@ import * as types from "./actionTypes"
 const initialState = {
    landlord:[],
    isLoading:false,
-   isError:false
+   isError:false,
+    filters: {
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+    },
+    sort: {
+        sortBy: '',
+        sortOrder: 'asc',
+    },
+    pagination: {
+        page: 1,
+        limit: 10,
+        totalPages: 1,
+        totalRecords: 0,
+    },
 }
 
 const reducer = (state = initialState, action) => {
@@ -81,6 +97,30 @@ const reducer = (state = initialState, action) => {
             isLoading:false,
             isError:true
         }
+    case types.FETCH_LANDLORDS_REQUEST:
+        return {
+            ...state,
+            isLoading: true,
+        }
+    case types.FETCH_LANDLORDS_SUCCESS:
+        return {
+            ...state,
+            landlord:payload || [],
+            filters: state.payload.filters || {},
+            sort: state.payload.sort || {},
+            pagination: state.payload.pagination || {},
+        }
+    case types.FETCH_LANDLORDS_FAILURE:
+        return {
+            ...state,
+            isLoading: false,
+            isError: true
+        }
+        case types.SET_PAGINATION:
+            return {
+                ...state,
+                pagination: state.payload,
+            };
     default:
         return state
     }

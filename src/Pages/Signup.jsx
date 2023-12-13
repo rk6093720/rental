@@ -1,11 +1,11 @@
 import React from 'react'
-import {Box,Input, Button, FormControl, FormLabel, InputGroup, InputRightElement, useToast} from "@chakra-ui/react";
+import { Box, Input, Button, FormControl, RadioGroup, Stack, Radio, FormLabel, InputGroup, InputRightElement, useToast} from "@chakra-ui/react";
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { EmailIcon, ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { RiAdminLine } from 'react-icons/ri';
 import { useDispatch } from 'react-redux';
-import { SignupAuth } from '../Redux/Auth/action';
+import { SignupAuth, rolesData } from '../Redux/Auth/action';
 import { SIGNUP_FAILURE } from '../Redux/Auth/actionTypes';
 const Signup = () => {
   const [email, setEmail] = useState("");
@@ -17,6 +17,14 @@ const Signup = () => {
   const navigate = useNavigate();
  const handleClick=()=>{
   setShow(!show)
+ }
+ const handleChange=(e)=>{
+     const radio = e.target.value;
+   if (radio === "SuperAdmin"){
+    navigate("/adminLogin", {state:{role:radio}})
+   }
+   setUserType(radio)
+   dispatch(rolesData(radio))
  }
   const handleSubmit=(e)=>{
     e.preventDefault();
@@ -64,6 +72,7 @@ const Signup = () => {
         })
     } 
   }
+  console.log(userType);
   return (
     <div className='auth' style={{ width:"30%", height:"500px",margin:"auto", marginTop:"15px"}}>
        <Box className="auth-inner" style={{width:"100%", height:"100%"}}>
@@ -73,19 +82,44 @@ const Signup = () => {
           <FormControl >
             <FormLabel>Admin</FormLabel>
             <InputGroup className='inputForEmail' style={{ width: "100%", height: "50%", marginTop: "15px" }}>
-              <Input placeholder='enter your Type'
-                type='text'
-                autoComplete='Admin'
-                _hover={{ bg: "green", color: "white" }}
-                value={userType}
-                style={{ fontSize: "24px" }}
-                onChange={(e) => setUserType(e.target.value)} />
+              <RadioGroup style={{ fontSize: "24px", marginTop: "5px", padding: "5px" }} >
+                <Stack direction='row' onChange={handleChange} value={userType}>
+                  <Radio value='SuperAdmin'>SuperAdmin</Radio>
+                  <Radio value='Admin'>Admin</Radio>
+                  <Radio value='User'>User</Radio>
+                </Stack>
+              </RadioGroup>
               <InputRightElement _hover={{ bg: "green", color: "white" }}>
                 <RiAdminLine  style={{fontSize:"24px"}}/>
               </InputRightElement>
             </InputGroup>
           </FormControl>
           <br/>
+          <FormControl >
+            <FormLabel>FirstName</FormLabel>
+            <InputGroup className='inputForFirstName' style={{ width: "100%", height: "50%", marginTop: "15px" }}>
+              <Input placeholder='enter your firstName'
+                type='text'
+                autoComplete='text'
+                _hover={{ bg: "green", color: "white" }}
+                value={email}
+                style={{ fontSize: "24px" }}
+                onChange={(e) => setEmail(e.target.value)} />
+            </InputGroup>
+          </FormControl>
+          <br /><FormControl >
+            <FormLabel>lastName</FormLabel>
+            <InputGroup className='inputForFirstName' style={{ width: "100%", height: "50%", marginTop: "15px" }}>
+              <Input placeholder='enter your firstName'
+                type='text'
+                autoComplete='text'
+                _hover={{ bg: "green", color: "white" }}
+                value={email}
+                style={{ fontSize: "24px" }}
+                onChange={(e) => setEmail(e.target.value)} />
+            </InputGroup>
+          </FormControl>
+          <br />
           <FormControl >
             <FormLabel>Email</FormLabel>
             <InputGroup className='inputForEmail' style={{ width: "100%", height: "50%", marginTop: "15px" }}>
@@ -132,7 +166,7 @@ const Signup = () => {
           <br/>
           <p className="forgot-password text-right"
           style={{fontSize:"20px"}}>
-            Create Registration for New Admin <Link to="/adminLogin" style={{color:"blue"}}>Login</Link>
+            Create Registration for Admin and User <Link to="/adminLogin" style={{color:"blue"}}>Login</Link>
           </p>
         </form>
        </Box>

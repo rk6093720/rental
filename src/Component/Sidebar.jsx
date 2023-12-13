@@ -11,8 +11,8 @@ import { MdSettings, MdPayment } from "react-icons/md";
 const Sidebar = () => {
     const navigate= useNavigate();
     const handleLogout = ()=>{
-        localStorage.removeItem("token")
-        navigate("/adminLogin")
+        // localStorage.removeItem("token")
+        // navigate("/adminLogin")
     }
     return (
         <div>

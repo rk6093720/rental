@@ -4,7 +4,6 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteSystem, editSystem, getSystem, postSystem } from '../Redux/System/action';
 import { useParams } from 'react-router-dom';
-
 const System = () => {
   const {id} = useParams();
   const [editing, setEditing] = useState(false);
@@ -23,7 +22,7 @@ const System = () => {
   const [separator,setSeparator]=useState("");
   const [separatorDot, setSeparatorDot] = useState("");
   const [separatorDate, setSeparatorDate] = useState("");
-  const [currentSystem,setCurrentSystem]=useState({});
+  const [currentSystem,setCurrentSystem]=useState({}); 
   const [country,setCountry]=useState([]);
   const system = useSelector((state) => state.System.system);
   const dispatch = useDispatch();
@@ -115,11 +114,12 @@ const System = () => {
       systemlandById && setSeparatorDot(systemlandById.separatorDot);
       systemlandById && setSeparatorDate(systemlandById.separatorDate);
     }
-  }, [id, system])
+  }, [id, system]);
+  console.log(logo);
   return (
     <div >
       <Box  maxW='m' borderWidth='1px' borderRadius='lg' overflowX="hidden" overflowY="scroll">
-          <form onSubmit={handleUpdate}>
+        
             {
             editing ? (
               <>
@@ -136,8 +136,10 @@ const System = () => {
                 </FormControl>
                 <br />
                 <FormControl>
-                  <Input type='file' value={logo} onChange={(e) => setLogo(console.log(e.target
-                    .files[0]), e.target.files[0])} placeholder='upload file' />
+                  <Input type="file"
+                    id="image"
+                    accept='image/*'
+                    name="logo"  onChange={(e) => setLogo(e.target.files[0])} placeholder='upload file' />
                 </FormControl>
                 <br />
                 <FormControl>
@@ -218,7 +220,7 @@ const System = () => {
                 </FormControl>
               </>
               ):(
-                <>
+              <form onSubmit={handleUpdate}>
                     <FormControl>
                       <Input type="text" value={companyName} onChange={(e) => setCompanyName(e.target.value)} placeholder='name of the company' />
                     </FormControl>
@@ -232,8 +234,10 @@ const System = () => {
                     </FormControl>
                     <br />
                     <FormControl>
-                      <Input type='file' value={logo} onChange={(e) => setLogo(console.log(e.target
-                        .files[0]), e.target.files[0])} placeholder='upload file' />
+                    <Input  type="file"
+                      id="image"
+                      accept='image/*'
+                      name="logo"  onChange={(e) => setLogo(e.target.files[0])} placeholder='upload file' />
                     </FormControl>
                     <br />
                     <FormControl>
@@ -312,7 +316,7 @@ const System = () => {
                     <FormControl>
                       <Button type='submit'>Add parameter</Button>
                     </FormControl>
-                </>
+              </form>
               )
             }
           
@@ -327,7 +331,6 @@ const System = () => {
             </>
           )
          }
-        </form>
          </Box>
     </div>
   )

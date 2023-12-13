@@ -1,5 +1,5 @@
 import { EmailIcon } from '@chakra-ui/icons'
-import { Box, Button, FormControl, FormLabel, Heading, Input, InputGroup, InputRightElement, useToast } from '@chakra-ui/react'
+import { Box, Flex,Spacer, Button, FormControl, FormLabel, Heading, Input, InputGroup, InputRightElement, useToast } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { getLandlord, postLandlord } from '../Redux/App/action';
@@ -64,9 +64,10 @@ const AddLandlord = () => {
   console.log(image)
   return (
     <div>
-         <Box style={{width:"50%",height:"700px",margin:"auto",marginTop:"15px",overflowX:"hidden",overflowY:"scroll"}}>
+         <Box style={{width:"50%",height:"700px",margin:"auto",marginTop:"15px"}}>
           <Heading>Add LandLord</Heading>
            <form onSubmit={handleForm}>
+           <Flex>
             <FormControl isRequired>
               <FormLabel>FirstName</FormLabel>
               <InputGroup className='inputForFn' style={{ width: "100%", height: "5%" }}>
@@ -78,6 +79,7 @@ const AddLandlord = () => {
                   onChange={(e) => setFirstName(e.target.value)} />
               </InputGroup>
             </FormControl>
+            <Spacer/>
           <FormControl isRequired>
               <FormLabel>LastName</FormLabel>
               <InputGroup className='inputForFn' style={{ width: "100%", height: "5%" }}>
@@ -88,7 +90,9 @@ const AddLandlord = () => {
                   style={{ fontSize: "24px" }}
                   onChange={(e) => setLastName(e.target.value)} />
               </InputGroup>
-            </FormControl>  
+            </FormControl> 
+          </Flex> 
+          <Flex>
           <FormControl isRequired>
             <FormLabel>Email</FormLabel>
             <InputGroup className='inputForEmail' style={{ width: "100%", height: "5%" }}>
@@ -116,6 +120,8 @@ const AddLandlord = () => {
                 onChange={(e) => setPhone(e.target.value)} />
             </InputGroup>
           </FormControl>
+          </Flex> 
+          <Flex>
           <FormControl isRequired>
             <FormLabel>Country</FormLabel>
             <InputGroup className='inputForcountry' style={{ width: "100%", height: "5%" }}>
@@ -138,6 +144,8 @@ const AddLandlord = () => {
                 onChange={(e) => setState(e.target.value)} />
             </InputGroup>
           </FormControl>
+          </Flex> 
+          <Flex>
           <FormControl isRequired>
             <FormLabel>City</FormLabel>
             <InputGroup className='inputForcity' style={{ width: "100%", height: "5%"}}>
@@ -161,6 +169,8 @@ const AddLandlord = () => {
                 onChange={(e) => setPostalCode(e.target.value)} />
             </InputGroup>
           </FormControl>
+          </Flex> 
+          <Flex>
           <FormControl isRequired>
             <FormLabel>Address</FormLabel>
             <InputGroup className='inputForAddress' style={{ width: "100%", height: "5%"}}>
@@ -183,6 +193,8 @@ const AddLandlord = () => {
                 onChange={(e) => setCountApartment(e.target.value)} />
             </InputGroup>
           </FormControl>
+          </Flex>
+          <Flex>
           <FormControl isRequired >
             <FormLabel>AdharCard</FormLabel>
             <InputGroup className='inputForAdharCard' style={{ width: "100%", height: "5%"}}>
@@ -208,6 +220,8 @@ const AddLandlord = () => {
                 onChange={handleChangeFile} />
             </InputGroup>
           </FormControl>
+          </Flex>
+          <Flex>
           <FormControl isRequired>
             <FormLabel>propertyCode</FormLabel>
             <InputGroup className='inputForpropertyCode' style={{ width: "100%", height: "5%" }}>
@@ -230,6 +244,7 @@ const AddLandlord = () => {
                 onChange={(e) => setPropertyName(e.target.value)} />
             </InputGroup>
           </FormControl>
+          </Flex>
           <FormControl isRequired>
             <FormLabel>Registration Date</FormLabel>
             <InputGroup className='inputForRegistration registerDate' style={{ width: "100%", height: "5%"}}>
