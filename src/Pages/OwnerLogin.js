@@ -1,4 +1,4 @@
-import React, {  useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import { EmailIcon, ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
@@ -13,8 +13,8 @@ const OwnerLogin = ()=>{
         setShow(!show)
     }
    // const [storage]= useState(JSON.parse(localStorage.getItem("Admintoken")));
-    const isAuthAdmin = useSelector((state)=>state.Auth.isAuthAdmin);
-    const role = useSelector((state)=>state.Auth.roles);
+   const isAuthAdmin = useSelector((state)=>state.Auth.isAuthAdmin);
+    const role = useSelector((state)=>state.Auth.role);
     const toast= useToast()
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -63,10 +63,9 @@ const OwnerLogin = ()=>{
         useEffect(()=>{
             if(isAuthAdmin ){
                 navigate("/owner-dashboard");
-                window.location.reload()
             }
         },[isAuthAdmin,navigate]);
-        console.log(role)
+       // console.log(role)
     return (
     <div className='mainLogin' style={{ margin: "auto",marginTop:"65px"}}>
             <Box className='wholeBoxForLogin' style={{ width: "500px", height: "450px", margin: "auto", marginTop: "25px", padding: "5px", boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px" }}>
@@ -124,8 +123,8 @@ const OwnerLogin = ()=>{
                         style={{ width: "100%", height: "50px", fontSize: "24px", color: "white", borderRadius: "15px" }}
                         >LOGIN</Button>
                 </Box>
-                <Box>
-                    <Text>Owner and User don't have Account  <Link to="/adminSignup"> Signup</Link></Text>
+                <Box style={{textAlign:'center'}}>
+                    <Text>Owner and User don't have Account{" "}<Link to="/adminSignup"> Signup</Link></Text>
                 </Box>
                 </form>
             </Box>

@@ -18,7 +18,7 @@ const UserLogin = () =>{
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const isAuthUser = useSelector((state)=>state.Auth.isAuthUser);
-    const role = useSelector((state)=>state.Auth.roles);
+    const role = useSelector((state)=>state.Auth.role);
     const handleLogin=async(e)=>{
         e.preventDefault()
         const payload={
@@ -32,7 +32,7 @@ const UserLogin = () =>{
             if(res.type === OWNER_LOGIN_SUCCESS )
             {
                 toast({
-                    title: 'Admin Login success',
+                    title: 'User Login success',
                     duration: 5000,
                     position: 'top',
                     isClosable: true,
@@ -42,7 +42,7 @@ const UserLogin = () =>{
             }
             else if(res.payload.data.msg === "Invalid Password"){
                 toast({
-                    title: 'Admin Login failed because of Invalid password',
+                    title: 'User Login failed because of Invalid password',
                     duration: 5000,
                     position: 'top',
                     isClosable: true,
@@ -51,7 +51,7 @@ const UserLogin = () =>{
                 })
             }else{
                 toast({
-                    title: 'Admin Login failed because of Error or connection',
+                    title: 'User Login failed because of Error or connection',
                     duration: 5000,
                     position: 'top',
                     isClosable: true,
@@ -64,7 +64,6 @@ const UserLogin = () =>{
     useEffect(()=>{
         if(isAuthUser ){
             navigate("/tentant-dashboard");
-            window.location.reload()
         }
     },[isAuthUser,navigate]);
     return (

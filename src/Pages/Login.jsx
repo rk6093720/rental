@@ -65,7 +65,6 @@ const Login = () => {
         if (isAuth && location.state?.role === "SuperAdmin") {
             console.log(isAuth)
         navigate("/superAdmin")
-        window.location.reload()
         }   
     }, [isAuth,navigate,location.state?.role])
     console.log(userType)

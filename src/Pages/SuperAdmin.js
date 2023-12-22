@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Box,Flex,Spacer,Button,Switch} from "@chakra-ui/react"
-import { Link } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 import { BsPersonFillAdd } from "react-icons/bs"
 import { useNavigate } from 'react-router-dom';
 import { useDispatch ,useSelector} from 'react-redux';
@@ -16,6 +16,8 @@ import {
 import {  DeleteIcon, EditIcon } from '@chakra-ui/icons';
 import { deleteLandLord, getLandlord } from '../Redux/App/action';
 import Navbar from '../Component/Navbar';
+import Sidebar from '../Component/Sidebar';
+import MainRoutes from './MainRoutes';
 const SuperAdmin = () => {
   const [change,setChange]= useState(null);
   const admin = useSelector((state) => state.App.landlord);
@@ -48,7 +50,13 @@ const SuperAdmin = () => {
   },[dispatch,admin.length])
   return (
     <div>
-      <Navbar/>
+      <Flex style={{width:"100%"}}>
+        <Box style={{width:"20%"}}>
+          <Sidebar/>
+        </Box>
+        <Spacer style={{width:"1%"}}/>
+        <Box  style={{width:"79%"}}>
+        <Navbar/>
       <Flex>
           <Button onClick={handleAdmin} p='6' mt="5px" bg='red.500' w='200px' h="100px" fontSize="24px" color="white" ml="15px">
             Admin Dashboard
@@ -106,6 +114,10 @@ const SuperAdmin = () => {
           </Tbody>
         </Table>
       </TableContainer>
+      <MainRoutes/>
+        <Outlet/>
+      </Box>
+      </Flex>
     </div>
   )
 }

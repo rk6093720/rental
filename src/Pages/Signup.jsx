@@ -20,11 +20,11 @@ const Signup = () => {
  }
  const handleChange=(e)=>{
      const radio = e.target.value;
-     setUserType(radio)
+     setUserType(radio);
+     dispatch(rolesData(radio))
    if (radio === "SuperAdmin"){
     navigate("/adminLogin", {state:{role:radio}})
    }
-   dispatch(rolesData(radio))
  }
  const handleSubmit = (e) => {
   e.preventDefault();

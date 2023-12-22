@@ -27,7 +27,7 @@ const  LoginAuth = (e)=> async(dispatch)=>{
 const  ownerUserLogin = (payload)=> async(dispatch)=>{
     try {
         dispatch({type:types.OWNER_LOGIN_REQUEST})
-        const endPoint = payload.role === "user" ? "admin/owner-login" : "admin/user-login";
+        let endPoint = payload.role !== "User" ? "admin/owner-login" : "admin/user-login";
          const res = await axios.post(`http://localhost:8080/${endPoint}`,payload);
          console.log(res)
          const {token,email,role}= res.data.data;

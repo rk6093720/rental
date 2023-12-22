@@ -32,11 +32,7 @@ import ViewPayment from './ViewPayment';
 import AddVacateNotice from './AddVacateNotice';
 import ViewVacateNotice from './ViewVacateNotice';
 import EditVacateNotice from './EditVacateNotice';
-import { useSelector } from 'react-redux';
-
 const MainRoutes = () => {
-    const isAuth = useSelector((state)=>state.Auth.isAuth);
-    console.log(isAuth)
     return (
         <div>
             <Routes>

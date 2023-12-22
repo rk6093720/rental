@@ -42,7 +42,7 @@ const reducer = (state = initialState, action) => {
         }
     case types.LOGIN_SUCCESS:
         console.log(payload.token.role)
-        const {role,token}=payload;
+        const {token}=payload;
         console.log("2",token)
         let newLogin = saveData(`${token.role}token`,payload)
         return {
@@ -50,7 +50,7 @@ const reducer = (state = initialState, action) => {
             isLoading:false,
             token:newLogin || token,
             admin:token,
-            roles:role,
+            roles:payload.token.role,
             isAuth:true,
             isError:false,
             msg:payload
@@ -75,7 +75,7 @@ const reducer = (state = initialState, action) => {
                 isLoading:false,
                 token:newOwnerLogin,
                 admin:payload.email,
-                roles:payload.role,
+                role:payload.role,
                 isAuthAdmin:payload.role === "Admin",
                 isAuthUser:payload.role === "User",
                 isError:false,
@@ -156,9 +156,12 @@ const reducer = (state = initialState, action) => {
                 ...state
             }
             case types.ROLES:
+                console.log(payload)
                 return {
                     ...state,
-                    roles:payload
+                    roles:payload,
+                    role:payload
+
                 }
     default:
         return state
