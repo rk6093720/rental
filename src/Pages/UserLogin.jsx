@@ -123,8 +123,8 @@ const UserLogin = () =>{
                     style={{ width: "100%", height: "50px", fontSize: "24px", color: "white", borderRadius: "15px" }}
                     >LOGIN</Button>
             </Box>
-            <Box>
-                <Text>Owner and User don't have Account  <Link to="/adminSignup"> Signup</Link></Text>
+            <Box style={{textAlign:"center"}}>
+                <Text>Owner and User don't have Account{" "}<Link to="/adminSignup"> Signup</Link></Text>
             </Box>
             </form>
         </Box>

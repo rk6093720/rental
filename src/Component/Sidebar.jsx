@@ -2,7 +2,7 @@ import { Box,Flex, Heading, Stack } from '@chakra-ui/react';
 import React from 'react'
 import { Link } from 'react-router-dom';
 import { Icon } from '@chakra-ui/icons';
-import { RiDashboardLine, RiHomeWifiFill } from "react-icons/ri";
+import {  RiHomeWifiFill } from "react-icons/ri";
 import { LuTableProperties } from "react-icons/lu";
 import { FaLandmark, FaFileInvoice } from "react-icons/fa";
 import { FcHome } from "react-icons/fc";

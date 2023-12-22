@@ -66,9 +66,10 @@ const Signup = () => {
               isClosable: true,
               colorScheme: "green",
             });
-            if (userType !== "Admin") {
-              navigate("/owner&user-login");
-              window.location.reload();
+            if (userType === "Admin") {
+              navigate("/owner-login");
+            }else{
+              navigate("/user-login");
             }
           }
         });

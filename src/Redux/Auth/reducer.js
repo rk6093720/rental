@@ -97,6 +97,7 @@ const reducer = (state = initialState, action) => {
                 forgetPasswordStatus: false, // Reset forget password status
             }
         case types.FORGET_PASSWORD_SUCCESS:
+            console.log("forgetpwd",payload)
             return {
                 ...state,
                 isLoading: false,
@@ -117,6 +118,7 @@ const reducer = (state = initialState, action) => {
                 forgetPasswordStatus: false, // Reset forget password status
             };
         case types.GET_RESET_PASSWORD_SUCCESS:
+            console.log(payload,"resetpassword")
             return {
                 ...state,
                 isLoading: false,

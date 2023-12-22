@@ -19,7 +19,7 @@ const TentantSidebar = () => {
                     <Link to="/tentant-dashboard/dashboard" >
                         <Flex _hover={{ color: "white", bg: "green" }} alignItems={"start"} justify={"space-evenly"} style={{ height:"50px", border: "1px solid black", marginTop: "45x", padding: "2px" }}>
                             <Box style={{ fontSize: "30px", width: "48%" }}><RiDashboardLine style={{ marginLeft: "40%", alignItems: "center" }} /></Box>
-                            <Box style={{ fontSize: "20px",width:"50%",textAlign:"start",alignItems:"center"}}>Dashboard</Box>
+                            <Box style={{ fontSize: "20px",width:"50%",textAlign:"start",alignItems:"center",whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}>Dashboard</Box>
                         </Flex>
                     </Link>
                     {/* 3 */}
@@ -40,41 +40,41 @@ const TentantSidebar = () => {
                     <Link to="/tentant-dashboard/leases" >
                         <Flex _hover={{ color: "white", bg: "green" }} alignItems={"start"} justify={"space-evenly"} style={{ height:"50px", border: "1px solid black", marginTop: "45x", padding: "2px" }}>
                             <Box style={{ fontSize: "30px", width: "48%" }}><TbHomeCheck style={{ marginLeft: "40%", alignItems: "center" }} /></Box>
-                            <Box style={{ fontSize: "20px", width: "50%", textAlign: "start", alignItems: "center" }}>Leases Details</Box>
+                            <Box style={{ fontSize: "20px", width: "50%", textAlign: "start", alignItems: "center",whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis" }}>Leases Details</Box>
                         </Flex>
                     </Link>
                     {/* 6 */}
                     <Link to="/tentant-dashboard/utilities " >
                         <Flex _hover={{ color: "white", bg: "green" }} alignItems={"start"} justify={"space-evenly"} style={{ height:"50px", border: "1px solid black", marginTop: "45x", padding: "2px" }}>
                             <Box style={{ fontSize: "30px", width: "48%" }}><RiHomeWifiFill style={{ marginLeft: "40%", alignItems: "center" }} /></Box>
-                            <Box style={{ fontSize: "20px", width: "50%", textAlign: "start", alignItems: "center" }}>Utility </Box>
+                            <Box style={{ fontSize: "20px", width: "50%", textAlign: "start", alignItems: "center",whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis" }}>Utility </Box>
                         </Flex>
                     </Link>
                     {/* 7 */}
                     <Link to="/tentant-dashboard/invoices" >
                         <Flex _hover={{ color: "white", bg: "green" }} alignItems={"start"} justify={"space-evenly"} style={{ height:"50px", border: "1px solid black", marginTop: "45x", padding: "2px" }}>
                             <Box style={{ fontSize: "30px", width: "48%" }}><FaFileInvoice style={{ marginLeft: "40%", alignItems: "center" }} /></Box>
-                            <Box style={{ fontSize: "20px", width: "50%", textAlign: "start", alignItems: "center" }}>Invoices</Box>
+                            <Box style={{ fontSize: "20px", width: "50%", textAlign: "start", alignItems: "center",whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis" }}>Invoices</Box>
                         </Flex>
                     </Link>
                     {/* 8 */}
                     <Link to="/tentant-dashboard/payment" >
                         <Flex _hover={{ color: "white", bg: "green" }} alignItems={"start"} justify={"space-evenly"} style={{ height:"50px", border: "1px solid black", marginTop: "45x", padding: "2px" }}>
                             <Box style={{ fontSize: "30px", width: "48%" }}><Icon as={MdPayment} style={{ marginLeft: "38%", alignItems: "center" }} /></Box>
-                            <Box style={{ fontSize: "20px", width: "50%", textAlign: "start", alignItems: "center" }}>Payment</Box>
+                            <Box style={{ fontSize: "20px", width: "50%", textAlign: "start", alignItems: "center",whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis" }}>Payment</Box>
                         </Flex>
                     </Link>
                     <Link to="/tentant-dashboard/vacateNotices">
                         <Flex _hover={{ color: "white", bg: "green" }} alignContent={"start"} justify={"space-evenly"} style={{ height:"50px", border: "1px solid black", marginTop: "45x", padding: "2px" }}>
                             <Box style={{ fontSize: "30px", width: "48%" }}><TbHomeMove style={{ marginLeft: "40%", alignItems: "center" }} /></Box>
-                            <Box style={{ fontSize: "20px", width: "50%", textAlign: "start", alignItems: "center" }}>VacateNotices</Box>
+                            <Box style={{ fontSize: "20px", width: "50%", textAlign: "start", alignItems: "center",whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis" }}>VacateNotices</Box>
                         </Flex>
                     </Link>
                     {/* 10 */}
                     <Link to="/tentant-dashboard/reports" >
                         <Flex _hover={{ color: "white", bg: "green" }} alignItems={"start"} justify={"space-evenly"} style={{ height:"50px", border: "1px solid black", marginTop: "45x", padding: "2px" }}>
                             <Box style={{ fontSize: "30px", width: "48%" }}><Icon as={TbReport} style={{ marginLeft: "38%", alignItems: "center" }} /></Box>
-                            <Box style={{ fontSize: "20px", width: "50%", textAlign: "start", alignItems: "center" }}>RentReports</Box>
+                            <Box style={{ fontSize: "20px", width: "50%", textAlign: "start", alignItems: "center",whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis" }}>RentReports</Box>
                         </Flex>
                     </Link>
                 </Stack>

@@ -37,7 +37,7 @@ const ResetPassword = () => {
             title: "please write your email address",
             description: "please provide your credentials",
             duration: 5000,
-            colorScheme: "red",
+            colorScheme: "green",
             status: "success",
             isClosable: true,
             position: "top",
@@ -63,7 +63,7 @@ const ResetPassword = () => {
   },[])
   return (
     <div>
-      <Box className='resetpwd' style={{border:"1px solid black",width:"30%",height:"500px",margin:"auto",marginTop:"8%"}}>
+      <Box className='resetpwd' style={{border:"1px solid black",width:"30%",height:"300px",margin:"auto",marginTop:"8%"}}>
           <Heading>Reset Password</Heading>
         <form onSubmit={handleResetPwd} >
           <FormControl >
