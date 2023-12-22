@@ -16,7 +16,7 @@ const AdminSidebar = () => {
                 <hr style={{ marginTop: "10px" }} />
                 <Stack marginTop={"15px"} style={{width:"100%",height:"100%",overflowX:"hidden",overflowY:"scroll"}}>
                     {/* 1 */}
-                    <Link to="/owner-dashboard/dashboard" >
+                    <Link to="/owner-dashboard" >
                         <Flex _hover={{ color: "white", bg: "green" }} alignItems={"start"} justify={"space-evenly"} style={{ height:"50px", border: "1px solid black", marginTop: "45x", padding: "2px" }}>
                             <Box style={{ fontSize: "30px", width: "48%" }}><RiDashboardLine style={{ marginLeft: "40%", alignItems: "center" }} /></Box>
                             <Box style={{ fontSize: "20px",width:"50%",textAlign:"start",alignItems:"center"}}>Dashboard</Box>
@@ -60,7 +60,7 @@ const AdminSidebar = () => {
                     {/* 8 */}
                     <Link to="/owner-dashboard/payment" >
                         <Flex _hover={{ color: "white", bg: "green" }} alignItems={"start"} justify={"space-evenly"} style={{ height:"50px", border: "1px solid black", marginTop: "45x", padding: "2px" }}>
-                            <Box style={{ fontSize: "30px", width: "48%" }}><Icon as={MdPayment} style={{ marginLeft: "6%", alignItems: "center" }} /></Box>
+                            <Box style={{ fontSize: "30px", width: "48%" }}><Icon as={MdPayment} style={{ marginLeft: "38%", alignItems: "center",textAlign:"center" }} /></Box>
                             <Box style={{ fontSize: "20px", width: "50%", textAlign: "start", alignItems: "center" }}>Payment</Box>
                         </Flex>
                     </Link>
@@ -73,7 +73,7 @@ const AdminSidebar = () => {
                     {/* 10 */}
                     <Link to="/owner-dashboard/reports" >
                         <Flex _hover={{ color: "white", bg: "green" }} alignItems={"start"} justify={"space-evenly"} style={{ height:"50px", border: "1px solid black", marginTop: "45x", padding: "2px" }}>
-                            <Box style={{ fontSize: "30px", width: "48%" }}><Icon as={TbReport} style={{ marginLeft: "6%", alignItems: "center" }} /></Box>
+                            <Box style={{ fontSize: "30px", width: "48%" }}><Icon as={TbReport} style={{ marginLeft: "38%", alignItems: "center" }} /></Box>
                             <Box style={{ fontSize: "20px", width: "50%", textAlign: "start", alignItems: "center" }}>Reports</Box>
                         </Flex>
                     </Link>

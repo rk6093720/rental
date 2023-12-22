@@ -1,9 +1,11 @@
 
 import { Box, Button, Flex, Icon, Popover, PopoverArrow, PopoverBody, PopoverCloseButton, PopoverContent, PopoverFooter, PopoverHeader, PopoverTrigger, Portal, Spacer, Text } from "@chakra-ui/react"
 import React, { useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
+import { Link, Outlet, useNavigate } from "react-router-dom"
 import { MdSettings } from "react-icons/md"
 import { FaUserCircle } from "react-icons/fa"
+import MainRoutes from "./MainRoutes"
+import TentantSidebar from "../Component/TentantSidebar"
 const TDashboard = ()=>{
     const navigate = useNavigate();
     const [User]=useState(JSON.parse(localStorage.getItem("Usertoken"))) 
@@ -15,6 +17,12 @@ const TDashboard = ()=>{
     }
     return (
         <div>
+            <Flex style={{width:"100%"}}>
+             <Box style={{width:"20%"}}>
+                <TentantSidebar/>
+             </Box>
+             <Spacer  style={{width:"1%"}}/>
+             <Box  style={{width:"79%"}}>
              <div className="container" style={{ width: "100%", height: "50px", display: "flex", backgroundColor: "teal", justifyContent: "space-between", alignItems: "center" }}>
                 <div className='left' style={{ width: "20%", color: "white", fontSize: "24px" }}>
                     <Link to="/dashboard" style={{ textDecoration: "none", color: "white" }}>
@@ -61,6 +69,10 @@ const TDashboard = ()=>{
                     </Box>
                 </div>
             </div>
+            <MainRoutes/>
+            <Outlet/>
+             </Box>
+            </Flex>
         </div>
     )
 }

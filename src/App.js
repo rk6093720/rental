@@ -53,7 +53,7 @@ const App = () => {
           {isAuthUser && (
           <>
           {
-          roles === "User" && <Route path='/tentant-dashboard' element={<TDashboard/>}/>
+          roles === "User" && <Route path='/tentant-dashboard/*' element={<TDashboard/>}/>
           }
           </>
           )}

@@ -16,12 +16,6 @@ const Sidebar = () => {
                 <hr style={{ marginTop: "10px" }} />
                 <Stack marginTop={"15px"} style={{width:"100%",height:"100%",overflowX:"hidden",overflowY:"scroll"}}>
                     {/* 1 */}
-                    <Link to="/superAdmin/dashboard" >
-                        <Flex _hover={{ color: "white", bg: "green" }} alignItems={"start"} justify={"space-evenly"} style={{ height:"50px", border: "1px solid black", marginTop: "45x", padding: "2px" }}>
-                            <Box style={{ fontSize: "30px", width: "48%" }}><RiDashboardLine style={{ marginLeft: "40%", alignItems: "center" }} /></Box>
-                            <Box style={{ fontSize: "20px",width:"50%",textAlign:"start",alignItems:"center"}}>Dashboard</Box>
-                        </Flex>
-                    </Link>
                     <Link to="/superAdmin" >
                         <Flex _hover={{ color: "white", bg: "green" }} alignItems={"start"} justify={"space-evenly"} style={{ height:"50px", border: "1px solid black", marginTop: "45x", padding: "2px" }}>
                             <Box style={{ fontSize: "30px", width: "48%" }}><FaLandmark style={{ marginLeft: "40%", alignItems: "center" }} /></Box>
@@ -73,7 +67,7 @@ const Sidebar = () => {
                     {/* 8 */}
                     <Link to="/superAdmin/payment" >
                         <Flex _hover={{ color: "white", bg: "green" }} alignItems={"start"} justify={"space-evenly"} style={{ height:"50px", border: "1px solid black", marginTop: "45x", padding: "2px" }}>
-                            <Box style={{ fontSize: "30px", width: "48%" }}><Icon as={MdPayment} style={{ marginLeft: "6%", alignItems: "center" }} /></Box>
+                            <Box style={{ fontSize: "30px", width: "48%" }}><Icon as={MdPayment} style={{ marginLeft: "38%", alignItems: "center" }} /></Box>
                             <Box style={{ fontSize: "20px", width: "50%", textAlign: "start", alignItems: "center" }}>Payment</Box>
                         </Flex>
                     </Link>
@@ -86,23 +80,17 @@ const Sidebar = () => {
                     {/* 9 */}
                     <Link to="/superAdmin/setting" >
                         <Flex _hover={{ color: "white", bg: "green" }} alignItems={"start"} justify={"space-evenly"} style={{ height:"50px", border: "1px solid black", marginTop: "45x", padding: "2px" }}>
-                            <Box style={{ fontSize: "30px", width: "48%" }}><Icon as={MdSettings} style={{ marginLeft: "6%", alignItems: "center" }} /></Box>
+                            <Box style={{ fontSize: "30px", width: "48%" }}><Icon as={MdSettings} style={{ marginLeft: "38%", alignItems: "center" }} /></Box>
                             <Box style={{ fontSize: "20px", width: "50%", textAlign: "start", alignItems: "center" }}>Settings</Box>
                         </Flex>
                     </Link>
                     {/* 10 */}
                     <Link to="/superAdmin/reports" >
                         <Flex _hover={{ color: "white", bg: "green" }} alignItems={"start"} justify={"space-evenly"} style={{ height:"50px", border: "1px solid black", marginTop: "45x", padding: "2px" }}>
-                            <Box style={{ fontSize: "30px", width: "48%" }}><Icon as={TbReport} style={{ marginLeft: "6%", alignItems: "center" }} /></Box>
+                            <Box style={{ fontSize: "30px", width: "48%" }}><Icon as={TbReport} style={{ marginLeft: "38%", alignItems: "center" }} /></Box>
                             <Box style={{ fontSize: "20px", width: "50%", textAlign: "start", alignItems: "center" }}>Reports</Box>
                         </Flex>
                     </Link>
-                    {/* 11 */}
-                    {/* <hr style={{ marginTop: "25px" }} />
-                    <Button onClick={handleLogout} _hover={{ color: "white", bg: "green" }} alignItems={"start"} justify={"space-evenly"} style={{ height:"50px",border: "1px solid black", marginTop: "10%", padding: "2px" }} >
-                            <Box style={{ fontSize: "30px", width: "48%" }}><RiLogoutCircleRLine style={{ marginLeft: "40%", alignItems: "center" }} /></Box>
-                            <Box style={{ fontSize: "20px", width: "50%", textAlign: "start", alignItems: "center" }}>Logout</Box>
-                    </Button> */}
                 </Stack>
             </Box>
         </div>
