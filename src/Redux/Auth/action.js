@@ -3,15 +3,15 @@ import axios from "axios";
 
 const SignupAuth = (e)=>async (dispatch)=>{
   dispatch({ type: types.SIGNUP_REQUEST})
-    return await axios.post(`http://localhost:8080/admin/signup`,e)
+    return await axios.post(`http://localhost:8080/admin/owner-signup`,e)
     .then((r)=>{
         return dispatch({type:types.SIGNUP_SUCCESS, payload:r.data.msg})
     })
     .catch((e)=>{
-        return dispatch({type:types.SIGNUP_FAILURE, payload:e.data.msg})
+        return dispatch({type:types.SIGNUP_FAILURE, payload:e})
     })
 }
-
+//superAdmin login
 const  LoginAuth = (e)=> async(dispatch)=>{
     dispatch({type:types.LOGIN_REQUEST})
     return await axios.post(`http://localhost:8080/admin/login`,e) 
@@ -20,8 +20,35 @@ const  LoginAuth = (e)=> async(dispatch)=>{
        return dispatch({type:types.LOGIN_SUCCESS, payload:{token:r.data.data,status:r.data.status}})
     })
     .catch((e)=>{
-       return dispatch({ type: types.LOGIN_FAILURE, payload:{statusbar:e.payload.status}})
+       return dispatch({ type: types.LOGIN_FAILURE, payload:{statusbar:e}})
     })
+}
+//owner and user login
+const  ownerUserLogin = (payload)=> async(dispatch)=>{
+    try {
+        dispatch({type:types.OWNER_LOGIN_REQUEST})
+        const endPoint = payload.role === "user" ? "admin/owner-login" : "admin/user-login";
+         const res = await axios.post(`http://localhost:8080/${endPoint}`,payload);
+         console.log(res)
+         const {token,email,role}= res.data.data;
+        console.log(token,email,role,res.data.status,res.data.msg);
+       return dispatch({
+            type:types.OWNER_LOGIN_SUCCESS,
+            payload:{
+                token,
+                email,
+                role,
+                msg:res.data.msg,
+                statusbar:res.data.status
+            }
+        })
+    } catch (error) {
+       // console.log(error.response.data.msg)
+       return dispatch({
+            type:types.OWNER_LOGIN_FAILURE,
+            payload:error.response
+        })
+    }
 }
 const forgetPassword =(el)=> async(dispatch)=>{
     dispatch({type:types.FORGET_PASSWORD_REQUEST})
@@ -70,6 +97,7 @@ export const rolesData=(payload)=>({
 export {
     SignupAuth,
     LoginAuth,
+    ownerUserLogin,
     forgetPassword,
     getResetPwd,
     postResetPwd,

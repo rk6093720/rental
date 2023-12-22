@@ -1,9 +1,10 @@
 import { appData, saveData } from "../../Component/LocalStorage";
 import * as types from "./actionTypes";
-const superadmin = JSON.parse(localStorage.getItem("token"));
 const initialState = {
-    isAuth:superadmin ? true : false,
-    token: appData("token") || superadmin?.token?.token,
+    isAuth: false,
+    isAuthAdmin:false,
+    isAuthUser:false,
+    token: appData("Supertoken") || appData("OwnerToken") || appData("UserToken")|| "",
     isLoading:false,
     isError:false,
     status:false,
@@ -33,19 +34,23 @@ const reducer = (state = initialState, action) => {
             isError:true,
             status:false
         }
+     
     case types.LOGIN_REQUEST:
         return {
             ...state,
             isLoading:true,
         }
     case types.LOGIN_SUCCESS:
-            let newLogin = saveData("token", payload)
+        console.log(payload.token.role)
+        const {role,token}=payload;
+        console.log("2",token)
+        let newLogin = saveData(`${token.role}token`,payload)
         return {
             ...state,
             isLoading:false,
-            token:newLogin || payload.token,
-            admin:payload,
-            roles:payload,
+            token:newLogin || token,
+            admin:token,
+            roles:role,
             isAuth:true,
             isError:false,
             msg:payload
@@ -57,6 +62,34 @@ const reducer = (state = initialState, action) => {
             isLoading:false,
             isError:true
         }
+        case types.OWNER_LOGIN_REQUEST:
+            return {
+                ...state,
+                isLoading:true,
+            }
+        case types.OWNER_LOGIN_SUCCESS:
+            console.log(payload)
+            let newOwnerLogin = saveData(`${payload.role}token`,payload)
+            return {
+                ...state,
+                isLoading:false,
+                token:newOwnerLogin,
+                admin:payload.email,
+                roles:payload.role,
+                isAuthAdmin:payload.role === "Admin",
+                isAuthUser:payload.role === "User",
+                isError:false,
+                msg:payload
+            }
+        case types.OWNER_LOGIN_FAILURE:
+            console.log(payload)
+            return {
+                ...state,
+                isAuth:false,
+                isLoading:false,
+                msg:payload,
+                isError:true
+            }
         case types.FORGET_PASSWORD_REQUEST:
             return {
                 ...state,

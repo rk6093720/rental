@@ -21,7 +21,7 @@ const ReqAuth = ({ children }) => {
   }
 
   if (!auth) {
-    return <Navigate to="/login" replace state={{ data: location.pathname, }} />
+    return <Navigate to="/adminSignup" replace state={{ data: location.pathname}} />
   }
   return children
 

@@ -5,12 +5,10 @@ import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getResetPwd } from '../Redux/Auth/action';
 import { postResetPwd } from '../Redux/Auth/action';
-
 const ResetPassword = () => {
   const [email,setEmail]= useState("");
   const [show,setShow]= useState(false);
   const [password,setPassword]=useState("");
-
   const handleClick= ()=>{
     setShow(!show)
   }
@@ -119,5 +117,4 @@ const ResetPassword = () => {
     </div>
   )
 }
-
 export default ResetPassword

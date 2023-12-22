@@ -27,6 +27,12 @@ const Sidebar = () => {
                             <Box style={{ fontSize: "20px",width:"50%",textAlign:"start",alignItems:"center"}}>Dashboard</Box>
                         </Flex>
                     </Link>
+                    <Link to="/superAdmin" >
+                        <Flex _hover={{ color: "white", bg: "green" }} alignItems={"start"} justify={"space-evenly"} style={{ height:"50px", border: "1px solid black", marginTop: "45x", padding: "2px" }}>
+                            <Box style={{ fontSize: "30px", width: "48%" }}><FaLandmark style={{ marginLeft: "40%", alignItems: "center" }} /></Box>
+                            <Box style={{ fontSize: "20px", width: "50%", textAlign: "start", alignItems: "center" }}>SuperAdmin</Box>
+                        </Flex>
+                    </Link>
                     {/* 2 */}
                     <Link to="/landlords" >
                         <Flex _hover={{ color: "white", bg: "green" }} alignItems={"start"} justify={"space-evenly"} style={{ height:"50px", border: "1px solid black", marginTop: "45x", padding: "2px" }}>

@@ -1,78 +1,76 @@
 import React, {  useEffect, useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
-import {useDispatch,useSelector} from "react-redux";
-import {useLocation} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
 import { EmailIcon, ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { Input,Text,InputGroup, InputRightElement, Button, Box, FormControl, FormLabel, useToast } from '@chakra-ui/react';
-import { LoginAuth} from '../Redux/Auth/action';
-import { LOGIN_FAILURE} from '../Redux/Auth/actionTypes';
-const Login = () => {
+import { ownerUserLogin } from '../Redux/Auth/action';
+import {  OWNER_LOGIN_SUCCESS } from '../Redux/Auth/actionTypes';
+const OwnerLogin = ()=>{
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [userType,setUserType]=useState("");
     const [show, setShow] = useState(false);
     const handleClick = () => {
         setShow(!show)
     }
-    const isAuth = useSelector((state)=> state.Auth.isAuth)
+   // const [storage]= useState(JSON.parse(localStorage.getItem("Admintoken")));
+    const isAuthAdmin = useSelector((state)=>state.Auth.isAuthAdmin);
+    const role = useSelector((state)=>state.Auth.roles);
     const toast= useToast()
     const dispatch = useDispatch();
     const navigate = useNavigate();
-     const location = useLocation();
-    // console.log(location.state?.role);
-    // const comingFrom = location.state?.data || "/";
-    useEffect(() => {
-        if (location.state && location.state?.role) {
-            setUserType(location.state?.role)
-        }
-    }, [location.state])
-    const handleLogin = (e)=>{
-        if( location.state?.role === "SuperAdmin"){
-                e.preventDefault();
-                const payload ={
-                    email,
-                    password,
-                    userType
-                }
-            dispatch(LoginAuth(payload))
+     const handleLogin=async(e)=>{
+            e.preventDefault()
+            const payload={
+              email,
+              password,
+              role
+            }
+            dispatch(ownerUserLogin(payload))
             .then((res)=>{
                 console.log(res)
-                if ( res.payload.error === "InvAlid Password" || res.type === LOGIN_FAILURE  )
-                 { toast({
-                       title: 'SuperAdmin Sign in failed becasue  Check details and try again.',
-                        description:"Invalid Password , error connection and Failed",
-                         duration: 5000,
-                         position: 'top',
-                         isClosable: true,
-                         colorScheme: 'red',
-                         status: 'error',
-                       
-                     })
-                 } else  {
-                     toast({
-                          title: 'SuperAdmin Login success',
-                         duration: 5000,
-                         position: 'top',
-                         isClosable: true,
-                         colorScheme: 'green',
-                         status: 'success',
-                     });
-                 }
+                if(res.type === OWNER_LOGIN_SUCCESS )
+                {
+                    toast({
+                        title: 'Admin Login success',
+                        duration: 5000,
+                        position: 'top',
+                        isClosable: true,
+                        colorScheme: 'green',
+                        status: 'success',
+                    })
+                }
+                else if(res.payload.data.msg === "Invalid Password"){
+                    toast({
+                        title: 'Admin Login failed because of Invalid password',
+                        duration: 5000,
+                        position: 'top',
+                        isClosable: true,
+                        colorScheme: 'red',
+                        status: 'error',
+                    })
+                }else{
+                    toast({
+                        title: 'Admin Login failed because of Error or connection',
+                        duration: 5000,
+                        position: 'top',
+                        isClosable: true,
+                        colorScheme: 'red',
+                        status: 'error',
+                    })
+                }
             })
-            } 
         }
-    useEffect(() => {
-        if (isAuth && location.state?.role === "SuperAdmin") {
-            console.log(isAuth)
-        navigate("/superAdmin")
-        window.location.reload()
-        }   
-    }, [isAuth,navigate,location.state?.role])
-    console.log(userType)
+        useEffect(()=>{
+            if(isAuthAdmin ){
+                navigate("/owner-dashboard");
+                window.location.reload()
+            }
+        },[isAuthAdmin,navigate]);
+        console.log(role)
     return (
-        <div className='mainLogin' style={{ margin: "auto",marginTop:"65px"}}>
+    <div className='mainLogin' style={{ margin: "auto",marginTop:"65px"}}>
             <Box className='wholeBoxForLogin' style={{ width: "500px", height: "450px", margin: "auto", marginTop: "25px", padding: "5px", boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px" }}>
-                <h1 className='heading' style={{ fontSize: "24px", fontWeight: "bold",textAlign:"center" }}>Welcome to SuperAdmin Login</h1>
+                <h1 className='heading' style={{ fontSize: "24px", fontWeight: "bold" ,textAlign:"center"}}>Welcome Admin  Login</h1>
                 <form onSubmit={handleLogin}>
                 <FormControl isRequired>
                     <FormLabel>Email</FormLabel>
@@ -126,13 +124,14 @@ const Login = () => {
                         style={{ width: "100%", height: "50px", fontSize: "24px", color: "white", borderRadius: "15px" }}
                         >LOGIN</Button>
                 </Box>
-                <Box style={{textAlign:'center'}}>
+                <Box>
                     <Text>Owner and User don't have Account  <Link to="/adminSignup"> Signup</Link></Text>
                 </Box>
                 </form>
             </Box>
+        
+              
         </div>
     )
 }
-
-export default Login
+export default OwnerLogin

@@ -1,7 +1,5 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom';
-import Login from './Login';
-import Signup from './Signup';
 import Properties from './Properties';
 import Setting from './Setting';
 import Profile from './Profile';
@@ -34,12 +32,14 @@ import ViewPayment from './ViewPayment';
 import AddVacateNotice from './AddVacateNotice';
 import ViewVacateNotice from './ViewVacateNotice';
 import EditVacateNotice from './EditVacateNotice';
+import { useSelector } from 'react-redux';
+
 const MainRoutes = () => {
+    const isAuth = useSelector((state)=>state.Auth.isAuth);
+    console.log(isAuth)
     return (
         <div>
             <Routes>
-              <Route path='/adminLogin' element={<Login />} />
-                <Route path='/adminSignup' element={<Signup />} />
                 <Route path='/properties' element={<Properties />} />
                 <Route path='/setting' element={<Setting />} />
                 <Route path="/profile" element={<Profile />} />
@@ -51,7 +51,9 @@ const MainRoutes = () => {
                 <Route path='/payment' element={<Payment/>}/>
                 <Route path='/vacateNotices' element={<VacateNotices/>}/>
                 <Route path='/reports' element={<Reports/>}/>
-                <Route path='/dashboard' element={<Dashboard/>}/>
+                <Route path='/dashboard' element={
+                <Dashboard/>
+                 }/>
                 <Route path='/AddLandLord' element={<AddLandlord/>}/>
                 <Route path='/AddProperty' element={<AddProperty/>}/>
                 <Route path='/AddPayment' element={<AddPayment/>}/>
@@ -71,7 +73,7 @@ const MainRoutes = () => {
                 <Route path='/property/:id/edit' element={<EditProperty/>}/> 
                 <Route path='/lease/:id/edit' element={<EditLease/>}/>
                 <Route path='/utility/:id/edit' element={<EditUtility/>}/>
-                <Route path='/vacatenotice/:id/edit' element={<EditVacateNotice/>}/>    
+                <Route path='/vacatenotice/:id/edit' element={<EditVacateNotice/>}/>   
             </Routes>
         </div>
     )
