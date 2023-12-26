@@ -1,6 +1,7 @@
 import * as types from "./actionTypes"
 const initialState = {
     vacate: [],
+    invoice:[],
     isLoading: false,
     isError: false
 }
@@ -81,6 +82,78 @@ const reducer = (state = initialState, action) => {
                 isLoading: false,
                 isError: true
             }
+            case types.GET_INVOICE_REQUEST:
+                return {
+                    ...state,
+                    isLoading: true
+                }
+            case types.GET_INVOICE_SUCCESS:
+                return {
+                    ...state,
+                    isLoading: false,
+                    invoice: payload,
+                    isError: false,
+                }
+            case types.GET_INVOICE_FAILURE:
+                return {
+                    ...state,
+                    isLoading: false,
+                    isError: true,
+                }
+            case types.POST_INVOICE_REQUEST:
+                return {
+                    ...state,
+                    isLoading: true,
+                }
+            case types.POST_INVOICE_SUCCESS:
+                return {
+                    ...state,
+                    isLoading: false,
+                    invoice: [...state.invoice, payload],
+                    isError: false,
+                }
+            case types.POST_INVOICE_FAILURE:
+                return {
+                    ...state,
+                    isLoading: false,
+                    isError: true
+                }
+            case types.EDIT_INVOICE_REQUEST:
+                return {
+                    ...state,
+                    isLoading: true,
+                }
+            case types.EDIT_INVOICE_SUCCESS:
+                return {
+                    ...state,
+                    invoice: state.invoice.map((item) => item._id === payload.id ? payload : item),
+                    isLoading: false,
+                    isError: false,
+                }
+            case types.EDIT_INVOICE_FAILURE:
+                return {
+                    ...state,
+                    isLoading: false,
+                    isError: true,
+                }
+            case types.DELETE_INVOICE_REQUEST:
+                return {
+                    ...state,
+                    isLoading: true,
+                }
+            case types.DELETE_INVOICE_SUCCESS:
+                return {
+                    ...state,
+                    isLoading: false,
+                    invoice: state.invoice.filter((land) => land._id !== payload),
+                    isError: false,
+                }
+            case types.DELETE_INVOICE_FAILURE:
+                return {
+                    ...state,
+                    isLoading: false,
+                    isError: true
+                }
         default:
             return state
     }

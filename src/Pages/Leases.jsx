@@ -1,6 +1,6 @@
 import { Box, Image, Input, Spacer } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { BsPersonFillAdd } from "react-icons/bs"
 import { useDispatch, useSelector } from 'react-redux';
 import { ChevronDownIcon, DeleteIcon, EditIcon } from '@chakra-ui/icons';
@@ -11,10 +11,35 @@ const Leases = () => {
   const dispatch = useDispatch();
   const [color, setColor] = useState(null);
   const [landlordFilter, setLandlordFilter] = useState("");
+   const navigate = useNavigate();
+   const location = useLocation();
   const handleFilter = (e) => {
     setLandlordFilter(e.target.value)
   }
-  // const navigate = useNavigate();
+  const handleAdd = ()=>{
+    if(location.pathname === "/tentant-dashboard/leases"){
+        navigate("/tentant-dashboard/AddLease")
+    }
+  }
+  const View = (id)=>{
+    if(location.pathname === "/superAdmin/leases"){
+      navigate(`/superAdmin/viewLease/${id}`)
+    }
+     else if(location.pathname === "/tentant-dashboard/leases"){
+      navigate(`/tentant-dashboard/viewLease/${id}`)
+    }else{
+      navigate(`owner-dashboard/viewLease/${id}`)
+    }
+  }
+  const edit =(id)=>{
+    if(location.pathname === "/superAdmin/leases"){
+      navigate(`/superAdmin/lease/${id}/edit`)
+    }else if(location.pathname === "/tentant-dashboard/leases"){
+      navigate(`/tentant-dashboard/lease/${id}/edit`)
+    }else{
+      navigate(`owner-dashboard/lease/${id}/edit`)
+    }
+  }
   const handleDelete = (item) => {
     dispatch(deleteLease(item._id))
       .then(() => dispatch(getLease()))
@@ -32,12 +57,10 @@ const Leases = () => {
   console.log(color)
   return (
     <div>
-      <Flex minWidth='max-content' alignItems='center' gap='2'>
-        <Link to="/AddLease">
-          <Box style={{ border: "1px solid black", width: "250px", height: "50px", marginTop: "15px", borderRadius: "5px", backgroundColor: "black", color: "white" }}>
+      <Flex minWidth='max-content' alignItems='center' gap='2' p={"15px"}>
+          <Button onClick={handleAdd} style={{ border: "1px solid black", width: "250px", height: "50px", marginTop: "15px", borderRadius: "5px", backgroundColor: "black", color: "white" }}>
             <BsPersonFillAdd style={{ width: "100%", fontSize: "24px", alignItems: "center", height: "100%", padding: "1px" }} />
-          </Box>
-        </Link>
+          </Button>
         <Spacer />
         <Box style={{ width: "500px", border: "0px" }}>
           <Input type="text" placeholder='filter using first name of user '
@@ -45,7 +68,7 @@ const Leases = () => {
             onChange={handleFilter} />
         </Box>
       </Flex>
-      <Box style={{ marginTop: "15px", padding: "2px" }}>
+      <Box style={{ marginTop: "15px", padding: "25px" }}>
         <TableContainer>
           <Table variant='striped' colorScheme='teal'>
             <TableCaption></TableCaption>
@@ -75,20 +98,20 @@ const Leases = () => {
                     {
                       LandLord.map((item,index)=>(
                         <Td key={index}>
-                          <Image src={base + `${item.document}`} height="100px" />
+                          <Image src={base + `${item.document}`} height="50px" />
                         </Td>
                       ))
                       }
                     <Flex>
                       <Td>
-                        <Link to={`/viewLease/${item._id}`}>
+                        <Button onClick={()=>View(`${item._id}`)}>
                           <ChevronDownIcon />
-                        </Link>
+                        </Button>
                       </Td>
                       <Td>
-                        <Link to={`/lease/${item._id}/edit`}>
+                        <Button onClick={()=>edit(`${item._id}`)}>
                           <EditIcon />
-                        </Link>
+                        </Button>
                       </Td>
                       <Td>
                         <Button onClick={() => handleDelete(item)}>

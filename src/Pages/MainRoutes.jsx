@@ -32,6 +32,7 @@ import ViewPayment from './ViewPayment';
 import AddVacateNotice from './AddVacateNotice';
 import ViewVacateNotice from './ViewVacateNotice';
 import EditVacateNotice from './EditVacateNotice';
+import EditPayment from './EditPayment';
 const MainRoutes = () => {
     return (
         <div>
@@ -70,6 +71,7 @@ const MainRoutes = () => {
                 <Route path='/lease/:id/edit' element={<EditLease/>}/>
                 <Route path='/utility/:id/edit' element={<EditUtility/>}/>
                 <Route path='/vacatenotice/:id/edit' element={<EditVacateNotice/>}/>   
+                <Route path='/payment/:id/edit' element={<EditPayment/>}/>  
             </Routes>
         </div>
     )

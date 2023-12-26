@@ -23,12 +23,12 @@ const TentantSidebar = () => {
                         </Flex>
                     </Link>
                     {/* 3 */}
-                    <Link to="/tentant-dashboard/properties" >
+                    {/* <Link to="/tentant-dashboard/rentStatement" >
                         <Flex _hover={{ color: "white", bg: "green" }} alignItems={"start"} justify={"space-evenly"} style={{ height:"50px", border: "1px solid black", marginTop: "45x", padding: "2px" }}>
                             <Box style={{ fontSize: "30px", width: "48%" }}><LuTableProperties style={{ marginLeft: "40%", alignItems: "center" }} /></Box>
                             <Box style={{ fontSize: "20px", width: "50%", textAlign: "start", alignItems: "center", whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis" }}>Rent Statement</Box>
                         </Flex>
-                    </Link>
+                    </Link> */}
                     {/* 4 */}
                     <Link to="/tentant-dashboard/tentants" >
                         <Flex _hover={{ color: "white", bg: "green" }} alignItems={"start"} justify={"space-evenly"} style={{ height:"50px", border: "1px solid black", marginTop: "45x", padding: "2px" }}>
@@ -54,7 +54,7 @@ const TentantSidebar = () => {
                     <Link to="/tentant-dashboard/invoices" >
                         <Flex _hover={{ color: "white", bg: "green" }} alignItems={"start"} justify={"space-evenly"} style={{ height:"50px", border: "1px solid black", marginTop: "45x", padding: "2px" }}>
                             <Box style={{ fontSize: "30px", width: "48%" }}><FaFileInvoice style={{ marginLeft: "40%", alignItems: "center" }} /></Box>
-                            <Box style={{ fontSize: "20px", width: "50%", textAlign: "start", alignItems: "center",whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis" }}>Invoices</Box>
+                            <Box style={{ fontSize: "20px", width: "50%", textAlign: "start", alignItems: "center",whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis" }}>RentStatement</Box>
                         </Flex>
                     </Link>
                     {/* 8 */}

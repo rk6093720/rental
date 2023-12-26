@@ -63,7 +63,7 @@ const UserLogin = () =>{
     }
     useEffect(()=>{
         if(isAuthUser ){
-            navigate("/tentant-dashboard");
+            navigate("/tentant-dashboard/dashboard");
         }
     },[isAuthUser,navigate]);
     return (

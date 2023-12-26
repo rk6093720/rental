@@ -1,6 +1,6 @@
 import { Box, Input, Spacer } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { BsPersonFillAdd } from "react-icons/bs"
 import { useDispatch, useSelector } from 'react-redux';
 import { ChevronDownIcon, DeleteIcon, EditIcon } from '@chakra-ui/icons';
@@ -25,10 +25,28 @@ const Tentants = () => {
           navigate("/tentant-dashboard/AddTentants")
         }
   }
+  const View = (id)=>{
+    if(location.pathname === "/superAdmin/tentants"){
+      navigate(`/superAdmin/viewTentants/${id}`)
+    }
+     else if(location.pathname === "/tentant-dashboard/tentants"){
+      navigate(`/tentant-dashboard/viewTentants/${id}`)
+    }else{
+      navigate(`owner-dashboard/viewTentants/${id}`)
+    }
+  }
+  const edit =(id)=>{
+    if(location.pathname === "/superAdmin/tentants"){
+      navigate(`/superAdmin/tentant/${id}/edit`)
+    }else if(location.pathname === "/tentant-dashboard/tentants"){
+      navigate(`/tentant-dashboard/tentant/${id}/edit`)
+    }else{
+      navigate(`owner-dashboard/tentant/${id}/edit`)
+    }
+  }
   const handleFilter = (e) => {
     setTentantsFilter(e.target.value)
   }
-  // const navigate = useNavigate();
   const handleDelete = (item) => {
     dispatch(deleteTentants(item._id))
     setColor(item._id)
@@ -43,7 +61,7 @@ const Tentants = () => {
   console.log(color)
   return (
     <div>
-      <Flex minWidth='max-content' alignItems='center' gap='2'>
+      <Flex minWidth='max-content' alignItems='center' gap='2' p={"15px"}>
           <Button onClick={handleAdd} style={{ border: "1px solid black", width: "250px", height: "50px", marginTop: "15px", borderRadius: "5px", backgroundColor: "black", color: "white" }}>
             <BsPersonFillAdd style={{ width: "100%", fontSize: "24px", alignItems: "center", height: "100%", padding: "1px" }} />
           </Button>
@@ -54,7 +72,7 @@ const Tentants = () => {
             onChange={handleFilter} />
         </Box>
       </Flex>
-      <Box style={{ marginTop: "15px", padding: "2px" }}>
+      <Box style={{ marginTop: "15px", padding: "25px" }}>
         <TableContainer>
           <Table variant='striped' colorScheme='teal'>
             <TableCaption></TableCaption>
@@ -62,7 +80,7 @@ const Tentants = () => {
               <Tr>
                 <Th>FirstName</Th>
                 <Th>LastName</Th>
-                <Th>Gender</Th>
+                <Th>Email</Th>
                 <Th>phone</Th>
                 <Th>Action</Th>
               </Tr>
@@ -73,18 +91,18 @@ const Tentants = () => {
                    <Tr key={item._id}>
                     <Td>{item.firstName}</Td>
                     <Td>{item.lastName}</Td>
-                    <Td>{item.gender}</Td>
+                    <Td>{item.email}</Td>
                     <Td>{item.phone}</Td>
                     <Flex>
                       <Td>
-                        <Link to={`/viewTentants/${item._id}`}>
+                        <Button onClick={()=>View(`${item._id}`)}>
                           <ChevronDownIcon />
-                        </Link>
+                        </Button>
                       </Td>
                       <Td>
-                        <Link to={`/tentant/${item._id}/edit`}>
+                        <Button onClick={()=>edit(`${item._id}`)}>
                           <EditIcon />
-                        </Link>
+                        </Button>
                       </Td>
                       <Td>
                         <Button onClick={() => handleDelete(item)}>

@@ -1,6 +1,6 @@
 import { Box, Input, Spacer } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import {  useLocation, useNavigate } from 'react-router-dom';
 import { BsPersonFillAdd } from "react-icons/bs"
 import { useDispatch, useSelector } from 'react-redux';
 import { ChevronDownIcon, DeleteIcon, EditIcon } from '@chakra-ui/icons';
@@ -10,10 +10,35 @@ const Payment = () => {
   const dispatch = useDispatch();
   const [color, setColor] = useState(null);
   const [landlordFilter, setLandlordFilter] = useState("");
+  const navigate = useNavigate();
+  const location = useLocation();
   const handleFilter = (e) => {
     setLandlordFilter(e.target.value)
   }
-  // const navigate = useNavigate();
+  const handleAdd = ()=>{
+    if(location.pathname === "/tentant-dashboard/payment"){
+        navigate("/tentant-dashboard/AddPayment")
+    }
+  }
+  const View = (id)=>{
+    if(location.pathname === "/superAdmin/payment"){
+      navigate(`/superAdmin/viewPayment/${id}`)
+    }
+     else if(location.pathname === "/tentant-dashboard/payment"){
+      navigate(`/tentant-dashboard/viewPayment/${id}`)
+    }else{
+      navigate(`owner-dashboard/viewPayment/${id}`)
+    }
+  }
+  const edit =(id)=>{
+    if(location.pathname === "/superAdmin/payment"){
+      navigate(`/superAdmin/payment/${id}/edit`)
+    }else if(location.pathname === "/tentant-dashboard/payment"){
+      navigate(`/tentant-dashboard/payment/${id}/edit`)
+    }else{
+      navigate(`owner-dashboard/payment/${id}/edit`)
+    }
+  }
   const handleDelete = (item) => {
     dispatch(deletePayment(item._id))
       .then(() => dispatch(getPayment()))
@@ -29,12 +54,10 @@ const Payment = () => {
   console.log(color)
   return (
     <div>
-      <Flex minWidth='max-content' alignItems='center' gap='2'>
-        <Link to="/AddPayment">
-          <Box style={{ border: "1px solid black", width: "250px", height: "50px", marginTop: "15px", borderRadius: "5px", backgroundColor: "black", color: "white" }}>
+      <Flex minWidth='max-content' alignItems='center' gap='2' p="10px">
+          <Button onClick={handleAdd} style={{ border: "1px solid black", width: "250px", height: "50px", marginTop: "15px", borderRadius: "5px", backgroundColor: "black", color: "white" }}>
             <BsPersonFillAdd style={{ width: "100%", fontSize: "24px", alignItems: "center", height: "100%", padding: "1px" }} />
-          </Box>
-        </Link>
+          </Button>
         <Spacer />
         <Box style={{ width: "500px", border: "0px" }}>
           <Input type="text" placeholder='filter using first name of user '
@@ -42,7 +65,7 @@ const Payment = () => {
             onChange={handleFilter} />
         </Box>
       </Flex>
-      <Box style={{ marginTop: "15px", padding: "2px" }}>
+      <Box style={{ marginTop: "15px", padding: "2px",padding:"20px" }}>
         <TableContainer>
           <Table variant='striped' colorScheme='teal'>
             <TableCaption></TableCaption>
@@ -73,14 +96,14 @@ const Payment = () => {
                     <Td>Status</Td>
                     <Flex>
                       <Td>
-                        <Link to={`/viewPayment/${item._id}`}>
+                        <Button onClick={()=>View(`${item._id}`)}>
                           <ChevronDownIcon />
-                        </Link>
+                        </Button>
                       </Td>
                       <Td>
-                        <Link to={`/landlord/${item._id}/edit`}>
+                        <Button onClick={()=> edit(`${item._id}`)}>
                           <EditIcon />
-                        </Link>
+                        </Button>
                       </Td>
                       <Td>
                         <Button onClick={() => handleDelete(item)}>
