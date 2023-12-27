@@ -69,7 +69,7 @@ const ResetPassword = () => {
           <FormControl >
             <FormLabel>Email</FormLabel>
             <InputGroup className='inputForEmail' style={{ width: "100%", height: "50%", marginTop: "15px" }}>
-              <Input placeholder='admin@gmail.com'
+              <Input placeholder='enter your email'
                 type='email'
                 autoComplete='Admin'
                 _hover={{ bg: "green", color: "white" }}

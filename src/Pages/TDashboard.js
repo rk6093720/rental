@@ -18,7 +18,7 @@ const TDashboard = ()=>{
     return (
         <div>
             <Flex style={{width:"100%"}}>
-             <Box style={{width:"20%"}}>
+             <Box style={{width:"20%",height:"100vh"}}>
                 <TentantSidebar/>
              </Box>
              <Spacer  style={{width:"1%"}}/>

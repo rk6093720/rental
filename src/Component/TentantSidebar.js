@@ -70,13 +70,6 @@ const TentantSidebar = () => {
                             <Box style={{ fontSize: "20px", width: "50%", textAlign: "start", alignItems: "center",whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis" }}>VacateNotices</Box>
                         </Flex>
                     </Link>
-                    {/* 10 */}
-                    <Link to="/tentant-dashboard/reports" >
-                        <Flex _hover={{ color: "white", bg: "green" }} alignItems={"start"} justify={"space-evenly"} style={{ height:"50px", border: "1px solid black", marginTop: "45x", padding: "2px" }}>
-                            <Box style={{ fontSize: "30px", width: "48%" }}><Icon as={TbReport} style={{ marginLeft: "38%", alignItems: "center" }} /></Box>
-                            <Box style={{ fontSize: "20px", width: "50%", textAlign: "start", alignItems: "center",whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis" }}>RentReports</Box>
-                        </Flex>
-                    </Link>
                 </Stack>
             </Box>
         </div>

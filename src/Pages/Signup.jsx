@@ -26,6 +26,15 @@ const Signup = () => {
     navigate("/adminLogin", {state:{role:radio}})
    }
  }
+
+ const handleRole =()=>{
+  if(userType === "Admin"){
+    navigate("/owner-login")
+  }
+  else if(userType === "User"){
+    navigate("/user-login")
+  }
+ }
  const handleSubmit = (e) => {
   e.preventDefault();
   if (userType === "Admin" || userType === "User") {
@@ -158,7 +167,7 @@ const Signup = () => {
           </div>
           <p className="forgot-password text-right"
           style={{fontSize:"20px",textAlign:"center"}}>
-            Create Registration for Admin and User <Link to="/owner-login" style={{color:"blue"}}>Login</Link>
+            Create Registration for Admin and User <Button onClick={handleRole} style={{color:"blue"}}>Login</Button>
           </p>
              </Box>
              ):(
@@ -220,7 +229,7 @@ const Signup = () => {
           </div>
           <p className="forgot-password text-right"
           style={{fontSize:"20px",textAlign:"center"}}>
-            Create Registration for Admin and User <Link to="/user-login" style={{color:"blue"}}>Login</Link>
+            Create Registration for Admin and User <Button onClick={handleRole} style={{color:"blue"}}>Login</Button>
           </p>
               </Box>
              )

@@ -1,6 +1,6 @@
-import { Box, FormControl, FormLabel, Input, Select, Spacer, useDisclosure } from '@chakra-ui/react'
+import { Box,Text, FormControl, FormLabel, Input, Select, Spacer, useDisclosure, useToast } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import {  useLocation, useNavigate } from 'react-router-dom';
 import { BsPersonFillAdd } from "react-icons/bs"
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteLandLord, getLandlord } from '../Redux/App/action';
@@ -15,12 +15,15 @@ import {
   ModalCloseButton,
 } from '@chakra-ui/react'
 import { Button, Flex, Table, TableCaption, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
+import { getInvoice, postInvoice } from '../Redux/VacateNotice/action';
+import { GET_INVOICE_SUCCESS } from '../Redux/VacateNotice/actionTypes';
 const Invoices = () => {
   const dispatch = useDispatch();
   const [color, setColor] = useState(null);
   const [landlordFilter, setLandlordFilter] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
+  const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [invoice,setInvoice]=useState("");
   const [date,setDate]=useState("");
@@ -29,22 +32,50 @@ const Invoices = () => {
   const [totalAmount,setTotalAmount]=useState("");
   const [payment,setPayment]=useState("");
   const [rent,setRent]=useState("");
+  const [month,setMonth]=useState("");
+  const [year,setYear]=useState("");
   const handleFilter = (e) => {
     setLandlordFilter(e.target.value)
   }
   const handleAddInvoice=()=>{
-    
-
+    const payload={
+      invoice,
+      date,
+      roomType,
+      period,
+      totalAmount,
+      payment,
+      rent,
+      month,
+      year
+    }
+    dispatch(postInvoice(payload))
+    .then(()=> dispatch(getInvoice()))
+    .then((r)=>{
+        if(r.type === GET_INVOICE_SUCCESS){
+          toast({
+            title: 'Invoice created Successfully',
+            duration: 5000,
+            position: 'top',
+            isClosable: true,
+            colorScheme: 'green',
+            status: 'success',
+          })
+        }
+    })
+    .catch((e)=>{
+      console.log(e);
+    })
   }
   const handleDelete = (item) => {
     dispatch(deleteLandLord(item._id))
       .then(() => dispatch(getLandlord()))
     setColor(item._id)
   }
-  const land = useSelector((state) => state.App.landlord);
+  const land = useSelector((state) => state.VacateNotice.invoice);
   useEffect(() => {
     if (land?.length === 0) {
-      dispatch(getLandlord())
+      dispatch(getInvoice())
     }
   }, [land.length, dispatch])
   console.log(land);
@@ -55,7 +86,7 @@ const Invoices = () => {
           <Button onClick={onOpen} style={{ border: "1px solid black", width: "250px", height: "50px", marginTop: "15px", borderRadius: "5px", backgroundColor: "black", color: "white" }}>
             <BsPersonFillAdd style={{ width: "100%", fontSize: "24px", alignItems: "center", height: "100%", padding: "1px" }} />
           </Button>
-          <Modal isOpen={isOpen} onClose={onClose}>
+          <Modal isOpen={isOpen} onClose={onClose} style={{width:"70%",padding:"30px"}}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Add Inovice Details of Payment For Rent</ModalHeader>
@@ -99,6 +130,42 @@ const Invoices = () => {
               </FormControl>
               <br/>
               <FormControl isRequired>
+                <FormLabel>Month</FormLabel>
+              <Select placeholder='Select Month' value={month} onChange={(e)=>setMonth(e.target.value)}>
+                <option value='January'>January</option>
+                <option value='February'>February</option>
+                <option value='March'>March</option>
+                <option value='April'>April</option>
+                <option value='May'>May</option>
+                <option value='June'>June</option>
+                <option value='July'>July</option>
+                <option value='August'>August</option>
+                <option value='September'>September</option>
+                <option value='October'>October</option>
+                <option value='November'>November</option>
+                <option value='December'>December</option>
+                </Select>
+                </FormControl>
+              <br/>
+              <FormControl isRequired>
+                <FormLabel>Year</FormLabel>
+               <Select placeholder='Select Year' value={year} onChange={(e)=>setYear(e.target.value)}>
+                <option value='2013'>2013</option>
+                <option value='2014'>2014</option>
+                <option value='2015'>2015</option>
+                <option value='2016'>2016</option>
+                <option value='2017'>2017</option>
+                <option value='2018'>2018</option>
+                <option value='2019'>2019</option>
+                <option value='2020'>2020</option>
+                <option value='2021'>2021</option>
+                <option value='2022'>2022</option>
+                <option value='2023'>2023</option>
+                <option value='2024'>2024</option>
+                </Select>
+                </FormControl>
+              <br/>
+              <FormControl isRequired>
               <FormLabel>Rent</FormLabel>
                 <Input type='text' value={rent} onChange={(e)=>setRent(e.target.value)}  placeholder='Rent' />
               </FormControl>
@@ -127,7 +194,7 @@ const Invoices = () => {
               <Tr>
                 <Th>Invoice Number</Th>
                 <Th>Invoice Date</Th>
-                <Th>Lease</Th>
+                <Th>RoomType</Th>
                 <Th>Period</Th>
                 <Th>TotalAmount</Th>
                 <Th>PaymentStatus</Th>
@@ -136,44 +203,20 @@ const Invoices = () => {
               </Tr>
             </Thead>
             <Tbody>
-              <Tr>
-                <Td>Invoice Number</Td>
-                <Td>Invoice Date</Td>
-                <Td>Lease</Td>
-                <Td>Period</Td>
-                <Td>Amount</Td>
-                <Td>Paid</Td>
-                <Td>Balance</Td>
-                <Td>Status</Td>
-              </Tr>
-
               {
-                land?.length > 0 && land?.map((item) => {
-                  return <Tr key={item._id}>
-                    <Td>{item.firstName}</Td>
-                    <Td>{item.LastName}</Td>
-                    <Td>{item.email}</Td>
-                    <Td>{item.phone}</Td>
-                    <Flex>
-                      <Td>
-                        <Link to={`/viewLandlord/${item._id}`}>
-                          <ChevronDownIcon />
-                        </Link>
-                      </Td>
-                      <Td>
-                        <Link to={`/landlord/${item._id}/edit`}>
-                          <EditIcon />
-                        </Link>
-                      </Td>
-                      <Td>
-                        <Button onClick={() => handleDelete(item)}>
-                          <DeleteIcon style={{ color: color === item._id ? "green" : "red" }} />
-                        </Button>
-                      </Td>
-                    </Flex>
-                  </Tr>
-                })
-              }
+                land.length > 0 && land.map((item)=>(
+                  <Tr key={item._id}>
+                  <Td >{item.invoice}</Td>
+                  <Td>{item.date}</Td>
+                  <Td>{item.roomType}</Td>
+                  <Td>{item.period}</Td>
+                  <Td>{item.totalAmount}</Td>
+                  <Td>{item.payment === "Paid"? (<Text style={{width:"60px",height:"30px",backgroundColor:"green",color:"white",fontSize:"24px",textAlign:'center',fontWeight:"bold"}}>Paid</Text>): (<Text style={{width:"60px",height:"30px",backgroundColor:"red",color:"white",fontSize:"24px",textAlign:'center',fontWeight:"bold"}}>Due</Text>)}</Td>
+                  <Td>{item.rent}</Td>
+                  <Td>Status</Td>
+                </Tr>
+                ))
+              } 
             </Tbody>
           </Table>
         </TableContainer>

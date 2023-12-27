@@ -55,7 +55,7 @@ const getInvoice = () => async (dispatch) => {
     return await axios.get("http://localhost:8080/invoice/read")
         .then((r) => {
             console.log(r, "get")
-            dispatch({ type: types.GET_INVOICE_SUCCESS, payload: r.data.vacate })
+           return dispatch({ type: types.GET_INVOICE_SUCCESS, payload: r.data.Invoice })
         })
         .catch((e) => {
             return dispatch({ type: types.GET_INVOICE_FAILURE, payload: e })
@@ -63,15 +63,15 @@ const getInvoice = () => async (dispatch) => {
 }
 const postInvoice = (payload) => async (dispatch) => {
     dispatch({ type: types.POST_INVOICE_REQUEST })
-    console.log(payload)
-    return await axios.post(`http://localhost:8080/invoice/create`, payload)
-        .then((r) => {
-            console.log(r)
-            dispatch({ type: types.POST_INVOICE_SUCCESS, payload: r.data.AddVacate })
-        })
-        .catch((e) => {
-            dispatch({ type: types.POST_INVOICE_FAILURE, payload: e })
-        })
+    console.log(payload);
+    return await axios.post(`http://localhost:8080/invoice/create`,payload)
+    .then((r)=>{
+        console.log(r);
+        dispatch({type:types.POST_INVOICE_SUCCESS,payload:r.data.AddInvoice})
+    })
+    .catch((e)=>{
+        dispatch({type:types.POST_INVOICE_FAILURE,payload:e});
+    })
 }
 
 const editInvoice = (id, payload) => async (dispatch) => {
@@ -79,7 +79,7 @@ const editInvoice = (id, payload) => async (dispatch) => {
     return await axios.put(`http://localhost:8080/invoice/update/${id}`, payload)
         .then((r) => {
             console.log(r);
-            dispatch({ type: types.EDIT_INVOICE_SUCCESS, payload: r.data.editVacate })
+            dispatch({ type: types.EDIT_INVOICE_SUCCESS, payload: r.data.editInvoice })
         })
         .catch((e) => {
             dispatch({ type: types.EDIT_INVOICE_FAILURE, payload: e })

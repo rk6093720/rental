@@ -2,6 +2,7 @@ import * as types from "./actionTypes"
 const initialState = {
     vacate: [],
     invoice:[],
+    msg:"",
     isLoading: false,
     isError: false
 }
@@ -106,15 +107,19 @@ const reducer = (state = initialState, action) => {
                     isLoading: true,
                 }
             case types.POST_INVOICE_SUCCESS:
+                console.log(payload);
                 return {
                     ...state,
                     isLoading: false,
                     invoice: [...state.invoice, payload],
+                    msg:payload,
                     isError: false,
                 }
             case types.POST_INVOICE_FAILURE:
+                console.log(payload.response.data.msg);
                 return {
                     ...state,
+                    msg:payload.response.data.msg,
                     isLoading: false,
                     isError: true
                 }
@@ -124,10 +129,12 @@ const reducer = (state = initialState, action) => {
                     isLoading: true,
                 }
             case types.EDIT_INVOICE_SUCCESS:
+
                 return {
                     ...state,
                     invoice: state.invoice.map((item) => item._id === payload.id ? payload : item),
                     isLoading: false,
+                    msg:payload,
                     isError: false,
                 }
             case types.EDIT_INVOICE_FAILURE:
@@ -146,13 +153,15 @@ const reducer = (state = initialState, action) => {
                     ...state,
                     isLoading: false,
                     invoice: state.invoice.filter((land) => land._id !== payload),
+                    msg:payload,
                     isError: false,
                 }
             case types.DELETE_INVOICE_FAILURE:
                 return {
                     ...state,
                     isLoading: false,
-                    isError: true
+                    isError: true,
+                    msg:payload
                 }
         default:
             return state
