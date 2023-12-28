@@ -129,7 +129,7 @@ const reducer = (state = initialState, action) => {
                     isLoading: true,
                 }
             case types.EDIT_INVOICE_SUCCESS:
-
+                console.log(payload)
                 return {
                     ...state,
                     invoice: state.invoice.map((item) => item._id === payload.id ? payload : item),

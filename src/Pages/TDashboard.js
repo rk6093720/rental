@@ -46,7 +46,7 @@ const TDashboard = ()=>{
                                     <PopoverHeader>Profile</PopoverHeader>
                                     <PopoverCloseButton />
                                     <PopoverBody>
-                                    <Box style={{ width:"20%",height:"100%", fontSize:"24px",fontWeight:"bold", alignItems:"center",marginLeft:"5%", color:"Black" }}>
+                                    <Box style={{ width:"20%",height:"100%", fontSize:"24px",fontWeight:"bold",textAlign:"center", alignItems:"center",margin:'auto', color:"Black" }}>
                                         {
                                           User ? <><Flex><Text>{User.role }</Text></Flex></>:null
                                         }
@@ -54,11 +54,11 @@ const TDashboard = ()=>{
                                     </PopoverBody>
                                     <PopoverFooter>
                                         <Flex>
-                                        <Button>
+                                        <Button colorScheme="blue">
                                             Profile
                                         </Button>
                                         <Spacer/>
-                                        <Button onClick={handleSignout}>
+                                        <Button colorScheme="red" onClick={handleSignout}>
                                                 SignOut
                                         </Button>
                                         </Flex>

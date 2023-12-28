@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import {  useLocation, useNavigate } from 'react-router-dom';
 import { BsPersonFillAdd } from "react-icons/bs"
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteLandLord, getLandlord } from '../Redux/App/action';
 import { ChevronDownIcon, DeleteIcon, EditIcon } from '@chakra-ui/icons';
 import {
   Modal,
@@ -15,7 +14,7 @@ import {
   ModalCloseButton,
 } from '@chakra-ui/react'
 import { Button, Flex, Table, TableCaption, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
-import { getInvoice, postInvoice } from '../Redux/VacateNotice/action';
+import { deleteInvoice, getInvoice, postInvoice } from '../Redux/VacateNotice/action';
 import { GET_INVOICE_SUCCESS } from '../Redux/VacateNotice/actionTypes';
 const Invoices = () => {
   const dispatch = useDispatch();
@@ -36,6 +35,30 @@ const Invoices = () => {
   const [year,setYear]=useState("");
   const handleFilter = (e) => {
     setLandlordFilter(e.target.value)
+  }
+  const View = (id)=>{
+    if(location.pathname === "/superAdmin/invoices"){
+      navigate(`/superAdmin/viewInvoice/${id}`)
+    }
+     else if(location.pathname === "/tentant-dashboard/invoices"){
+      navigate(`/tentant-dashboard/viewInvoice/${id}`)
+    }else{
+      navigate(`owner-dashboard/viewInvoice/${id}`)
+    }
+  }
+  const edit =(id)=>{
+    if(location.pathname === "/superAdmin/invoices"){
+      navigate(`/superAdmin/invoice/${id}/edit`)
+    }else if(location.pathname === "/tentant-dashboard/invoices"){
+      navigate(`/tentant-dashboard/invoice/${id}/edit`)
+    }else{
+      navigate(`owner-dashboard/invoice/${id}/edit`)
+    }
+  }
+  const handleDelete = (item) => {
+    dispatch(deleteInvoice(item._id))
+      .then(() => dispatch(getInvoice()))
+    setColor(item._id)
   }
   const handleAddInvoice=()=>{
     const payload={
@@ -67,11 +90,6 @@ const Invoices = () => {
       console.log(e);
     })
   }
-  const handleDelete = (item) => {
-    dispatch(deleteLandLord(item._id))
-      .then(() => dispatch(getLandlord()))
-    setColor(item._id)
-  }
   const land = useSelector((state) => state.VacateNotice.invoice);
   useEffect(() => {
     if (land?.length === 0) {
@@ -79,7 +97,8 @@ const Invoices = () => {
     }
   }, [land.length, dispatch])
   console.log(land);
-  console.log(color)
+  console.log(color);
+  // invoice/:id/edit
   return (
     <div>
       <Flex minWidth='max-content' alignItems='center' gap='2' p={"15px"}>
@@ -213,7 +232,23 @@ const Invoices = () => {
                   <Td>{item.totalAmount}</Td>
                   <Td>{item.payment === "Paid"? (<Text style={{width:"60px",height:"30px",backgroundColor:"green",color:"white",fontSize:"24px",textAlign:'center',fontWeight:"bold"}}>Paid</Text>): (<Text style={{width:"60px",height:"30px",backgroundColor:"red",color:"white",fontSize:"24px",textAlign:'center',fontWeight:"bold"}}>Due</Text>)}</Td>
                   <Td>{item.rent}</Td>
-                  <Td>Status</Td>
+                  <Flex>
+                      <Td>
+                        <Button onClick={()=>View(`${item._id}`)}>
+                          <ChevronDownIcon />
+                        </Button>
+                      </Td>
+                      <Td>
+                        <Button onClick={()=> edit(`${item._id}`)}>
+                          <EditIcon />
+                        </Button>
+                      </Td>
+                      <Td>
+                        <Button onClick={() => handleDelete(item)}>
+                          <DeleteIcon style={{ color: color === item._id ? "green" : "red" }} />
+                        </Button>
+                      </Td>
+                    </Flex>
                 </Tr>
                 ))
               } 

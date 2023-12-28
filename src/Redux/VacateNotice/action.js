@@ -78,7 +78,7 @@ const editInvoice = (id, payload) => async (dispatch) => {
     dispatch({ type: types.EDIT_INVOICE_REQUEST });
     return await axios.put(`http://localhost:8080/invoice/update/${id}`, payload)
         .then((r) => {
-            console.log(r);
+            console.log(r.data.editInvoice);
             dispatch({ type: types.EDIT_INVOICE_SUCCESS, payload: r.data.editInvoice })
         })
         .catch((e) => {

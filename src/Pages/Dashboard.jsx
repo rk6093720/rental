@@ -1,10 +1,20 @@
 import React from 'react'
-import Chart from './Chart'
-import { Flex ,Box, Heading, Spacer, Text} from '@chakra-ui/react';
+import { Flex ,Box, Heading, Spacer, Text, Button, useDisclosure} from '@chakra-ui/react';
 import { FaPeopleGroup } from "react-icons/fa6";
 import { BsFillDoorOpenFill } from "react-icons/bs";
 import { SiHelpdesk } from "react-icons/si";
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+} from '@chakra-ui/react'
+import Chart1 from './Chart1';
 const Dashboard = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure()
   return (
     <div>
        <Heading>TentantDashboard <small>controlPanel</small> </Heading>
@@ -71,13 +81,41 @@ const Dashboard = () => {
                <SiHelpdesk style={{textAlign:'center'}}/>
           </Box>
           </Flex>
-          <Box style={{width:"100%",height:"50px",marginTop:"5px",padding:"20px"}}>
-            <Text style={{width:"100",height:"100%",alignItems:"center",color:"white", textAlign:"center",fontSize:"24px",fontWeight:"bold"}}> MoreDetails </Text>
+          <Box style={{width:"100%",height:"100px",marginTop:"0px",padding:"30px"}}>
+            <Button onClick={onOpen} style={{width:"100",height:"100%",alignItems:"center",color:"black", textAlign:"center",fontSize:"24px",fontWeight:"bold"}}> MoreDetails </Button>
             {/* <i><BsForwardFill /></i> */}
+            <Modal isOpen={isOpen} onClose={onClose}>
+              <ModalOverlay />
+              <ModalContent>
+                <ModalHeader>Help Desk for Tentants</ModalHeader>
+                <ModalCloseButton />
+                <ModalBody>
+                  <Box>
+                  <Flex>
+                    <Box>Contact</Box>
+                    <Spacer/>
+                    <Box>Number of Security /guard</Box>
+                  </Flex>
+                  <br />
+                  <Flex>
+                    <Box>Contact</Box>
+                    <Spacer/>
+                    <Box>Number of Security /guard</Box>
+                  </Flex>
+                  </Box>
+                </ModalBody>
+                <ModalFooter>
+                  <Button colorScheme='blue' mr={3} onClick={onClose}>
+                    Close
+                  </Button>
+                  <Button variant='ghost'>Secondary Action</Button>
+                </ModalFooter>
+              </ModalContent>
+            </Modal>
           </Box>
         </Box>
        </Flex>
-      <Chart/>
+       <Chart1/>
     </div>
   )
 }

@@ -23,10 +23,10 @@ const TentantSidebar = () => {
                         </Flex>
                     </Link>
                     {/* 3 */}
-                    {/* <Link to="/tentant-dashboard/rentStatement" >
+                    {/* <Link to="/tentant-dashboard/helpDesk" >
                         <Flex _hover={{ color: "white", bg: "green" }} alignItems={"start"} justify={"space-evenly"} style={{ height:"50px", border: "1px solid black", marginTop: "45x", padding: "2px" }}>
                             <Box style={{ fontSize: "30px", width: "48%" }}><LuTableProperties style={{ marginLeft: "40%", alignItems: "center" }} /></Box>
-                            <Box style={{ fontSize: "20px", width: "50%", textAlign: "start", alignItems: "center", whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis" }}>Rent Statement</Box>
+                            <Box style={{ fontSize: "20px", width: "50%", textAlign: "start", alignItems: "center", whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis" }}>helpDesk</Box>
                         </Flex>
                     </Link> */}
                     {/* 4 */}

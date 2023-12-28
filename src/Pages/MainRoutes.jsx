@@ -33,6 +33,9 @@ import AddVacateNotice from './AddVacateNotice';
 import ViewVacateNotice from './ViewVacateNotice';
 import EditVacateNotice from './EditVacateNotice';
 import EditPayment from './EditPayment';
+import EditInvoice from './EditInvoice';
+import ViewInvoice from './ViewInvoice';
+// import HelpDesk from './HelpDesk';
 const MainRoutes = () => {
     return (
         <div>
@@ -64,6 +67,7 @@ const MainRoutes = () => {
                 <Route path='/viewTentants/:id' element={<ViewTentant/>}/>
                 <Route path='/viewLandlord/:id' element={<ViewLandLord/>}/>
                 <Route path='/viewProperty/:id' element={<ViewProperties/>}/>
+                <Route path='/viewInvoice/:id' element={<ViewInvoice/>}/>
                 <Route path='/viewVacateNotice/:id' element={<ViewVacateNotice/>}/> 
                 <Route path='/tentant/:id/edit' element={<EditTentant/>}/>
                 <Route path='/landlord/:id/edit' element={<EditLandLord/>}/>  
@@ -72,6 +76,8 @@ const MainRoutes = () => {
                 <Route path='/utility/:id/edit' element={<EditUtility/>}/>
                 <Route path='/vacatenotice/:id/edit' element={<EditVacateNotice/>}/>   
                 <Route path='/payment/:id/edit' element={<EditPayment/>}/>  
+                <Route path='/invoice/:id/edit' element={<EditInvoice/>}/>
+                {/* <Route path='/helpDesk' element={<HelpDesk/>}/> */}
             </Routes>
         </div>
     )
