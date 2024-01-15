@@ -14,17 +14,17 @@ const Tentants = () => {
   const location = useLocation();
   const navigate = useNavigate();
   console.log(location.pathname);
-  const handleAdd=()=>{
-        if(location.pathname === "/superAdmin/tentants"){
-          navigate("/superAdmin/AddTentants")
-        }
-        else if(location.pathname === "/owner-dashboard/tentants")
-        {
-          navigate("/owner-dashboard/AddTentants")
-        }else{
-          navigate("/tentant-dashboard/AddTentants")
-        }
-  }
+  // const handleAdd=()=>{
+  //       if(location.pathname === "/superAdmin/tentants"){
+  //         navigate("/superAdmin/AddTentants")
+  //       }
+  //       else if(location.pathname === "/owner-dashboard/tentants")
+  //       {
+  //         navigate("/owner-dashboard/AddTentants")
+  //       }else{
+  //         navigate("/tentant-dashboard/AddTentants")
+  //       }
+  // }
   const View = (id)=>{
     if(location.pathname === "/superAdmin/tentants"){
       navigate(`/superAdmin/viewTentants/${id}`)
@@ -32,7 +32,7 @@ const Tentants = () => {
      else if(location.pathname === "/tentant-dashboard/tentants"){
       navigate(`/tentant-dashboard/viewTentants/${id}`)
     }else{
-      navigate(`owner-dashboard/viewTentants/${id}`)
+      navigate(`/owner-dashboard/viewTentants/${id}`)
     }
   }
   const edit =(id)=>{
@@ -41,7 +41,7 @@ const Tentants = () => {
     }else if(location.pathname === "/tentant-dashboard/tentants"){
       navigate(`/tentant-dashboard/tentant/${id}/edit`)
     }else{
-      navigate(`owner-dashboard/tentant/${id}/edit`)
+      navigate(`/owner-dashboard/tentant/${id}/edit`)
     }
   }
   const handleFilter = (e) => {
@@ -62,9 +62,9 @@ const Tentants = () => {
   return (
     <div>
       <Flex minWidth='max-content' alignItems='center' gap='2' p={"15px"}>
-          <Button onClick={handleAdd} style={{ border: "1px solid black", width: "250px", height: "50px", marginTop: "15px", borderRadius: "5px", backgroundColor: "black", color: "white" }}>
+          {/* <Button onClick={handleAdd} style={{ border: "1px solid black", width: "250px", height: "50px", marginTop: "15px", borderRadius: "5px", backgroundColor: "black", color: "white" }}>
             <BsPersonFillAdd style={{ width: "100%", fontSize: "24px", alignItems: "center", height: "100%", padding: "1px" }} />
-          </Button>
+          </Button> */}
         <Spacer />
         <Box style={{ width: "500px", border: "0px" }}>
           <Input type="text" placeholder='filter using first name of user '

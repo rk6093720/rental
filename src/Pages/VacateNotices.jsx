@@ -15,6 +15,7 @@ const VacateNotices = () => {
     const handleFilter = (e) => {
       setLandlordFilter(e.target.value)
     }
+    console.log(location)
     const handleAdd = ()=>{
       if(location.pathname === "/tentant-dashboard/vacateNotices"){
           navigate("/tentant-dashboard/AddVacateNotice")
@@ -26,8 +27,8 @@ const VacateNotices = () => {
       }
        else if(location.pathname === "/tentant-dashboard/vacateNotices"){
         navigate(`/tentant-dashboard/viewVacateNotice/${id}`)
-      }else{
-        navigate(`owner-dashboard/viewVacateNotice/${id}`)
+      }else {
+        navigate(`/owner-dashboard/viewVacateNotice/${id}`)
       }
     }
     const edit =(id)=>{
@@ -36,7 +37,7 @@ const VacateNotices = () => {
       }else if(location.pathname === "/tentant-dashboard/vacateNotices"){
         navigate(`/tentant-dashboard/vacatenotice/${id}/edit`)
       }else{
-        navigate(`owner-dashboard/vacatenotice/${id}/edit`)
+        navigate(`/owner-dashboard/vacatenotice/${id}/edit`)
       }
     }
     const handleDelete = (item) => {

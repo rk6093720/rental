@@ -1,5 +1,5 @@
 import React from 'react'
-import { Flex ,Box, Heading, Spacer, Text, Button, useDisclosure} from '@chakra-ui/react';
+import { Flex ,Box, Spacer, Text, Button, useDisclosure} from '@chakra-ui/react';
 import { FaPeopleGroup } from "react-icons/fa6";
 import { BsFillDoorOpenFill } from "react-icons/bs";
 import { SiHelpdesk } from "react-icons/si";
@@ -13,11 +13,20 @@ import {
   ModalCloseButton,
 } from '@chakra-ui/react'
 import Chart1 from './Chart1';
+import { useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 const Dashboard = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const { isOpen, onOpen, onClose } = useDisclosure();
+    // const role = useSelector((state)=> state.Auth.roles);
+  const location = useLocation();
+  console.log(location);
   return (
     <div>
-       <Heading>TentantDashboard <small>controlPanel</small> </Heading>
+      {
+        location.pathname === "/owner-dashboard/dashboard" ? (<>
+        <h1>OwnerDashboard <small>controlPanel</small> </h1>
+        </>) :(<>
+        <h1>TentantDashboard <small>controlPanel</small> </h1>
        <Flex style={{width:"100%",height:"200px",padding:"15px",marginTop:"5px"}}>
         <Box style={{width:"25%",height:"100%",backgroundColor:"green"}}>
           <Flex style={{color:"white"}}>
@@ -39,7 +48,7 @@ const Dashboard = () => {
         <Box style={{width:"25%",height:"100%",marginLeft:"5px",backgroundColor:"green"}}>
         <Flex style={{color:"white"}}>
           <Box style={{color:"white",fontSize:"24px",marginTop:"5px",padding:"5px"}}>
-            <h1>Unit Details</h1>
+            <h1>Tentant Details</h1>
             <p>Tentants</p>
           </Box>
           <Spacer/>
@@ -116,6 +125,11 @@ const Dashboard = () => {
         </Box>
        </Flex>
        <Chart1/>
+        </>
+        )
+      }
+    
+   
     </div>
   )
 }

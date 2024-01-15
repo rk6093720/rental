@@ -17,8 +17,13 @@ const Leases = () => {
     setLandlordFilter(e.target.value)
   }
   const handleAdd = ()=>{
-    if(location.pathname === "/tentant-dashboard/leases"){
+    if(location.pathname === "/superAdmin/leases"){
+      navigate("/superAdmin/AddLease")
+    }
+    else if(location.pathname === "/tentant-dashboard/leases"){
         navigate("/tentant-dashboard/AddLease")
+    }else{
+      navigate("/owner-dashboard/AddLease")
     }
   }
   const View = (id)=>{
@@ -28,7 +33,7 @@ const Leases = () => {
      else if(location.pathname === "/tentant-dashboard/leases"){
       navigate(`/tentant-dashboard/viewLease/${id}`)
     }else{
-      navigate(`owner-dashboard/viewLease/${id}`)
+      navigate(`/owner-dashboard/viewLease/${id}`)
     }
   }
   const edit =(id)=>{
@@ -37,7 +42,7 @@ const Leases = () => {
     }else if(location.pathname === "/tentant-dashboard/leases"){
       navigate(`/tentant-dashboard/lease/${id}/edit`)
     }else{
-      navigate(`owner-dashboard/lease/${id}/edit`)
+      navigate(`/owner-dashboard/lease/${id}/edit`)
     }
   }
   const handleDelete = (item) => {

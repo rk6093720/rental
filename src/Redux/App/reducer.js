@@ -1,6 +1,7 @@
 import * as types from "./actionTypes"
 const initialState = {
    landlord:[],
+   apartment:[],
    isLoading:false,
    isError:false,
     filters: {
@@ -24,8 +25,7 @@ const initialState = {
 const reducer = (state = initialState, action) => {
     const  { type, payload } = action;
     switch (type) {
-
-    case types.GET_LANDLORD_REQUEST:
+         case types.GET_LANDLORD_REQUEST:
         return { 
             ...state,
             isLoading:true
@@ -121,6 +121,78 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 pagination: state.payload,
             };
+           case types.GET_APARTMENT_REQUEST:
+        return { 
+            ...state,
+            isLoading:true
+         }
+    case types.GET_APARTMENT_SUCCESS:
+        return {
+            ...state,
+            isLoading:false,
+            apartment:payload,
+            isError:false,
+        }
+    case types.GET_APARTMENT_FAILURE:
+        return {
+            ...state,
+            isLoading:false,
+            isError:true,
+        }
+    case types.POST_APARTMENT_REQUEST:
+        return {
+            ...state,
+            isLoading:true,
+        }
+    case types.POST_APARTMENT_SUCCESS:
+        return {
+            ...state,
+            isLoading:false,
+            apartment:[...state.apartment, payload],
+            isError:false,
+        }
+    case types.POST_APARTMENT_FAILURE:
+        return {
+            ...state,
+            isLoading:false,
+            isError:true
+        }
+       case types.EDIT_APARTMENT_REQUEST:
+        return{
+            ...state,
+            isLoading:true,
+        }
+    case types.EDIT_APARTMENT_SUCCESS:
+        return {
+            ...state,
+            apartment:state.apartment.map((item)=> item._id === payload.id ? payload:item),
+            isLoading:false,
+            isError:false,
+        }
+    case types.EDIT_APARTMENT_FAILURE:
+        return{
+            ...state,
+            isLoading:false,
+            isError:true,
+        }
+    case types.DELETE_APARTMENT_REQUEST:
+        return{
+            ...state,
+            isLoading:true,
+        }
+    case types.DELETE_APARTMENT_SUCCESS:
+        return{
+            ...state,
+            isLoading:false,
+            apartment:state.apartment.filter((land)=>land._id !== payload),
+            isError:false,
+        }
+    case types.DELETE_APARTMENT_FAILURE:
+        return {
+            ...state,
+            isLoading:false,
+            isError:true
+        }
     default:
         return state
     }

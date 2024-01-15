@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box, Input, Button, FormControl, RadioGroup, Stack, Radio, FormLabel, InputGroup, InputRightElement, useToast} from "@chakra-ui/react";
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
 import { EmailIcon, ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { RiAdminLine } from 'react-icons/ri';
 import { useDispatch } from 'react-redux';
@@ -87,7 +87,7 @@ const Signup = () => {
 };
 
   return (
-    <div className='auth' style={{ width:"40%", height:"500px",margin:"auto", marginTop:"15px" }}>
+    <div className='auth' style={{ width:"40%", height:"550px",margin:"auto", marginTop:"15px",boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",padding:"15px" }}>
        <Box className="auth-inner" style={{width:"100%", height:"100%",position:"relative"}}>
           <heading style={{fontSize:"24px", fontWeight:"bold",textAlign:"center"}}>Welcome to Rental Apartment</heading>
           <br/>
@@ -159,12 +159,14 @@ const Signup = () => {
                     </InputRightElement>
                   </InputGroup>
                 </FormControl>
+                <br/>
                 <div className="d-grid" style={{ width: "100%", height: "50px"}}>
             <Button type="submit" className="btn btn-primary" _hover={{ color: "white", bg: "green" }}
               style={{ width: "100%", height: "50px", fontSize: "24px", color: "white", borderRadius: "15px" }}>
               Sign Up
             </Button>
           </div>
+          <br />
           <p className="forgot-password text-right"
           style={{fontSize:"20px",textAlign:"center"}}>
             Create Registration for Admin and User <Button onClick={handleRole} style={{color:"blue"}}>Login</Button>
@@ -221,12 +223,14 @@ const Signup = () => {
                     </InputRightElement>
                   </InputGroup>
                 </FormControl>
+                <br/>
                 <div className="d-grid" style={{ width: "100%", height: "50px"}}>
             <Button type="submit" className="btn btn-primary" _hover={{ color: "white", bg: "green" }}
               style={{ width: "100%", height: "50px", fontSize: "24px", color: "white", borderRadius: "15px" }}>
               Sign Up
             </Button>
           </div>
+          <br/>
           <p className="forgot-password text-right"
           style={{fontSize:"20px",textAlign:"center"}}>
             Create Registration for Admin and User <Button onClick={handleRole} style={{color:"blue"}}>Login</Button>

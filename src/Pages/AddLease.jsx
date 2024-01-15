@@ -627,6 +627,7 @@ const AddLease = () => {
                         )}
                     </Step>
                 ))}
+                <br/>
                 {active === steps.length - 1 && (
                     <Button className='addPropertybutton' _hover={{ bg: "green", color: "white" }} style={{
                         marginTop: "80%", width: "30%",

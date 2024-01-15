@@ -2,7 +2,7 @@ import { Box,Flex, Heading, Stack } from '@chakra-ui/react';
 import React from 'react'
 import { Link } from 'react-router-dom';
 import { Icon } from '@chakra-ui/icons';
-import {  RiHomeWifiFill } from "react-icons/ri";
+import {  RiDashboardLine, RiHomeWifiFill } from "react-icons/ri";
 import { LuTableProperties } from "react-icons/lu";
 import { FaLandmark, FaFileInvoice } from "react-icons/fa";
 import { FcHome } from "react-icons/fc";
@@ -16,10 +16,10 @@ const Sidebar = () => {
                 <hr style={{ marginTop: "10px" }} />
                 <Stack marginTop={"15px"} style={{width:"100%",height:"100%",overflowX:"hidden",overflowY:"scroll"}}>
                     {/* 1 */}
-                    <Link to="/superAdmin" >
+                   <Link to="/superAdmin/dashboard" >
                         <Flex _hover={{ color: "white", bg: "green" }} alignItems={"start"} justify={"space-evenly"} style={{ height:"50px", border: "1px solid black", marginTop: "45x", padding: "2px" }}>
-                            <Box style={{ fontSize: "30px", width: "48%" }}><FaLandmark style={{ marginLeft: "40%", alignItems: "center" }} /></Box>
-                            <Box style={{ fontSize: "20px", width: "50%", textAlign: "start", alignItems: "center" }}>SuperAdmin</Box>
+                            <Box style={{ fontSize: "30px", width: "48%" }}><RiDashboardLine style={{ marginLeft: "40%", alignItems: "center" }} /></Box>
+                            <Box style={{ fontSize: "20px",width:"50%",textAlign:"start",alignItems:"center"}}>Dashboard</Box>
                         </Flex>
                     </Link>
                     {/* 2 */}

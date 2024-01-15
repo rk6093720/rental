@@ -35,6 +35,10 @@ import EditVacateNotice from './EditVacateNotice';
 import EditPayment from './EditPayment';
 import EditInvoice from './EditInvoice';
 import ViewInvoice from './ViewInvoice';
+import Apartment from './Apartment';
+import AddApartment from './AddApartment';
+import ViewApartment from './ViewApartment';
+import EditApartment from './EditApartment';
 // import HelpDesk from './HelpDesk';
 const MainRoutes = () => {
     return (
@@ -54,6 +58,8 @@ const MainRoutes = () => {
                 <Route path='/dashboard' element={
                 <Dashboard/>
                  }/>
+                 <Route path='/apartment' element={<Apartment/>}/>
+                  <Route path='/AddApartment' element={<AddApartment/>}/>
                 <Route path='/AddLandLord' element={<AddLandlord/>}/>
                 <Route path='/AddProperty' element={<AddProperty/>}/>
                 <Route path='/AddPayment' element={<AddPayment/>}/>
@@ -61,6 +67,8 @@ const MainRoutes = () => {
                 <Route path='/AddLease' element={<AddLease/>}/>
                 <Route path='/AddUtility' element={<AddUtility/>}/>
                 <Route path='/AddVacateNotice' element={<AddVacateNotice/>}/>
+                <Route path='/view-apartment/:id' element={<ViewApartment/>}/>
+                <Route path='/apartment/:id/edit' element={<EditApartment/>}/>
                 <Route path='/viewUtility/:id' element={<ViewUtility/>}/>
                 <Route path='/viewLease/:id' element={<ViewLease/>}/>
                 <Route path='/viewPayment/:id' element={<ViewPayment/>}/>

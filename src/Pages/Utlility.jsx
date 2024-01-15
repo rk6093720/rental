@@ -24,19 +24,15 @@ const Utlility = () => {
     if(location.pathname === "/superAdmin/utilities"){
       navigate(`/superAdmin/viewUtility/${id}`)
     }
-     else if(location.pathname === "/tentant-dashboard/utilities"){
-      navigate(`/tentant-dashboard/viewUtility/${id}`)
-    }else{
-      navigate(`owner-dashboard/viewUtility/${id}`)
+     else if(location.pathname === "/owner-dashboard/utilities"){
+      navigate(`/owner-dashboard/viewUtility/${id}`)
     }
   }
   const edit =(id)=>{
     if(location.pathname === "/superAdmin/utilities"){
       navigate(`/superAdmin/utility/${id}/edit`)
-    }else if(location.pathname === "/tentant-dashboard/utilities"){
-      navigate(`/tentant-dashboard/utility/${id}/edit`)
-    }else{
-      navigate(`owner-dashboard/utility/${id}/edit`)
+    }else if(location.pathname === "/owner-dashboard/utilities"){
+      navigate(`/owner-dashboard/utility/${id}/edit`)
     }
   }
   const handleDelete = (item) => {

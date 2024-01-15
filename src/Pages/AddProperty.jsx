@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Box, Button, FormControl, Input, Stack, Step, StepDescription, StepIcon, StepIndicator, StepNumber, StepSeparator, StepStatus, StepTitle, Stepper,Modal,ModalBody,ModalCloseButton,ModalContent,ModalFooter,ModalHeader,ModalOverlay,Select,Tab,TabList,TabPanel,TabPanels,Tabs,Text,useDisclosure,
 } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import {  getProperty, postProperty } from '../Redux/Property/action';
+import { getLandlord } from '../Redux/App/action';
 const steps = [
     { title: 'PropertyDetails', description: 'Contact Info' },
     { title: 'PaymentSetting', description: 'Payment for Rooms' },
@@ -257,10 +258,10 @@ const AddProperty = () => {
     const handleNext = () => {
         setActive((active)=> active + 1) // Go to the next step
     };
-    const handleLand=()=>{
-        //  const newLand = landlord.find(())
-
-    }
+    // const handleLand=(e)=>{
+    //     setLandlord(e.target.value)
+    // }
+    console.log(landlord);
 
     console.log(utilities, modals, payment, extra, late, propertyname,
         propertycode,
@@ -268,7 +269,12 @@ const AddProperty = () => {
         location,
         propertyType,
         agentCommission,
-        agentCommissionType)
+        agentCommissionType);
+        useEffect(()=>{
+            if(landlord.length === 0){
+                dispatch(getLandlord())
+            }
+        },[landlord.length, dispatch])
     return (
         <Stack style={{ width:"100%", height:"100vh", marginTop:"15px"}}>
             <Stepper size="lg" index={active} orientation='vertical' height='400px' gap='0' marginTop={"15px"} padding={"10px"}>
@@ -321,7 +327,13 @@ const AddProperty = () => {
                                 </FormControl>
                                 <br/>
                                 <FormControl isRequired>
-                                <Input type="text" value={land} onChange={handleLand} placeholder='find Landlord'/>
+                                <Select type="text" value={land}  onChange={(e)=>setLandlord(e.target.value)} placeholder='find Landlord'>
+                                  {
+                                    landlord.map((item,index)=>(
+                                      <option key={index}>{item.firstName}</option>
+                                    ))
+                                  }
+                                </Select>
                                 </FormControl>
                                 <br/>
                                 { modals.map((modal, index)=>(
