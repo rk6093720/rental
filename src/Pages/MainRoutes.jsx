@@ -38,7 +38,7 @@ import ViewInvoice from './ViewInvoice';
 import Apartment from './Apartment';
 import AddApartment from './AddApartment';
 import ViewApartment from './ViewApartment';
-import EditApartment from './EditApartment';
+import EditApartmentDetails from './EditApartmentDetails';
 // import HelpDesk from './HelpDesk';
 const MainRoutes = () => {
     return (
@@ -68,7 +68,7 @@ const MainRoutes = () => {
                 <Route path='/AddUtility' element={<AddUtility/>}/>
                 <Route path='/AddVacateNotice' element={<AddVacateNotice/>}/>
                 <Route path='/view-apartment/:id' element={<ViewApartment/>}/>
-                <Route path='/apartment/:id/edit' element={<EditApartment/>}/>
+                <Route path='/apartment/:id/edit' element={<EditApartmentDetails/>}/>
                 <Route path='/viewUtility/:id' element={<ViewUtility/>}/>
                 <Route path='/viewLease/:id' element={<ViewLease/>}/>
                 <Route path='/viewPayment/:id' element={<ViewPayment/>}/>

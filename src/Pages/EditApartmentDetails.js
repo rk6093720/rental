@@ -1,14 +1,13 @@
-import { Box, Button,Textarea,InputGroup,Spacer, Flex, FormControl, FormLabel, Heading, Input, Select, useToast } from "@chakra-ui/react";
+import { Box, Button,Textarea,InputGroup,Spacer, Flex, FormControl, FormLabel, Input, Select, useToast } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { editApartment, getApartment } from "../Redux/App/action";
-import { GET_APARTMENT_SUCCESS } from "../Redux/App/actionTypes";
-const EditApartment = () =>{
+const EditApartmentDetails = () =>{
     const {id} = useParams();
     const [image,setImage]= useState(null);
   const [title,setTittle]= useState("");
-  const [typesOfApartment,setTypesOfApartment]= useState("");
+  const [typeofApartment,setTypeofApartment]= useState("");
   const [area, setArea] = useState("");
   const [floor,setFloor]= useState("");
   const [country,setCountry]= useState("");
@@ -22,101 +21,86 @@ const EditApartment = () =>{
   const [description, setDescription]= useState("");
     const location = useLocation();
     const [currentApartment,setCurrentApartment]=useState({});
-    const invoiceLand = useSelector((state)=> state.App.apartment);
-    const dispatch= useDispatch();
+    const apartment = useSelector((state)=> state.App.apartment);
+    const dispatch = useDispatch();
     const toast = useToast();
     const navigate = useNavigate();
      const handleChangeFile = (e) =>{
-    console.log(e.target.files[0],"emage");
-    setImage(e.target.files[0])
+      setImage(e.target.files[0])
   }
-    const handleEditApartment=(e)=>{
-        e.preventDefault();
-          if (image) {
-         const formData = new FormData();
-        //  filename = crypto.randomUUID() + image.name;
-        //  formData.append('filename', filename)
-         formData.append("apartmentImage", image); // Use "document" as the key
-         formData.append("title", title);
-         formData.append("typesOfApartment", typesOfApartment);
-         formData.append("area", area);
-         formData.append("floor", floor);
-         formData.append("city", city);
-         formData.append("country", country);
-         formData.append("bedRooms", bedRooms);
-         formData.append("bathRooms", bathRooms);
-         formData.append("terrace", terrace);
-         formData.append("price", price);
-         formData.append("parking", parking);
-         formData.append("description", description);
-         formData.append("advancePaymentForRent", advancePaymentForRent);
-        dispatch(editApartment(id,formData))
-        .then(()=> dispatch(getApartment())) 
-        .then((r)=>{
-            if(r.type === GET_APARTMENT_SUCCESS){
-                toast({
-                  title: 'Invoice is Edit Successfully',
-                  duration: 5000,
-                  position: 'top',
-                  isClosable: true,
-                  colorScheme: 'green',
-                  status: 'success',
-                })
-                if(location.pathname === `/superAdmin/invoice/${id}/edit`){
-                    navigate("/superAdmin/invoices")
-                }
-                else if(location.pathname === `/tentant-dashboard/invoice/${id}/edit`)
-                {
-                    navigate("/tentant-dashboard/invoices")
-                }else{
-                    navigate("/owner-dashboard/invoices")
-                }
-              }
-        })
-        .catch((e)=>{
-            console.log(e);
-        })
-
+    const handleForm =(e) => {
+    e.preventDefault();
+    try {
+     if(image){
+      const formData = new FormData();
+      for(const key in {
+        title,
+        typeofApartment,
+        area,
+        floor,
+        country,
+        bedRooms,
+        city,
+        bathRooms,
+        terrace,
+        parking,
+        price,
+        advancePaymentForRent,
+      }){
+        formData.append(key, key === "apartmentImage" ? image : eval(key))
+      }
+      console.log(formData);
+      dispatch(editApartment(id,formData))
+      .then(()=> dispatch(getApartment()))
+      .then((r)=>{
+        console.log(r);
+      })
+     }
+    } catch (error) {
+      console.log(error);
     }
-}
-    
-    useEffect(()=>{
-        if(invoiceLand.length===0)
-        {
-         dispatch(getApartment())
-        }
-     },[invoiceLand.length, dispatch])
-     useEffect(()=>{
-       if(id){
-          const landById = invoiceLand.find((lands)=> lands._id === id)
-           landById && setCurrentApartment(landById);
-         landById && setImage(landById.image)
-         landById && setTittle(landById.title)
-         landById && setAdvancePaymentForRent(landById.advancePaymentForRent)
-         landById && setArea(landById.area)
-         landById && setBathRooms(landById.bathRooms)
-         landById && setBedRooms(landById.bedRooms)
-         landById && setCity(landById.city)
-         landById && setCountry(landById.country)
-         landById && setFloor(landById.floor)
-         landById && setDescription(landById.description)
-         landById && setTerrace(landById.terrace)
-         landById && setParking(landById.parking)
-          landById && setPrice(landById.price)
-         landById && setParking(landById.parking)
-       }
-     },[id,invoiceLand])
+  };
+  useEffect(() => {
+    if (apartment.length === 0) {
+      dispatch(getApartment());
+    }
+  }, [apartment.length, dispatch]);
+
+  useEffect(() => {
+    if (id) {
+      const apartmentById = apartment.find((apartments) => apartments._id === id);
+      console.log(apartmentById);
+      apartmentById && setCurrentApartment(apartmentById);
+      apartmentById && setImage(apartmentById.apartmentImage);
+      apartmentById && setTittle(apartmentById.title);
+      apartmentById && setTypeofApartment(apartmentById.typeofApartment);
+      apartmentById && setArea(apartmentById.area);
+      apartmentById && setFloor(apartmentById.floor);
+      apartmentById && setCountry(apartmentById.country);
+      apartmentById && setBedRooms(apartmentById.bedRooms);
+      apartmentById && setCity(apartmentById.city);
+      apartmentById && setBathRooms(apartmentById.bathRooms);
+      apartmentById && setTerrace(apartmentById.terrace);
+      apartmentById && setParking(apartmentById.parking);
+      apartmentById && setDescription(apartmentById.description);
+      apartmentById && setPrice(apartmentById.price);
+      apartmentById && setAdvancePaymentForRent(apartmentById.advancePaymentForRent);
+    }
+  }, [id, apartment]);
+  // console.log(apartment);
+  console.log(image,title,typeofApartment,description,area,floor,bedRooms,bathRooms,terrace, parking, price,advancePaymentForRent,country,city);
     return (
         <div>
-             <Box style={{width:"80%",height:"700px",margin:"auto",marginTop:"15px"}}>
+           <Box style={{width:"80%",height:"700px",margin:"auto",marginTop:"15px"}}>
           <h1>Edit Apartment</h1>
-           <form onSubmit={handleEditApartment}>
+           <form onSubmit={handleForm} >
            <Flex>
             <FormControl isRequired>
               <FormLabel>Title</FormLabel>
               <InputGroup className='title' style={{ width: "100%", height: "5%" }}>
                 <Input placeholder='Apartment-Name'
                   type='text'
+                  name='title'
                   _hover={{ bg: "green", color: "white" }}
                   value={title}
                   style={{ fontSize: "24px" }}
@@ -125,12 +109,13 @@ const EditApartment = () =>{
             </FormControl>
             <Spacer/>
           <FormControl isRequired>
-              <FormLabel>TypesOfApartment</FormLabel>
-              <InputGroup className='TypesOfApartment' style={{ width: "100%", height: "5%" }}>
-                <Select placeholder='TypesOfApartment'
-                  value={typesOfApartment}
+              <FormLabel>typeofApartment</FormLabel>
+              <InputGroup className='typeofApartment' style={{ width: "100%", height: "5%" }}>
+                <Select placeholder='typeofApartment'
+                 name='typeofApartment'
+                  value={typeofApartment}
                   style={{ fontSize: "24px" }}
-                  onChange={(e) => setTypesOfApartment(e.target.value)} > 
+                  onChange={(e) => setTypeofApartment(e.target.value)} > 
                   <option value="1BHK">1BHK</option>
                   <option value="2BHK">2BHK</option>
                   </Select>
@@ -143,7 +128,7 @@ const EditApartment = () =>{
             <InputGroup className='Area' style={{ width: "100%", height: "5%" }}>
               <Input placeholder='Area'
                 type='text'
-                autoComplete='area'
+                name='area'
                 _hover={{ bg: "green", color: "white" }}
                 value={area}
                 style={{ fontSize: "24px" }}
@@ -155,6 +140,7 @@ const EditApartment = () =>{
             <InputGroup className='Floor' style={{ width: "100%", height: "5%" }}>
               <Input placeholder='Floor'
                 type='text'
+                name='floor'
                 _hover={{ bg: "green", color: "white" }}
                 value={floor}
                 maxLength={10}
@@ -169,6 +155,7 @@ const EditApartment = () =>{
             <InputGroup className='inputForcountry' style={{ width: "100%", height: "5%" }}>
               <Input placeholder='enter your country name'
                 type='text'
+                name='country'
                 _hover={{ bg: "green", color: "white" }}
                 value={country}
                 style={{ fontSize: "24px" }}
@@ -180,6 +167,7 @@ const EditApartment = () =>{
             <InputGroup className='BedRooms' style={{ width: "100%", height: "5%" }}>
               <Input placeholder='BedRooms'
                 type='text'
+                name='bedRooms'
                 _hover={{ bg: "green", color: "white" }}
                 value={bedRooms}
                 style={{ fontSize: "24px" }}
@@ -193,6 +181,7 @@ const EditApartment = () =>{
             <InputGroup className='inputForcity' style={{ width: "100%", height: "5%"}}>
               <Input placeholder='enter your city name'
                 type='text'
+                name='city'
                 _hover={{ bg: "green", color: "white" }}
                 value={city}
                 style={{ fontSize: "24px" }}
@@ -217,6 +206,7 @@ const EditApartment = () =>{
             <InputGroup className='Terrace' style={{ width: "100%", height: "5%"}}>
               <Input placeholder='Terrace'
                 type='text'
+                name='terrace'
                 _hover={{ bg: "green", color: "white" }}
                 value={terrace}
                 style={{ fontSize: "24px" }}
@@ -227,6 +217,7 @@ const EditApartment = () =>{
             <FormLabel>Parking</FormLabel>
             <InputGroup className='Parking' style={{ width: "100%", height: "5%"}}>
               <Select placeholder='parking'
+              name='parking'
                 value={parking}
                 style={{ fontSize: "24px" }}
                 onChange={(e) => setParking(e.target.value)} >
@@ -242,6 +233,7 @@ const EditApartment = () =>{
             <InputGroup className='Price' style={{ width: "100%", height: "5%"}}>
               <Input placeholder='Price'
                 type='text'
+                name="price"
                 _hover={{ bg: "green", color: "white" }}
                 value={price}
                 style={{ fontSize: "24px" }}
@@ -268,6 +260,7 @@ const EditApartment = () =>{
             <InputGroup className='advancePaymentForRent  ' style={{ width: "100%", height: "5%" }}>
               <Input placeholder='advancePaymentForRent  '
                 type='text'
+                name="advancePaymentForRent"
                 _hover={{ bg: "green", color: "white" }}
                 value={advancePaymentForRent}
                 style={{ fontSize: "24px" }}
@@ -278,19 +271,20 @@ const EditApartment = () =>{
             <FormLabel>Description</FormLabel>
             <InputGroup className='Description' style={{ width: "100%", height: "5%" }}>
               <Textarea placeholder='Description'
+              name="description"
                 value={description}
                 style={{ fontSize: "24px" }}
                 onChange={(e) => setDescription(e.target.value)} />
             </InputGroup>
           </FormControl>
           </Flex>
-          <Box className='EditButton'
+          <Box className='editButton'
             style={{ width: "100%", height: "30px",marginTop:"15px" }}>
             <Button className='button'
               type="submit"
               _hover={{ color: "white", bg: "green" }}
               style={{ width: "100%", height: "50px", fontSize: "24px", color: "white", borderRadius: "15px" }}
-            >EditApartment</Button>
+            >Edit Apartment</Button>
           </Box>
           </form>
          </Box>
@@ -298,4 +292,4 @@ const EditApartment = () =>{
     )
 }
 
-export default EditApartment;
+export default EditApartmentDetails;

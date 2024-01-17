@@ -37,59 +37,19 @@ const ViewApartment = () => {
                                src={base + `${currentApartment.apartmentImage}`}
                               /> 
                               <Box border="1px solid black" alignItems="center" height='80px'>title:{currentApartment.title}</Box>
-                              <Box border="1px solid black" alignItems="center" height='80px'>Email:{currentApartment.email}</Box>
-                              <Box border="1px solid black" alignItems="center" height='80px'>PhoneNumber:{currentApartment.phone}</Box>
+                              <Box border="1px solid black" alignItems="center" height='80px'>Types-of-Apartment:{currentApartment.typeofApartment}</Box> 
+                              <Box border="1px solid black" alignItems="center" height='80px'>Description:{currentApartment.description}</Box>
                               <Box border="1px solid black" alignItems="center" height='80px'>country:{currentApartment.country}</Box>
-                              <Box border="1px solid black" alignItems="center" height='80px'>state:{currentApartment.state}</Box>
+                              <Box border="1px solid black" alignItems="center" height='80px'>Area:{currentApartment.area}</Box>
                               <Box border="1px solid black" alignItems="center" height='80px'>city:{currentApartment.city}</Box>
-                              <Box border="1px solid black" alignItems="center" height='80px'>postalCode:{currentApartment.postalCode}</Box>
-                              <Box border="1px solid black" alignItems="center" height='80px'>Address:{currentApartment.address}</Box>
-                              <Box border="1px solid black" alignItems="center" height='80px'>AdharCard:{currentApartment.adharCard}</Box>
+                              <Box border="1px solid black" alignItems="center" height='80px'>Floor:{currentApartment.floor}</Box>
+                              <Box border="1px solid black" alignItems="center" height='80px'>BedRooms:{currentApartment.bedRooms}</Box>
+                              <Box border="1px solid black" alignItems="center" height='80px'>BathRooms:{currentApartment.bathRooms}</Box>
+                                 <Box border="1px solid black" alignItems="center" height='80px'>Terrace:{currentApartment.terrace}</Box>
+                              <Box border="1px solid black" alignItems="center" height='80px'>Parking:{currentApartment.parking}</Box>
+                              <Box border="1px solid black" alignItems="center" height='80px'>Price:{currentApartment.price}</Box>
+                              <Box border="1px solid black" alignItems="center" height='80px'>AdvancedRent:{currentApartment.advancePaymentForRent}</Box>
                     </SimpleGrid>         
-                  </TabPanel>
-                  <TabPanel>
-                      <TableContainer>
-                          <Table variant='striped' colorScheme='teal'>
-                              <TableCaption></TableCaption>
-                              <Thead>
-                                  <Tr>
-                                      <Th>PropertyCode</Th>
-                                      <Th>PropertyName</Th>
-                                      <Th>City</Th>
-                                      <Th>CountApartment</Th>
-                                  </Tr>
-                              </Thead>
-                              <Tbody>
-                                  <Tr>
-                                      <Td>{currentApartment.propertyCode}</Td>
-                                      <Td>{currentApartment.propertyName}</Td>
-                                      <Td>{currentApartment.city}</Td>
-                                      <Td>{currentApartment.countApartment}</Td>
-                               </Tr>
-                              </Tbody>
-                          </Table>
-                      </TableContainer>
-                  </TabPanel>
-                  <TabPanel>
-                      <TableContainer>
-                          <Table variant='striped' colorScheme='teal'>
-                              <TableCaption></TableCaption>
-                              <Thead>
-                                  <Tr>
-                                      <Th>registrationDate</Th>
-                                      <Th>Document</Th>
-                                  </Tr>
-                              </Thead>
-                              <Tbody>
-                                  <Tr>
-                                      <Td>{currentApartment.registerDate}</Td>
-                                      <Td>  <Image src={ base + `${currentApartment.document}`} height="100px"/>
-                                        </Td>
-                                        
-                                  </Tr>
-                              </Tbody>
-                          </Table>
-                      </TableContainer>      
                   </TabPanel>
               </TabPanels>
           </Tabs>

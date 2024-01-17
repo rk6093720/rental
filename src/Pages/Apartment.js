@@ -76,6 +76,7 @@ const Apartment = () => {
             <TableCaption></TableCaption>
             <Thead>
               <Tr>
+                <Th>S.no</Th>
                 <Th>Image</Th>
                 <Th>Title</Th>
                 <Th>parking</Th>
@@ -85,8 +86,9 @@ const Apartment = () => {
             </Thead>
             <Tbody>
               {
-                land?.length > 0 && land?.map((item) => {
+                land?.length > 0 && land?.map((item, index) => {
                   return<Tr key={item._id}>
+                    <Td>{index +  1}</Td>
                 <Td>
                    <Image src={base + item.apartmentImage} width={"50px"} height={"50px"}/>
                     </Td>

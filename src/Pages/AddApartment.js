@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 const AddApartment = () => {
   const [image,setImage]= useState(null);
   const [title,setTittle]= useState("");
-  const [typesOfApartment,setTypesOfApartment]= useState("");
+  const [typeofApartment,setTypeofApartment]= useState("");
   const [area, setArea] = useState("");
   const [floor,setFloor]= useState("");
   const [country,setCountry]= useState("");
@@ -36,7 +36,7 @@ const AddApartment = () => {
         //  formData.append('filename', filename)
          formData.append("apartmentImage", image); // Use "document" as the key
          formData.append("title", title);
-         formData.append("typesOfApartment", typesOfApartment);
+         formData.append("typeofApartment", typeofApartment); 
          formData.append("area", area);
          formData.append("floor", floor);
          formData.append("city", city);
@@ -48,6 +48,7 @@ const AddApartment = () => {
          formData.append("parking", parking);
          formData.append("description", description);
          formData.append("advancePaymentForRent", advancePaymentForRent);
+         console.log(formData);
          await dispatch(postApartment(formData))
            .then(() => dispatch(getApartment()))
            .then((r) => {
@@ -64,7 +65,7 @@ const AddApartment = () => {
     <div>
          <Box style={{width:"80%",height:"700px",margin:"auto",marginTop:"15px"}}>
           <h1>Add Apartment</h1>
-           <form onSubmit={handleForm}>
+           <form onSubmit={handleForm} >
            <Flex>
             <FormControl isRequired>
               <FormLabel>Title</FormLabel>
@@ -79,12 +80,12 @@ const AddApartment = () => {
             </FormControl>
             <Spacer/>
           <FormControl isRequired>
-              <FormLabel>TypesOfApartment</FormLabel>
-              <InputGroup className='TypesOfApartment' style={{ width: "100%", height: "5%" }}>
-                <Select placeholder='TypesOfApartment'
-                  value={typesOfApartment}
+              <FormLabel>typeofApartment</FormLabel>
+              <InputGroup className='typeofApartment' style={{ width: "100%", height: "5%" }}>
+                <Select placeholder='typeofApartment'
+                  value={typeofApartment}
                   style={{ fontSize: "24px" }}
-                  onChange={(e) => setTypesOfApartment(e.target.value)} > 
+                  onChange={(e) => setTypeofApartment(e.target.value)} > 
                   <option value="1BHK">1BHK</option>
                   <option value="2BHK">2BHK</option>
                   </Select>
@@ -244,7 +245,7 @@ const AddApartment = () => {
               type="submit"
               _hover={{ color: "white", bg: "green" }}
               style={{ width: "100%", height: "50px", fontSize: "24px", color: "white", borderRadius: "15px" }}
-            >AddLandLord</Button>
+            >AddApartment</Button>
           </Box>
           </form>
          </Box>

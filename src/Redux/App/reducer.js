@@ -127,6 +127,7 @@ const reducer = (state = initialState, action) => {
             isLoading:true
          }
     case types.GET_APARTMENT_SUCCESS:
+        console.log("get",payload);
         return {
             ...state,
             isLoading:false,
@@ -163,6 +164,7 @@ const reducer = (state = initialState, action) => {
             isLoading:true,
         }
     case types.EDIT_APARTMENT_SUCCESS:
+        console.log("payload",payload)
         return {
             ...state,
             apartment:state.apartment.map((item)=> item._id === payload.id ? payload:item),

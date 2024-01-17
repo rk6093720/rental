@@ -73,11 +73,11 @@ export const setPagination = (pagination) => ({
     payload: pagination,
 });
 const getApartment = ()=> async(dispatch)=>{
-  dispatch({type:types.GET_APARTMENT_REQUEST})
-    return await axios.get("http://localhost:8080/apartment/read")
+  dispatch({type:types.GET_APARTMENT_REQUEST});
+   await axios.get("http://localhost:8080/apartment/read")
     .then((r)=>{
         console.log(r,"get")
-     dispatch({type:types.GET_APARTMENT_SUCCESS, payload:r.data.data.getData})
+     return dispatch({type:types.GET_APARTMENT_SUCCESS, payload:r.data.data.getData})
     })
     .catch((e)=>{
        return  dispatch({type:types.GET_APARTMENT_FAILURE,payload:e})
@@ -95,17 +95,26 @@ const postApartment = (payload)=>async(dispatch)=>{
      dispatch({type:types.POST_APARTMENT_FAILURE,payload:e})
     })
 }
-const editApartment = (id,payload) =>async(dispatch)=>{
-    dispatch({type:types.EDIT_APARTMENT_REQUEST});
-    return await axios.put(`http://localhost:8080/apartment/update/${id}`,payload)
-    .then((r)=>{
-        console.log(r);
-         dispatch({ type: types.EDIT_APARTMENT_SUCCESS, payload: r.data.newApartment })
-    })
-    .catch((e)=>{
-         dispatch({type:types.EDIT_APARTMENT_FAILURE,payload:e})
-    })
-}
+const editApartment = (id, payload) => async (dispatch) => {
+  dispatch({ type: types.EDIT_APARTMENT_REQUEST });
+  console.log("edit", payload);
+
+  try {
+    const res = await axios.put(`http://localhost:8080/apartment/update/${id}`, payload, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    console.log("data", res);
+
+    // Assuming that your response contains an `editApartment` property
+    const editedApartment = res.data.editApartment;
+
+    dispatch({ type: types.EDIT_APARTMENT_SUCCESS, payload: editedApartment });
+  } catch (error) {
+    dispatch({ type: types.EDIT_APARTMENT_FAILURE, payload: error });
+  }
+};
 
 const deleteApartment = (id) => async(dispatch)=>{
       dispatch({type:types.DELETE_APARTMENT_REQUEST});
