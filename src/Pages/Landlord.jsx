@@ -39,7 +39,7 @@ const Landlord = () => {
   return (
     <div>
       <Flex minWidth='max-content' alignItems='center' gap='2'>
-       <Link to="/superAdmin/AddLandlord"> 
+       <Link to="/owner-dashboard/AddLandlord"> 
           <Box  style={{ border: "1px solid black", width: "250px", height: "50px", marginTop: "15px",borderRadius:"5px", backgroundColor:"black" , color:"white"}}>
             <BsPersonFillAdd style={{ width:"100%",fontSize:"24px", alignItems:"center",height:"100%",padding:"1px"}}/>
           </Box>

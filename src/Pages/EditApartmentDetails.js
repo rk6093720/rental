@@ -38,6 +38,7 @@ const EditApartmentDetails = () =>{
         typeofApartment,
         area,
         floor,
+        description,
         country,
         bedRooms,
         city,
