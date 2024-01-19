@@ -5,43 +5,47 @@ import { getTentants, postTentants } from '../Redux/Tentants/action';
 import { useNavigate } from 'react-router-dom';
 const AddTentants = () => {
     const [formData, setFormData] = useState({
-        firstName: '',
-        lastName: '',
-        email: '',
-        phone: '',
-        dateOfBirth: '',
-        address: {
-            street: '',
-            city: '',
-            state: '',
-            country: '',
-            zipCode: '',
-        },
-        employment: {
-            employer: '',
-            jobTitle: '',
-            income: '',
-        },
-        rentalHistory: [
-            {
-                landlord: '',
-                property: '',
-                startDate: '',
-                endDate: '',
-                reasonForLeaving: '',
-            },
-        ],
-        references: [
-            {
-                name: '',
-                relationship: '',
-                phone: '',
-            },
-        ],
-        creditScore: '',
-        identification: {
-            aadhaarCard: '',
-        },
+      // firstName, lastName, email , phone,dateOfBirth, address,identification, registrationofRoomRent, contract,approve
+      firstName: "",
+      lastName: "",
+      email: "",
+      phone: "",
+      dateOfBirth: "",
+      registrationofRoomRent: "",
+      contract: "",
+      address: {
+        street: "",
+        city: "",
+        state: "",
+        country: "",
+        zipCode: "",
+      },
+      // employment: {
+      //     employer: '',
+      //     jobTitle: '',
+      //     income: '',
+      // },
+      // rentalHistory: [
+      //     {
+      //         landlord: '',
+      //         property: '',
+      //         startDate: '',
+      //         endDate: '',
+      //         reasonForLeaving: '',
+      //     },
+      // ],
+      // references: [
+      //     {
+      //         name: '',
+      //         relationship: '',
+      //         phone: '',
+      //     },
+      // ],
+      // creditScore: '',
+      identification: {
+        aadhaarCard: "",
+      },
+      approve:"",
     });
 
      const dispatch = useDispatch();
@@ -49,19 +53,12 @@ const AddTentants = () => {
     const tentant = useSelector((state) => state.Tentants.tentants);
     const handleChange = (e) => {
         const { name, value } = e.target;
-        if (name.startsWith('address.') || name.startsWith('employment.') || name.startsWith('identification.')) {
+        if (name.startsWith('address.') || name.startsWith('identification.')) {
             setFormData((prevData) => ({
                 ...prevData,
                 address: {
                     ...prevData.address,
                     [name.split('address.')[1]]: value,
-                },
-            }));
-            setFormData((prevData) => ({
-                ...prevData,
-                employment: {
-                    ...prevData.employment,
-                    [name.split('employment.')[1]]: value,
                 },
             }));
             setFormData((prevData) => ({
@@ -231,7 +228,7 @@ const AddTentants = () => {
                 <br/>
                 {/* Add other address fields similarly */}
                 {/* Employment */}
-                <Flex>
+                {/* <Flex>
                 <FormControl>
                     <FormLabel>Employer:</FormLabel>
                     <Input
@@ -265,10 +262,10 @@ const AddTentants = () => {
                         onChange={handleChange}
                     />
                 </FormControl>
-                <br />
+                <br /> */}
                 {/* Add other employment fields similarly */}
                 {/* Rental History */}
-                {
+                {/* {
                     formData.rentalHistory.map((land, index)=>(
                         <Box key={index}>
                             <Flex>
@@ -331,10 +328,10 @@ const AddTentants = () => {
                             </FormControl>
                         </Box>
                     ))
-                } 
+                }  */}
                 {/* Add other rental history fields similarly */}
                 {/* References */}
-                {
+                {/* {
                     formData.references.map((refer,index)=>(
                         <div key={index}>
                             <Flex>
@@ -375,35 +372,9 @@ const AddTentants = () => {
                         </div>
                     ))
                 }
-                <br />
+                <br /> */}
                 {/* Add other references fields similarly */}
                 {/* Credit Score */}
-                <Flex>
-                <FormControl>
-                    <FormLabel> Credit Score:</FormLabel>
-                    <Input
-                        type="text"
-                        name="creditScore"
-                        placeholder='enter your creditScore'
-                        value={formData.creditScore}
-                        onChange={handleChange}
-                    />
-                </FormControl>
-                <br />
-
-                {/* Identification */}
-                <FormControl>
-                    <FormLabel>Aadhaar Card:</FormLabel> 
-                    <Input
-                        type="text"
-                        maxLength={12}
-                        placeholder='enter your aadharCard number'
-                        name="identification.aadhaarCard"
-                        value={formData.identification.aadhaarCard}
-                        onChange={handleChange}
-                    />
-                </FormControl>
-                </Flex>
                 <br />
                 <Button type="submit">Submit</Button>
             </form>

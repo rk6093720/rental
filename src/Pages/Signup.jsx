@@ -25,6 +25,11 @@ const Signup = () => {
    if (radio === "SuperAdmin"){
     navigate("/adminLogin", {state:{role:radio}})
    }
+   else if(radio === "Admin"){
+     navigate("/owner-login", { state: { role: radio } });
+   }else{
+    navigate("/user-login",{state:{role:radio}});
+   }
  }
 
  const handleRole =()=>{
