@@ -1,12 +1,12 @@
-import { Flex, Icon, Popover, PopoverArrow, PopoverBody, PopoverCloseButton, PopoverContent, PopoverFooter, PopoverHeader, PopoverTrigger, Portal, Spacer, Text } from "@chakra-ui/react"
-import React, { useState } from "react";
+import { Flex, Icon, Popover, PopoverArrow, PopoverBody, Badge ,PopoverCloseButton, PopoverContent, PopoverFooter, PopoverHeader, PopoverTrigger, Portal, Spacer, Text } from "@chakra-ui/react"
+import React, { useEffect, useState } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { IoMdNotifications } from "react-icons/io";
 import { FaUserCircle } from "react-icons/fa";
 import AdminSidebar from "../Component/AdminSidebar";
 import MainRoutes from "./MainRoutes";
 import { Box, Button, FormControl, FormLabel, Input, InputGroup, InputRightElement, useToast } from '@chakra-ui/react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { EmailIcon } from '@chakra-ui/icons';
 import{
   Modal,
@@ -19,6 +19,7 @@ import{
   useDisclosure
 } from '@chakra-ui/react';
 import { getLandlord, postLandlord } from "../Redux/App/action";
+import { getNotification } from "../Redux/Tentants/action";
 const OwnerDashboard =()=>{
    const navigate = useNavigate();
   const [Admin]=useState(JSON.parse(localStorage.getItem("Admintoken"))) 
@@ -28,6 +29,7 @@ const OwnerDashboard =()=>{
     navigate("/adminSignup")
     window.location.reload()
   }
+  const notice = useSelector((state) => state.Tentants.notification);
     const { isOpen, onOpen, onClose } = useDisclosure()
    const [image,setImage]= useState(null);
   const [firstName,setFirstName]= useState("");
@@ -84,7 +86,16 @@ const OwnerDashboard =()=>{
      }
   }
   console.log(image)
- 
+ const handleNotice=()=>{
+   let no = notice.find((item)=>{
+      return item
+     });
+     console.log(no.tentantsId);
+ }
+  useEffect(()=>{
+    dispatch(getNotification())
+  },[])
+  console.log(notice);
     return (
       <div>
         <Flex style={{ width: "100%" }}>
@@ -125,10 +136,18 @@ const OwnerDashboard =()=>{
                 }}
               >
                 <Box>
-                  <Button 
-                    style={{ textDecoration: "none", color: "black", fontSize:"24px" }}
+                  <Button
+                    onClick={handleNotice}
+                    style={{
+                      textDecoration: "none",
+                      color: "black",
+                      fontSize: "24px",
+                    }}
                   >
                     <Icon as={IoMdNotifications} />
+                    <Badge colorScheme="red" fontSize="0.8em" >
+                      {notice.length}
+                    </Badge>
                   </Button>
                 </Box>
                 <Box>
