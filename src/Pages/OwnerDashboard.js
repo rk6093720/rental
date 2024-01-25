@@ -1,13 +1,13 @@
 import { Flex, Icon, Popover, PopoverArrow, PopoverBody, PopoverCloseButton, PopoverContent, PopoverFooter, PopoverHeader, PopoverTrigger, Portal, Spacer, Text } from "@chakra-ui/react"
-import React, { useState } from "react"
-import { Link, Outlet, useNavigate } from "react-router-dom"
-import { MdSettings } from "react-icons/md"
+import React, { useState } from "react";
+import { Link, Outlet, useNavigate } from "react-router-dom";
+import { IoMdNotifications } from "react-icons/io";
 import { FaUserCircle } from "react-icons/fa";
 import AdminSidebar from "../Component/AdminSidebar";
 import MainRoutes from "./MainRoutes";
 import { Box, Button, FormControl, FormLabel, Input, InputGroup, InputRightElement, useToast } from '@chakra-ui/react'
 import { useDispatch } from 'react-redux';
-import { EmailIcon } from '@chakra-ui/icons'
+import { EmailIcon } from '@chakra-ui/icons';
 import{
   Modal,
   ModalOverlay,
@@ -125,12 +125,11 @@ const OwnerDashboard =()=>{
                 }}
               >
                 <Box>
-                  <Link
-                    to="/setting"
-                    style={{ textDecoration: "none", color: "white" }}
+                  <Button 
+                    style={{ textDecoration: "none", color: "black", fontSize:"24px" }}
                   >
-                    <Icon as={MdSettings} />
-                  </Link>
+                    <Icon as={IoMdNotifications} />
+                  </Button>
                 </Box>
                 <Box>
                   <Popover>

@@ -49,10 +49,25 @@ const deleteTentants = (id) => async (dispatch) => {
             dispatch({ type: types.DELETE_TENTANTS_FAILURE, payload: e })
         })
 }
-
+const getNotification = () => async (dispatch) => {
+  dispatch({ type: types.GET_NOTIFICATION_TENTANTS_REQUEST });
+  return await axios
+    .get("http://localhost:8080/tentants/notification/read")
+    .then((r) => {
+      console.log(r, "get");
+      dispatch({
+        type: types.GET_NOTIFICATION_TENTANTS_SUCCESS,
+        payload: r.data.notification,
+      });
+    })
+    .catch((e) => {
+      return dispatch({ type: types.GET_NOTIFICATION_TENTANTS_FAILURE, payload: e });
+    });
+};
 export {
-    getTentants,
-    postTentants,
-    editTentants,
-    deleteTentants
-}
+  getTentants,
+  postTentants,
+  editTentants,
+  deleteTentants,
+  getNotification,
+};
