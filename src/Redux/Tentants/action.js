@@ -64,10 +64,43 @@ const getNotification = () => async (dispatch) => {
       return dispatch({ type: types.GET_NOTIFICATION_TENTANTS_FAILURE, payload: e });
     });
 };
+// const postNotification = (payload) => async (dispatch) => {
+//   dispatch({ type: types.POST_TENTANTS_REQUEST });
+//   console.log(payload);
+//   return await axios
+//     .post(`http://localhost:8080/tentants/create`, payload)
+//     .then((r) => {
+//       console.log(r);
+//       dispatch({
+//         type: types.POST_TENTANTS_SUCCESS,
+//         payload: r.data.AddTentant,
+//       });
+//     })
+//     .catch((e) => {
+//       dispatch({ type: types.POST_TENTANTS_FAILURE, payload: e });
+//     });
+// };
+const editNotification = (id, payload) => async (dispatch) => {
+  dispatch({ type: types.EDIT_TENTANTS_REQUEST });
+  return await axios
+    .patch(`http://localhost:8080/tentants/notification/update/${id}`, payload)
+    .then((r) => {
+      console.log(r);
+      dispatch({
+        type: types.EDIT_TENTANTS_SUCCESS,
+        payload: r.data.editTentants,
+      });
+    })
+    .catch((e) => {
+      dispatch({ type: types.EDIT_TENTANTS_FAILURE, payload: e });
+    });
+};
 export {
   getTentants,
   postTentants,
   editTentants,
   deleteTentants,
   getNotification,
+//   postNotification,
+editNotification
 };

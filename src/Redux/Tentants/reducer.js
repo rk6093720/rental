@@ -101,7 +101,21 @@ const reducer = (state = initialState, action) => {
           isLoading: false,
           isError: true,
         };
-
+      case types.EDIT_NOTIFICATION_TENTANTS_REQUEST:
+        return {
+          ...state,
+          isLoading: true,
+        };
+      case types.EDIT_NOTIFICATION_TENTANTS_SUCCESS:
+        return {
+          ...state,
+          notification: state.notification.map((item) =>
+            item._id === payload.id ? payload : item
+          ),
+          isLoading: false,
+          isError: false,
+        };
+      case types.EDIT_NOTIFICATION_TENTANTS_FAILURE:
       default:
         return state;
     }
