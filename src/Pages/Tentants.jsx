@@ -17,6 +17,7 @@ const Tentants = () => {
   const notice = useSelector((state) => state.Tentants.notification);
   const location = useLocation();
   const navigate = useNavigate();
+
   console.log(location.pathname);
   // const handleAdd=()=>{
   //       if(location.pathname === "/superAdmin/tentants"){
@@ -32,7 +33,7 @@ const Tentants = () => {
   const showContract =(id)=>{
     const notificationId = notice.find((item)=>item);
     const apartmentId = apartment.find((item)=> item);
-  console.log(apartmentId,notificationId._id)
+  console.log(apartmentId,notificationId._id ) 
     const text = "completed";
     const payload = {
       contract: text,

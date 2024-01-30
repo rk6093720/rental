@@ -52,7 +52,7 @@ const AddApartment = () => {
          await dispatch(postApartment(formData))
            .then(() => dispatch(getApartment()))
            .then((r) => {
-             // navigate("/landlords")
+             navigate("/owner-dashboard/apartment");
              console.log(r);
            })
        }

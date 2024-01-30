@@ -19,7 +19,7 @@ const ViewProperties = () => {
       currentTentant && setCurrentTentant(currentTentant);
     }
   }, [id, tentant]);
-  console.log(currentTentant)
+  console.log(currentTentant.currentAddress.city)
   return (
     <div>
       <Tabs>
@@ -32,51 +32,83 @@ const ViewProperties = () => {
 
         <TabPanels>
           <TabPanel>
-            <SimpleGrid columns={[2, null, 3]} spacing='40px' >
-              <Box border="1px solid black" alignItems="center" height='80px' key={currentTentant._id}>Id:{currentTentant._id} </Box>
-              <Box border="1px solid black" alignItems="center" height='80px' >tentant-type:{currentTentant.tentant_Type} </Box>
-              <Box border="1px solid black" alignItems="center" height='80px' >firstName:{currentTentant.firstName} </Box>
-              <Box border="1px solid black" alignItems="center" height='80px' >lastName:{currentTentant.lastName} </Box>
-              <Box border="1px solid black" alignItems="center" height='80px' >Gender:{currentTentant.gender} </Box>
-              <Box border="1px solid black" alignItems="center" height='80px' >Date of Birth:{currentTentant.dob} </Box>
-              <Box border="1px solid black" alignItems="center" height='80px' >Passport Number:{currentTentant.passportNumber} </Box>
-              <Box border="1px solid black" alignItems="center" height='80px' >MartialStatus:{currentTentant.martialStatus} </Box>
-              <Box border="1px solid black" alignItems="center" height='80px' >phone:{currentTentant.phone} </Box>
-              <Box border="1px solid black" alignItems="center" height='80px' >email:{currentTentant.email} </Box>
-              <Box border="1px solid black" alignItems="center" height='80px' >country:{currentTentant.country} </Box>
-              <Box border="1px solid black" alignItems="center" height='80px' >city:{currentTentant.city} </Box>
-              <Box border="1px solid black" alignItems="center" height='80px' >postal Code:{currentTentant.postalCode} </Box>
-              <Box border="1px solid black" alignItems="center" height='80px' >Postal Address:{currentTentant.postalAddress} </Box>
-              <Box border="1px solid black" alignItems="center" height='80px' >physical Address:{currentTentant.physicalAddress} </Box>
+            <SimpleGrid columns={[2, null, 3]} spacing="40px">
+              <Box
+                border="1px solid black"
+                alignItems="center"
+                height="80px"
+                key={currentTentant._id}
+              >
+                Id:{currentTentant._id}{" "}
+              </Box>
+              <Box border="1px solid black" alignItems="center" height="80px">
+                tentant-type:{currentTentant.tentant_Type}{" "}
+              </Box>
+              <Box border="1px solid black" alignItems="center" height="80px">
+                firstName:{currentTentant.firstName}{" "}
+              </Box>
+              <Box border="1px solid black" alignItems="center" height="80px">
+                lastName:{currentTentant.lastName}{" "}
+              </Box>
+              <Box border="1px solid black" alignItems="center" height="80px">
+                phone:{currentTentant.phone}{" "}
+              </Box>
+              <Box border="1px solid black" alignItems="center" height="80px">
+                Street{" "}
+              </Box>
+              <Box border="1px solid black" alignItems="center" height="80px">
+                city:{currentTentant.currentAddress.city}{" "}
+              </Box>
+              <Box border="1px solid black" alignItems="center" height="80px">
+                MartialStatus:{currentTentant.martialStatus}{" "}
+              </Box>
+              <Box border="1px solid black" alignItems="center" height="80px">
+                phone:{currentTentant.phone}{" "}
+              </Box>
+              <Box border="1px solid black" alignItems="center" height="80px">
+                email:{currentTentant.email}{" "}
+              </Box>
+              <Box border="1px solid black" alignItems="center" height="80px">
+                country:{currentTentant.country}{" "}
+              </Box>
+              <Box border="1px solid black" alignItems="center" height="80px">
+                city:{currentTentant.city}{" "}
+              </Box>
+              <Box border="1px solid black" alignItems="center" height="80px">
+                postal Code:{currentTentant.postalCode}{" "}
+              </Box>
+              <Box border="1px solid black" alignItems="center" height="80px">
+                Postal Address:{currentTentant.postalAddress}{" "}
+              </Box>
+              <Box border="1px solid black" alignItems="center" height="80px">
+                physical Address:{currentTentant.physicalAddress}{" "}
+              </Box>
               {/* <Box border="1px solid black" alignItems="center" height='80px' >password:{currentTentant._id} </Box> */}
-            
             </SimpleGrid>
           </TabPanel>
           <TabPanel>
             <TableContainer>
-              <Table variant='striped' colorScheme='teal'>
+              <Table variant="striped" colorScheme="teal">
                 <TableCaption></TableCaption>
                 <Thead>
                   <Tr>
                     <Th>please wait ......</Th>
-                    
                   </Tr>
                 </Thead>
                 <Tbody>
-                  
-                    <Tr >
-                      <Td></Td>
-                      <Td></Td>
-                      <Td></Td>
-                      <Td></Td>
-                    </Tr>
+                  <Tr>
+                    <Td></Td>
+                    <Td></Td>
+                    <Td></Td>
+                    <Td></Td>
+                  </Tr>
                 </Tbody>
               </Table>
             </TableContainer>
           </TabPanel>
           <TabPanel>
             <TableContainer>
-              <Table variant='striped' colorScheme='teal'>
+              <Table variant="striped" colorScheme="teal">
                 <TableCaption></TableCaption>
                 <Thead>
                   <Tr>
@@ -86,7 +118,6 @@ const ViewProperties = () => {
                 <Tbody>
                   <Tr>
                     <Td>here i show quickly data please wait ....</Td>
-
                   </Tr>
                 </Tbody>
               </Table>
@@ -95,6 +126,6 @@ const ViewProperties = () => {
         </TabPanels>
       </Tabs>
     </div>
-  )
+  );
 }
 export default ViewProperties

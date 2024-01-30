@@ -87,32 +87,38 @@ const Apartment = () => {
             <Tbody>
               {
                 land?.length > 0 && land?.map((item, index) => {
-                  return<Tr key={item._id}>
-                    <Td>{index +  1}</Td>
-                <Td>
-                   <Image src={base + item.apartmentImage} width={"50px"} height={"50px"}/>
-                    </Td>
-                <Td>{item.title}</Td>
-                <Td>{item.parking}</Td>
-                <Td>{item.terrace}</Td>
-                <Flex>
-                   <Td>
-                        <Button onClick={()=> View(`${item._id}`)}>
-                          <ChevronDownIcon />
-                        </Button>
+                  return (
+                    <Tr key={item._id}>
+                      <Td>{index + 1}</Td>
+                      <Td width={"50px"} height={"20px"}>
+                        <Image src={base + item.apartmentImage} />
                       </Td>
-                      <Td>
-                        <Button onClick={()=>edit(`${item._id}`)}>
-                          <EditIcon />
-                        </Button>
-                      </Td>
-                  <Td>
-                        <Button   onClick={()=>handleDelete(item)}>
-                          <DeleteIcon  style={{  color:color===item._id ? "green":"red" }} /> 
-                    </Button>
-                  </Td>
-                </Flex>
-              </Tr>
+                      <Td>{item.title}</Td>
+                      <Td>{item.parking}</Td>
+                      <Td>{item.terrace}</Td>
+                      <Flex>
+                        <Td>
+                          <Button onClick={() => View(`${item._id}`)}>
+                            <ChevronDownIcon />
+                          </Button>
+                        </Td>
+                        <Td>
+                          <Button onClick={() => edit(`${item._id}`)}>
+                            <EditIcon />
+                          </Button>
+                        </Td>
+                        <Td>
+                          <Button onClick={() => handleDelete(item)}>
+                            <DeleteIcon
+                              style={{
+                                color: color === item._id ? "green" : "red",
+                              }}
+                            />
+                          </Button>
+                        </Td>
+                      </Flex>
+                    </Tr>
+                  );
                 })
               }
             </Tbody>
