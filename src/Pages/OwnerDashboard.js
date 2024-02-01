@@ -105,7 +105,14 @@ const OwnerDashboard = () => {
         await dispatch(postLandlord(formData))
           .then(() => dispatch(getLandlord()))
           .then((r) => {
-            // navigate("/landlords")
+              toast({
+                title:"Admin data created successfully",
+                duration: 5000,
+                position: "top",
+                isClosable: true,
+                colorScheme: "green",
+                status: "success",
+              });
           });
       }
     } catch (error) {
@@ -603,11 +610,11 @@ const OwnerDashboard = () => {
                                     </Flex>
                                     <Flex>
                                       <FormControl isRequired>
-                                        <FormLabel>password </FormLabel>
+                                        <FormLabel>password</FormLabel>
                                         <InputGroup
-                                          className="password"
+                                          className="inputForpassword"
                                           style={{
-                                            width: "50%",
+                                            width: "100%",
                                             height: "5%",
                                           }}
                                         >
@@ -629,20 +636,20 @@ const OwnerDashboard = () => {
                                       <FormControl isRequired>
                                         <FormLabel>Registration Date</FormLabel>
                                         <InputGroup
-                                          className="inputForRegistration registerDate"
+                                          className="Registration Date"
                                           style={{
-                                            width: "50%",
+                                            width: "100%",
                                             height: "5%",
                                           }}
                                         >
                                           <Input
-                                            placeholder="enter your Registration registerDate"
-                                            type="datetime-local"
+                                            placeholder="enter your Registration Date"
+                                            type="date"
                                             _hover={{
                                               bg: "green",
                                               color: "white",
                                             }}
-                                            value={registerDate}
+                                            value={ registerDate }
                                             style={{ fontSize: "24px" }}
                                             onChange={(e) =>
                                               setRegisterDate(e.target.value)
