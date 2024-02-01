@@ -2,14 +2,12 @@ import { EmailIcon } from '@chakra-ui/icons'
 import { Box, Flex, FormControl,Button, FormLabel, Heading, Input, InputGroup, InputRightElement, Spacer, useToast } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux';
-// import { useNavigate } from 'react-router-dom';
 import { forgetPassword } from '../Redux/Auth/action';
 
 const ForgetPassword = () => {
   const [email,setEmail]= useState("");
   const toast = useToast();
   const dispatch = useDispatch();
-  // const navigate = useNavigate();
   const handleResetCode = ()=>{
      if(email === ""){
       toast({
@@ -80,5 +78,4 @@ const ForgetPassword = () => {
     </div>
   )
 }
-
 export default ForgetPassword
