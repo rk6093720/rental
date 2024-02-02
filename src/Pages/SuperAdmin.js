@@ -57,7 +57,7 @@ const SuperAdmin = () => {
         <Spacer style={{width:"1%"}}/>
         <Box  style={{width:"79%"}}>
         <Navbar/>
-      <Flex>
+      {/* <Flex>
           <Button onClick={handleAdmin} p='6' mt="5px" bg='red.500' w='200px' h="100px" fontSize="24px" color="white" ml="15px">
             Admin Dashboard
           </Button>
@@ -65,8 +65,8 @@ const SuperAdmin = () => {
         <Box p='6' mt="5px" w='200px' h="100px" bg='green.500' mr="15px" borderRadius="10px">
           <Button style={{width:"100%",height:"100%"}} onClick={handleAdd}><BsPersonFillAdd  /></Button>
         </Box>
-        </Flex>
-        <hr/>
+        </Flex> */}
+        {/* <hr/>
       <TableContainer mt="5px">
         <Table  >
           <Thead border="1px solid black">
@@ -113,7 +113,7 @@ const SuperAdmin = () => {
             }
           </Tbody>
         </Table>
-      </TableContainer>
+      </TableContainer> */}
       <MainRoutes/>
         <Outlet/>
       </Box>

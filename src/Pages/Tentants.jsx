@@ -34,14 +34,13 @@ const Tentants = () => {
     const notificationId = notice.find((item)=>item);
     const apartmentId = apartment.find((item)=> item);
   console.log(apartmentId,notificationId._id ) 
-    const text = "completed";
     const payload = {
-      contract: text,
+      contract: notificationId.contract,
       apartmentId: apartmentId._id,
       tentantsId:id
     };
     alert(payload.contract);
-    setContract(text);
+    setContract(notificationId.contract);
     dispatch(editNotification(notificationId._id,payload))
   }
   const showActive=()=>{

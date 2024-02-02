@@ -79,7 +79,7 @@ const EditTentant = () => {
   useEffect(() => {
     if (id) {
       const tentantById = tentant.find((lands) => lands._id === id);
-      console.log(tentantById);
+      console.log();
       tentantById && setCurrentTentant(tentantById);
       tentantById && setFirstName(tentantById.firstName);
       tentantById && setLastName(tentantById.lastName);
@@ -88,27 +88,48 @@ const EditTentant = () => {
       tentantById && setDateOfBirth(tentantById.dateOfBirth);
       tentantById && setAadharCard(tentantById.aadharCard);
       tentantById && setPanCard(tentantById.panCard);
-      tentantById && setCurrentAddress(tentantById?.currentAddress?.street);
-      tentantById && setCurrentAddress(tentantById?.currentAddress?.city);
-      tentantById && setCurrentAddress(tentantById?.currentAddress?.state);
-      tentantById && setCurrentAddress(tentantById?.currentAddress?.country);
-      tentantById && setCurrentAddress(tentantById?.currentAddress?.zipCode);
       tentantById &&
-        setResidentialAddress(tentantById?.residentialAddress?.street);
+        setCurrentAddress({
+          street: tentantById.currentAddress
+            ? tentantById.currentAddress.street || ""
+            : "",
+          city: tentantById.currentAddress
+            ? tentantById.currentAddress.city || ""
+            : "",
+          state: tentantById.currentAddress
+            ? tentantById.currentAddress.state || ""
+            : "",
+          country: tentantById.currentAddress
+            ? tentantById.currentAddress.country || ""
+            : "",
+          zipCode: tentantById.currentAddress
+            ? tentantById.currentAddress.zipCode || ""
+            : "",
+        });
       tentantById &&
-        setResidentialAddress(tentantById?.residentialAddress?.city);
-      tentantById &&
-        setResidentialAddress(tentantById?.residentialAddress?.state);
-      tentantById &&
-        setResidentialAddress(tentantById?.residentialAddress?.country);
-      tentantById &&
-        setResidentialAddress(tentantById?.residentialAddress?.zipCode);
+        setResidentialAddress({
+          street: tentantById.residentialAddress
+            ? tentantById.residentialAddress.street || ""
+            : "",
+          city: tentantById.residentialAddress
+            ? tentantById.residentialAddress.city || ""
+            : "",
+          state: tentantById.residentialAddress
+            ? tentantById.residentialAddress.state || ""
+            : "",
+          country: tentantById.residentialAddress
+            ? tentantById.residentialAddress.country || ""
+            : "",
+          zipCode: tentantById.residentialAddress
+            ? tentantById.residentialAddress.zipCode || ""
+            : "",
+        });
     }
   }, [id, tentant]);
   console.log(tentant);
   return (
     <div>
-      <Stack style={{ width: "100%", height: "100vh", marginTop: "15px" }}>
+      <Stack style={{ width: "100%", height: "100vh", marginTop: "15px", padding:"15px" }}>
         <form onSubmit={handleEditTentant}>
           <Box>
             <Flex>
@@ -364,15 +385,17 @@ const EditTentant = () => {
                 />
               </FormControl>
             </Flex>
-          </Box>
+     </Box>
+     <br/>
           <Button
             type="submit"
             className="addPropertybutton"
             _hover={{ bg: "green", color: "white" }}
             style={{
-              marginTop: "40%",
-              width: "30%",
-              margin: "auto",
+              marginTop: "50%", 
+              width: "50%",
+              marginLeft:"25%",
+              textAlign:'center',
               fontSize: "24px",
             }}
           >
@@ -380,7 +403,7 @@ const EditTentant = () => {
           </Button>
         </form>
       </Stack>
-    </div>
+    </div> 
   );
 };
 

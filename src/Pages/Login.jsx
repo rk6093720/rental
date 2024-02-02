@@ -64,7 +64,7 @@ const Login = () => {
     useEffect(() => {
         if (isAuth && location.state?.role === "SuperAdmin") {
             console.log(isAuth)
-        navigate("/superAdmin")
+        navigate("/superAdmin/dashboard")
         }   
     }, [isAuth,navigate,location.state?.role])
     console.log(userType)
