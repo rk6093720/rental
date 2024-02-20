@@ -75,7 +75,6 @@ const OwnerDashboard = () => {
   const dispatch = useDispatch();
   const toast = useToast();
   const handleChangeFile = (e) => {
-    console.log(e.target.files[0], "emage");
     setImage(e.target.files[0]);
   };
   const handleForm = async (e) => {
@@ -116,10 +115,16 @@ const OwnerDashboard = () => {
           });
       }
     } catch (error) {
-      console.log(error);
+            toast({
+              title:`${error.message}`,
+              duration: 5000,
+              position: "top",
+              isClosable: true,
+              colorScheme: "red",
+              status: "error",
+            });
     }
   };
-  console.log(image);
   const handleNotice = () => {
     if (!count) {
       setCount(!count);
@@ -130,8 +135,8 @@ const OwnerDashboard = () => {
   };
   useEffect(() => {
     dispatch(getNotification());
-  }, []);
-  console.log("c", count, notice);
+  }, [dispatch]);
+  // console.log("c", count, notice);
   return (
     <div>
       <Flex style={{ width: "100%" }}>
@@ -228,478 +233,479 @@ const OwnerDashboard = () => {
                         </Box>
                       </PopoverBody>
                       <PopoverFooter>
-                        <Flex>
-                          <Button colorScheme="blue" onClick={onOpen}>
-                            Profile
+  
+                          <Button colorScheme="green" onClick={handleSignout}>
+                            Login
                           </Button>
-
-                          <Modal
-                            isOpen={isOpen}
-                            onClose={onClose}
-                            style={{ width: "1200px" }}
-                          >
-                            <ModalOverlay />
-                            <ModalContent>
-                              <ModalHeader>Add LandLord</ModalHeader>
-                              <ModalCloseButton />
-                              <form onSubmit={handleForm}>
-                                <ModalBody>
-                                  <Box style={{ width: "100%" }}>
-                                    <Flex>
-                                      <FormControl isRequired>
-                                        <FormLabel>FirstName</FormLabel>
-                                        <InputGroup
-                                          className="inputForFn"
-                                          style={{
-                                            width: "100%",
-                                            height: "5%",
-                                          }}
-                                        >
-                                          <Input
-                                            placeholder="enter firstname"
-                                            type="text"
-                                            _hover={{
-                                              bg: "green",
-                                              color: "white",
-                                            }}
-                                            value={firstName}
-                                            style={{ fontSize: "24px" }}
-                                            onChange={(e) =>
-                                              setFirstName(e.target.value)
-                                            }
-                                          />
-                                        </InputGroup>
-                                      </FormControl>
-                                      <Spacer />
-                                      <FormControl isRequired>
-                                        <FormLabel>LastName</FormLabel>
-                                        <InputGroup
-                                          className="inputForFn"
-                                          style={{
-                                            width: "100%",
-                                            height: "5%",
-                                          }}
-                                        >
-                                          <Input
-                                            placeholder="enter your lastname"
-                                            type="text"
-                                            _hover={{
-                                              bg: "green",
-                                              color: "white",
-                                            }}
-                                            value={LastName}
-                                            style={{ fontSize: "24px" }}
-                                            onChange={(e) =>
-                                              setLastName(e.target.value)
-                                            }
-                                          />
-                                        </InputGroup>
-                                      </FormControl>
-                                    </Flex>
-                                    <Flex>
-                                      <FormControl isRequired>
-                                        <FormLabel>Email</FormLabel>
-                                        <InputGroup
-                                          className="inputForEmail"
-                                          style={{
-                                            width: "100%",
-                                            height: "5%",
-                                          }}
-                                        >
-                                          <Input
-                                            placeholder="enter your email"
-                                            type="email"
-                                            autoComplete="email"
-                                            _hover={{
-                                              bg: "green",
-                                              color: "white",
-                                            }}
-                                            value={email}
-                                            style={{ fontSize: "24px" }}
-                                            onChange={(e) =>
-                                              setEmail(e.target.value)
-                                            }
-                                          />
-                                          <InputRightElement
-                                            _hover={{
-                                              bg: "green",
-                                              color: "white",
-                                            }}
-                                          >
-                                            <EmailIcon
-                                              style={{ fontSize: "24px" }}
-                                            />
-                                          </InputRightElement>
-                                        </InputGroup>
-                                      </FormControl>
-                                      <FormControl isRequired>
-                                        <FormLabel>Phone Number</FormLabel>
-                                        <InputGroup
-                                          className="inputForPhone"
-                                          style={{
-                                            width: "100%",
-                                            height: "5%",
-                                          }}
-                                        >
-                                          <Input
-                                            placeholder="enter your phoneNumber"
-                                            type="text"
-                                            _hover={{
-                                              bg: "green",
-                                              color: "white",
-                                            }}
-                                            value={phone}
-                                            maxLength={10}
-                                            style={{ fontSize: "24px" }}
-                                            onChange={(e) =>
-                                              setPhone(e.target.value)
-                                            }
-                                          />
-                                        </InputGroup>
-                                      </FormControl>
-                                    </Flex>
-                                    <Flex>
-                                      <FormControl isRequired>
-                                        <FormLabel>Country</FormLabel>
-                                        <InputGroup
-                                          className="inputForcountry"
-                                          style={{
-                                            width: "100%",
-                                            height: "5%",
-                                          }}
-                                        >
-                                          <Input
-                                            placeholder="enter your country name"
-                                            type="text"
-                                            _hover={{
-                                              bg: "green",
-                                              color: "white",
-                                            }}
-                                            value={country}
-                                            style={{ fontSize: "24px" }}
-                                            onChange={(e) =>
-                                              setCountry(e.target.value)
-                                            }
-                                          />
-                                        </InputGroup>
-                                      </FormControl>
-                                      <FormControl isRequired>
-                                        <FormLabel>State</FormLabel>
-                                        <InputGroup
-                                          className="inputForstate"
-                                          style={{
-                                            width: "100%",
-                                            height: "5%",
-                                          }}
-                                        >
-                                          <Input
-                                            placeholder="enter your State name"
-                                            type="text"
-                                            _hover={{
-                                              bg: "green",
-                                              color: "white",
-                                            }}
-                                            value={state}
-                                            style={{ fontSize: "24px" }}
-                                            onChange={(e) =>
-                                              setState(e.target.value)
-                                            }
-                                          />
-                                        </InputGroup>
-                                      </FormControl>
-                                    </Flex>
-                                    <Flex>
-                                      <FormControl isRequired>
-                                        <FormLabel>City</FormLabel>
-                                        <InputGroup
-                                          className="inputForcity"
-                                          style={{
-                                            width: "100%",
-                                            height: "5%",
-                                          }}
-                                        >
-                                          <Input
-                                            placeholder="enter your city name"
-                                            type="text"
-                                            _hover={{
-                                              bg: "green",
-                                              color: "white",
-                                            }}
-                                            value={city}
-                                            style={{ fontSize: "24px" }}
-                                            onChange={(e) =>
-                                              setCity(e.target.value)
-                                            }
-                                          />
-                                        </InputGroup>
-                                      </FormControl>
-                                      <FormControl isRequired>
-                                        <FormLabel>PostalCode</FormLabel>
-                                        <InputGroup
-                                          className="inputForpostalcode"
-                                          style={{
-                                            width: "100%",
-                                            height: "5%",
-                                          }}
-                                        >
-                                          <Input
-                                            placeholder="enter your Postalcode"
-                                            type="text"
-                                            maxLength={6}
-                                            _hover={{
-                                              bg: "green",
-                                              color: "white",
-                                            }}
-                                            value={postalCode}
-                                            style={{ fontSize: "24px" }}
-                                            onChange={(e) =>
-                                              setPostalCode(e.target.value)
-                                            }
-                                          />
-                                        </InputGroup>
-                                      </FormControl>
-                                    </Flex>
-                                    <Flex>
-                                      <FormControl isRequired>
-                                        <FormLabel>Address</FormLabel>
-                                        <InputGroup
-                                          className="inputForAddress"
-                                          style={{
-                                            width: "100%",
-                                            height: "5%",
-                                          }}
-                                        >
-                                          <Input
-                                            placeholder="enter your Address"
-                                            type="text"
-                                            _hover={{
-                                              bg: "green",
-                                              color: "white",
-                                            }}
-                                            value={address}
-                                            style={{ fontSize: "24px" }}
-                                            onChange={(e) =>
-                                              setAddress(e.target.value)
-                                            }
-                                          />
-                                        </InputGroup>
-                                      </FormControl>
-                                      <FormControl isRequired>
-                                        <FormLabel>CountApartment</FormLabel>
-                                        <InputGroup
-                                          className="inputForApartment"
-                                          style={{
-                                            width: "100%",
-                                            height: "5%",
-                                          }}
-                                        >
-                                          <Input
-                                            placeholder="enter your count Apartment"
-                                            type="number"
-                                            _hover={{
-                                              bg: "green",
-                                              color: "white",
-                                            }}
-                                            value={countApartment}
-                                            style={{ fontSize: "24px" }}
-                                            onChange={(e) =>
-                                              setCountApartment(e.target.value)
-                                            }
-                                          />
-                                        </InputGroup>
-                                      </FormControl>
-                                    </Flex>
-                                    <Flex>
-                                      <FormControl isRequired>
-                                        <FormLabel>AdharCard</FormLabel>
-                                        <InputGroup
-                                          className="inputForAdharCard"
-                                          style={{
-                                            width: "100%",
-                                            height: "5%",
-                                          }}
-                                        >
-                                          <Input
-                                            placeholder="enter your AdharCard Number"
-                                            type="text"
-                                            _hover={{
-                                              bg: "green",
-                                              color: "white",
-                                            }}
-                                            value={adharCard}
-                                            maxLength={12}
-                                            style={{ fontSize: "24px" }}
-                                            onChange={(e) =>
-                                              setAdharCard(e.target.value)
-                                            }
-                                          />
-                                        </InputGroup>
-                                      </FormControl>
-                                      <FormControl>
-                                        <FormLabel>Document</FormLabel>
-                                        <InputGroup
-                                          className="inputFordocument"
-                                          style={{
-                                            width: "100%",
-                                            height: "5",
-                                          }}
-                                        >
-                                          <Input
-                                            placeholder="Select an image"
-                                            type="file"
-                                            accept="application/pdf"
-                                            _hover={{
-                                              bg: "green",
-                                              color: "white",
-                                            }}
-                                            style={{ fontSize: "24px" }}
-                                            onChange={handleChangeFile}
-                                          />
-                                        </InputGroup>
-                                      </FormControl>
-                                    </Flex>
-                                    <Flex>
-                                      <FormControl isRequired>
-                                        <FormLabel>propertyCode</FormLabel>
-                                        <InputGroup
-                                          className="inputForpropertyCode"
-                                          style={{
-                                            width: "100%",
-                                            height: "5%",
-                                          }}
-                                        >
-                                          <Input
-                                            placeholder="enter your propertyCode"
-                                            type="text"
-                                            _hover={{
-                                              bg: "green",
-                                              color: "white",
-                                            }}
-                                            value={propertyCode}
-                                            style={{ fontSize: "24px" }}
-                                            onChange={(e) =>
-                                              setPropertyCode(e.target.value)
-                                            }
-                                          />
-                                        </InputGroup>
-                                      </FormControl>
-                                      <FormControl isRequired>
-                                        <FormLabel>PropertyName</FormLabel>
-                                        <InputGroup
-                                          className="PropertyName"
-                                          style={{
-                                            width: "100%",
-                                            height: "5%",
-                                          }}
-                                        >
-                                          <Input
-                                            placeholder="enter your PropertyName"
-                                            type="text"
-                                            _hover={{
-                                              bg: "green",
-                                              color: "white",
-                                            }}
-                                            value={propertyName}
-                                            style={{ fontSize: "24px" }}
-                                            onChange={(e) =>
-                                              setPropertyName(e.target.value)
-                                            }
-                                          />
-                                        </InputGroup>
-                                      </FormControl>
-                                    </Flex>
-                                    <Flex>
-                                      <FormControl isRequired>
-                                        <FormLabel>password</FormLabel>
-                                        <InputGroup
-                                          className="inputForpassword"
-                                          style={{
-                                            width: "100%",
-                                            height: "5%",
-                                          }}
-                                        >
-                                          <Input
-                                            placeholder="enter your password"
-                                            type="password"
-                                            _hover={{
-                                              bg: "green",
-                                              color: "white",
-                                            }}
-                                            value={password}
-                                            style={{ fontSize: "24px" }}
-                                            onChange={(e) =>
-                                              setPassword(e.target.value)
-                                            }
-                                          />
-                                        </InputGroup>
-                                      </FormControl>
-                                      <FormControl isRequired>
-                                        <FormLabel>Registration Date</FormLabel>
-                                        <InputGroup
-                                          className="Registration Date"
-                                          style={{
-                                            width: "100%",
-                                            height: "5%",
-                                          }}
-                                        >
-                                          <Input
-                                            placeholder="enter your Registration Date"
-                                            type="date"
-                                            _hover={{
-                                              bg: "green",
-                                              color: "white",
-                                            }}
-                                            value={ registerDate }
-                                            style={{ fontSize: "24px" }}
-                                            onChange={(e) =>
-                                              setRegisterDate(e.target.value)
-                                            }
-                                          />
-                                        </InputGroup>
-                                      </FormControl>
-                                    </Flex>
-                                  </Box>
-                                </ModalBody>
-                                <ModalFooter>
-                                  <Button
-                                    colorScheme="blue"
-                                    style={{
-                                      width: "50%",
-                                      height: "50px",
-                                      fontSize: "24px",
-                                      color: "white",
-                                      borderRadius: "15px",
-                                    }}
-                                    mr={3}
-                                    onClick={onClose}
-                                  >
-                                    Close
-                                  </Button>
-                                  {/* <Button variant='ghost'>Secondary Action</Button> */}
-                                  <Button
-                                    className="button"
-                                    type="submit"
-                                    colorScheme="green"
-                                    style={{
-                                      width: "50%",
-                                      height: "50px",
-                                      fontSize: "24px",
-                                      color: "white",
-                                      borderRadius: "15px",
-                                    }}
-                                    mr={3}
-                                  >
-                                    AddLandLord
-                                  </Button>
-                                </ModalFooter>
-                              </form>
-                            </ModalContent>
-                          </Modal>
                           <Spacer />
                           <Button colorScheme="red" onClick={handleSignout}>
                             SignOut
                           </Button>
-                        </Flex>
+                        <Button colorScheme="blue" onClick={onOpen}>
+                          Profile
+                        </Button>
+                        <Modal
+                          isOpen={isOpen}
+                          onClose={onClose}
+                          style={{ width: "1200px" }}
+                        >
+                          <ModalOverlay />
+                          <ModalContent>
+                            <ModalHeader>Add LandLord</ModalHeader>
+                            <ModalCloseButton />
+                            <form onSubmit={handleForm}>
+                              <ModalBody>
+                                <Box style={{ width: "100%" }}>
+                                  <Flex>
+                                    <FormControl isRequired>
+                                      <FormLabel>FirstName</FormLabel>
+                                      <InputGroup
+                                        className="inputForFn"
+                                        style={{
+                                          width: "100%",
+                                          height: "5%",
+                                        }}
+                                      >
+                                        <Input
+                                          placeholder="enter firstname"
+                                          type="text"
+                                          _hover={{
+                                            bg: "green",
+                                            color: "white",
+                                          }}
+                                          value={firstName}
+                                          style={{ fontSize: "24px" }}
+                                          onChange={(e) =>
+                                            setFirstName(e.target.value)
+                                          }
+                                        />
+                                      </InputGroup>
+                                    </FormControl>
+                                    <Spacer />
+                                    <FormControl isRequired>
+                                      <FormLabel>LastName</FormLabel>
+                                      <InputGroup
+                                        className="inputForFn"
+                                        style={{
+                                          width: "100%",
+                                          height: "5%",
+                                        }}
+                                      >
+                                        <Input
+                                          placeholder="enter your lastname"
+                                          type="text"
+                                          _hover={{
+                                            bg: "green",
+                                            color: "white",
+                                          }}
+                                          value={LastName}
+                                          style={{ fontSize: "24px" }}
+                                          onChange={(e) =>
+                                            setLastName(e.target.value)
+                                          }
+                                        />
+                                      </InputGroup>
+                                    </FormControl>
+                                  </Flex>
+                                  <Flex>
+                                    <FormControl isRequired>
+                                      <FormLabel>Email</FormLabel>
+                                      <InputGroup
+                                        className="inputForEmail"
+                                        style={{
+                                          width: "100%",
+                                          height: "5%",
+                                        }}
+                                      >
+                                        <Input
+                                          placeholder="enter your email"
+                                          type="email"
+                                          autoComplete="email"
+                                          _hover={{
+                                            bg: "green",
+                                            color: "white",
+                                          }}
+                                          value={email}
+                                          style={{ fontSize: "24px" }}
+                                          onChange={(e) =>
+                                            setEmail(e.target.value)
+                                          }
+                                        />
+                                        <InputRightElement
+                                          _hover={{
+                                            bg: "green",
+                                            color: "white",
+                                          }}
+                                        >
+                                          <EmailIcon
+                                            style={{ fontSize: "24px" }}
+                                          />
+                                        </InputRightElement>
+                                      </InputGroup>
+                                    </FormControl>
+                                    <FormControl isRequired>
+                                      <FormLabel>Phone Number</FormLabel>
+                                      <InputGroup
+                                        className="inputForPhone"
+                                        style={{
+                                          width: "100%",
+                                          height: "5%",
+                                        }}
+                                      >
+                                        <Input
+                                          placeholder="enter your phoneNumber"
+                                          type="text"
+                                          _hover={{
+                                            bg: "green",
+                                            color: "white",
+                                          }}
+                                          value={phone}
+                                          maxLength={10}
+                                          style={{ fontSize: "24px" }}
+                                          onChange={(e) =>
+                                            setPhone(e.target.value)
+                                          }
+                                        />
+                                      </InputGroup>
+                                    </FormControl>
+                                  </Flex>
+                                  <Flex>
+                                    <FormControl isRequired>
+                                      <FormLabel>Country</FormLabel>
+                                      <InputGroup
+                                        className="inputForcountry"
+                                        style={{
+                                          width: "100%",
+                                          height: "5%",
+                                        }}
+                                      >
+                                        <Input
+                                          placeholder="enter your country name"
+                                          type="text"
+                                          _hover={{
+                                            bg: "green",
+                                            color: "white",
+                                          }}
+                                          value={country}
+                                          style={{ fontSize: "24px" }}
+                                          onChange={(e) =>
+                                            setCountry(e.target.value)
+                                          }
+                                        />
+                                      </InputGroup>
+                                    </FormControl>
+                                    <FormControl isRequired>
+                                      <FormLabel>State</FormLabel>
+                                      <InputGroup
+                                        className="inputForstate"
+                                        style={{
+                                          width: "100%",
+                                          height: "5%",
+                                        }}
+                                      >
+                                        <Input
+                                          placeholder="enter your State name"
+                                          type="text"
+                                          _hover={{
+                                            bg: "green",
+                                            color: "white",
+                                          }}
+                                          value={state}
+                                          style={{ fontSize: "24px" }}
+                                          onChange={(e) =>
+                                            setState(e.target.value)
+                                          }
+                                        />
+                                      </InputGroup>
+                                    </FormControl>
+                                  </Flex>
+                                  <Flex>
+                                    <FormControl isRequired>
+                                      <FormLabel>City</FormLabel>
+                                      <InputGroup
+                                        className="inputForcity"
+                                        style={{
+                                          width: "100%",
+                                          height: "5%",
+                                        }}
+                                      >
+                                        <Input
+                                          placeholder="enter your city name"
+                                          type="text"
+                                          _hover={{
+                                            bg: "green",
+                                            color: "white",
+                                          }}
+                                          value={city}
+                                          style={{ fontSize: "24px" }}
+                                          onChange={(e) =>
+                                            setCity(e.target.value)
+                                          }
+                                        />
+                                      </InputGroup>
+                                    </FormControl>
+                                    <FormControl isRequired>
+                                      <FormLabel>PostalCode</FormLabel>
+                                      <InputGroup
+                                        className="inputForpostalcode"
+                                        style={{
+                                          width: "100%",
+                                          height: "5%",
+                                        }}
+                                      >
+                                        <Input
+                                          placeholder="enter your Postalcode"
+                                          type="text"
+                                          maxLength={6}
+                                          _hover={{
+                                            bg: "green",
+                                            color: "white",
+                                          }}
+                                          value={postalCode}
+                                          style={{ fontSize: "24px" }}
+                                          onChange={(e) =>
+                                            setPostalCode(e.target.value)
+                                          }
+                                        />
+                                      </InputGroup>
+                                    </FormControl>
+                                  </Flex>
+                                  <Flex>
+                                    <FormControl isRequired>
+                                      <FormLabel>Address</FormLabel>
+                                      <InputGroup
+                                        className="inputForAddress"
+                                        style={{
+                                          width: "100%",
+                                          height: "5%",
+                                        }}
+                                      >
+                                        <Input
+                                          placeholder="enter your Address"
+                                          type="text"
+                                          _hover={{
+                                            bg: "green",
+                                            color: "white",
+                                          }}
+                                          value={address}
+                                          style={{ fontSize: "24px" }}
+                                          onChange={(e) =>
+                                            setAddress(e.target.value)
+                                          }
+                                        />
+                                      </InputGroup>
+                                    </FormControl>
+                                    <FormControl isRequired>
+                                      <FormLabel>CountApartment</FormLabel>
+                                      <InputGroup
+                                        className="inputForApartment"
+                                        style={{
+                                          width: "100%",
+                                          height: "5%",
+                                        }}
+                                      >
+                                        <Input
+                                          placeholder="enter your count Apartment"
+                                          type="number"
+                                          _hover={{
+                                            bg: "green",
+                                            color: "white",
+                                          }}
+                                          value={countApartment}
+                                          style={{ fontSize: "24px" }}
+                                          onChange={(e) =>
+                                            setCountApartment(e.target.value)
+                                          }
+                                        />
+                                      </InputGroup>
+                                    </FormControl>
+                                  </Flex>
+                                  <Flex>
+                                    <FormControl isRequired>
+                                      <FormLabel>AdharCard</FormLabel>
+                                      <InputGroup
+                                        className="inputForAdharCard"
+                                        style={{
+                                          width: "100%",
+                                          height: "5%",
+                                        }}
+                                      >
+                                        <Input
+                                          placeholder="enter your AdharCard Number"
+                                          type="text"
+                                          _hover={{
+                                            bg: "green",
+                                            color: "white",
+                                          }}
+                                          value={adharCard}
+                                          maxLength={12}
+                                          style={{ fontSize: "24px" }}
+                                          onChange={(e) =>
+                                            setAdharCard(e.target.value)
+                                          }
+                                        />
+                                      </InputGroup>
+                                    </FormControl>
+                                    <FormControl>
+                                      <FormLabel>Document</FormLabel>
+                                      <InputGroup
+                                        className="inputFordocument"
+                                        style={{
+                                          width: "100%",
+                                          height: "5",
+                                        }}
+                                      >
+                                        <Input
+                                          placeholder="Select an image"
+                                          type="file"
+                                          accept="application/pdf"
+                                          _hover={{
+                                            bg: "green",
+                                            color: "white",
+                                          }}
+                                          style={{ fontSize: "24px" }}
+                                          onChange={handleChangeFile}
+                                        />
+                                      </InputGroup>
+                                    </FormControl>
+                                  </Flex>
+                                  <Flex>
+                                    <FormControl isRequired>
+                                      <FormLabel>propertyCode</FormLabel>
+                                      <InputGroup
+                                        className="inputForpropertyCode"
+                                        style={{
+                                          width: "100%",
+                                          height: "5%",
+                                        }}
+                                      >
+                                        <Input
+                                          placeholder="enter your propertyCode"
+                                          type="text"
+                                          _hover={{
+                                            bg: "green",
+                                            color: "white",
+                                          }}
+                                          value={propertyCode}
+                                          style={{ fontSize: "24px" }}
+                                          onChange={(e) =>
+                                            setPropertyCode(e.target.value)
+                                          }
+                                        />
+                                      </InputGroup>
+                                    </FormControl>
+                                    <FormControl isRequired>
+                                      <FormLabel>PropertyName</FormLabel>
+                                      <InputGroup
+                                        className="PropertyName"
+                                        style={{
+                                          width: "100%",
+                                          height: "5%",
+                                        }}
+                                      >
+                                        <Input
+                                          placeholder="enter your PropertyName"
+                                          type="text"
+                                          _hover={{
+                                            bg: "green",
+                                            color: "white",
+                                          }}
+                                          value={propertyName}
+                                          style={{ fontSize: "24px" }}
+                                          onChange={(e) =>
+                                            setPropertyName(e.target.value)
+                                          }
+                                        />
+                                      </InputGroup>
+                                    </FormControl>
+                                  </Flex>
+                                  <Flex>
+                                    <FormControl isRequired>
+                                      <FormLabel>password</FormLabel>
+                                      <InputGroup
+                                        className="inputForpassword"
+                                        style={{
+                                          width: "100%",
+                                          height: "5%",
+                                        }}
+                                      >
+                                        <Input
+                                          placeholder="enter your password"
+                                          type="password"
+                                          _hover={{
+                                            bg: "green",
+                                            color: "white",
+                                          }}
+                                          value={password}
+                                          style={{ fontSize: "24px" }}
+                                          onChange={(e) =>
+                                            setPassword(e.target.value)
+                                          }
+                                        />
+                                      </InputGroup>
+                                    </FormControl>
+                                    <FormControl isRequired>
+                                      <FormLabel>Registration Date</FormLabel>
+                                      <InputGroup
+                                        className="Registration Date"
+                                        style={{
+                                          width: "100%",
+                                          height: "5%",
+                                        }}
+                                      >
+                                        <Input
+                                          placeholder="enter your Registration Date"
+                                          type="date"
+                                          _hover={{
+                                            bg: "green",
+                                            color: "white",
+                                          }}
+                                          value={registerDate}
+                                          style={{ fontSize: "24px" }}
+                                          onChange={(e) =>
+                                            setRegisterDate(e.target.value)
+                                          }
+                                        />
+                                      </InputGroup>
+                                    </FormControl>
+                                  </Flex>
+                                </Box>
+                              </ModalBody>
+                              <ModalFooter>
+                                <Button
+                                  colorScheme="blue"
+                                  style={{
+                                    width: "50%",
+                                    height: "50px",
+                                    fontSize: "24px",
+                                    color: "white",
+                                    borderRadius: "15px",
+                                  }}
+                                  mr={3}
+                                  onClick={onClose}
+                                >
+                                  Close
+                                </Button>
+                                {/* <Button variant='ghost'>Secondary Action</Button> */}
+                                <Button
+                                  className="button"
+                                  type="submit"
+                                  colorScheme="green"
+                                  style={{
+                                    width: "50%",
+                                    height: "50px",
+                                    fontSize: "24px",
+                                    color: "white",
+                                    borderRadius: "15px",
+                                  }}
+                                  mr={3}
+                                >
+                                  AddLandLord
+                                </Button>
+                              </ModalFooter>
+                            </form>
+                          </ModalContent>
+                        </Modal>
                       </PopoverFooter>
                     </PopoverContent>
                   </Portal>

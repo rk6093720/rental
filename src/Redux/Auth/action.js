@@ -26,22 +26,26 @@ const  LoginAuth = (e)=> async(dispatch)=>{
 //owner and user login
 const  ownerUserLogin = (payload)=> async(dispatch)=>{
     try {
-        dispatch({type:types.OWNER_LOGIN_REQUEST})
-        let endPoint = payload.role !== "User" ? "admin/owner-login" : "admin/user-login";
-         const res = await axios.post(`http://localhost:8080/${endPoint}`,payload);
-         console.log(res)
-         const {token,email,role}= res.data.data;
-        console.log(token,email,role,res.data.status,res.data.msg);
-       return dispatch({
-            type:types.OWNER_LOGIN_SUCCESS,
-            payload:{
-                token,
-                email,
-                role,
-                msg:res.data.msg,
-                statusbar:res.data.status
-            }
-        })
+      dispatch({ type: types.OWNER_LOGIN_REQUEST });
+      let endPoint =
+        payload.role !== "User" ? "admin/owner-login" : "admin/user-login";
+      const res = await axios.post(
+        `http://localhost:8080/${endPoint}`,
+        payload
+      );
+    //   console.log(res.data.data);
+       const {token,email,role,adminTokenExpire}= res.data.data;
+         return dispatch({
+              type:types.OWNER_LOGIN_SUCCESS,
+              payload:{
+                  token,
+                  email,
+                  role,
+                  adminTokenExpire,
+                  msg:res.data.msg,
+                  statusbar:res.data.status
+              }
+          })
     } catch (error) {
        // console.log(error.response.data.msg)
        return dispatch({

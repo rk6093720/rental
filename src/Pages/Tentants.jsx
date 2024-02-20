@@ -1,24 +1,39 @@
-import { Box, Input, Spacer } from '@chakra-ui/react'
-import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { BsPersonFillAdd } from "react-icons/bs"
-import { useDispatch, useSelector } from 'react-redux';
-import { ChevronDownIcon, DeleteIcon, EditIcon } from '@chakra-ui/icons';
-import { Button, Flex, Table, TableCaption, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
-import { deleteTentants, editNotification, getTentants } from '../Redux/Tentants/action';
-import { getApartment } from '../Redux/App/action';
+import { Box, Input, Spacer } from "@chakra-ui/react";
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { ChevronDownIcon, DeleteIcon, EditIcon } from "@chakra-ui/icons";
+import {
+  Button,
+  Flex,
+  Table,
+  TableCaption,
+  TableContainer,
+  Tbody,
+  useToast,
+  Td,
+  Th,
+  Thead,
+  Tr,
+} from "@chakra-ui/react";
+import {
+  deleteTentants,
+  editNotification,
+  getNotification,
+  getTentants,
+} from "../Redux/Tentants/action";
+import { getApartment } from "../Redux/App/action";
 const Tentants = () => {
   const dispatch = useDispatch();
   const [color, setColor] = useState(null);
-  const [contract,setContract]= useState("")
+  const [contract, setContract] = useState("");
   const [tentantsFilter, setTentantsFilter] = useState("");
   const tentant = useSelector((state) => state.Tentants.tentants);
   const apartment = useSelector((state) => state.App.apartment);
   const notice = useSelector((state) => state.Tentants.notification);
   const location = useLocation();
   const navigate = useNavigate();
-
-  console.log(location.pathname);
+  const toast = useToast();
   // const handleAdd=()=>{
   //       if(location.pathname === "/superAdmin/tentants"){
   //         navigate("/superAdmin/AddTentants")
@@ -30,59 +45,66 @@ const Tentants = () => {
   //         navigate("/tentant-dashboard/AddTentants")
   //       }
   // }
-  const showContract =(id)=>{
-    const notificationId = notice.find((item)=>item);
-    const apartmentId = apartment.find((item)=> item);
-  console.log(apartmentId,notificationId._id ) 
+  const showContract = (id) => {
+    const notificationId = notice.find((item) => item.contract);
+    const apartmentId = apartment.find((item) => item);
     const payload = {
       contract: notificationId.contract,
       apartmentId: apartmentId._id,
-      tentantsId:id
+      tentantsId: id,
     };
-    alert(payload.contract);
     setContract(notificationId.contract);
-    dispatch(editNotification(notificationId._id,payload))
-  }
-  const showActive=()=>{
-
-  }
-  const View = (id)=>{
-    if(location.pathname === "/superAdmin/tentants"){
-      navigate(`/superAdmin/viewTentants/${id}`)
+    dispatch(editNotification(notificationId._id, payload));
+    toast({
+      title:
+        "Owner has give to access to see the contract pdf  after that admin has hide the data of user ",
+      status: "success",
+      duration: 5000,
+      position: "top",
+      isClosable: true,
+      colorScheme: "green",
+    });
+  };
+  const showActive = () => {
+    alert("active");
+  };
+  const View = (id) => {
+    if (location.pathname === "/superAdmin/tentants") {
+      navigate(`/superAdmin/viewTentants/${id}`);
+    } else if (location.pathname === "/tentant-dashboard/tentants") {
+      navigate(`/tentant-dashboard/viewTentants/${id}`);
+    } else {
+      navigate(`/owner-dashboard/viewTentants/${id}`);
     }
-     else if(location.pathname === "/tentant-dashboard/tentants"){
-      navigate(`/tentant-dashboard/viewTentants/${id}`)
-    }else{
-      navigate(`/owner-dashboard/viewTentants/${id}`)
+  };
+  const edit = (id) => {
+    if (location.pathname === "/superAdmin/tentants") {
+      navigate(`/superAdmin/tentant/${id}/edit`);
+    } else if (location.pathname === "/tentant-dashboard/tentants") {
+      navigate(`/tentant-dashboard/tentant/${id}/edit`);
+    } else {
+      navigate(`/owner-dashboard/tentant/${id}/edit`);
     }
-  }
-  const edit =(id)=>{
-    if(location.pathname === "/superAdmin/tentants"){
-      navigate(`/superAdmin/tentant/${id}/edit`)
-    }else if(location.pathname === "/tentant-dashboard/tentants"){
-      navigate(`/tentant-dashboard/tentant/${id}/edit`)
-    }else{
-      navigate(`/owner-dashboard/tentant/${id}/edit`)
-    }
-  }
+  };
   const handleFilter = (e) => {
-    setTentantsFilter(e.target.value)
-  }
+    setTentantsFilter(e.target.value);
+  };
   const handleDelete = (item) => {
-    dispatch(deleteTentants(item._id))
-    setColor(item._id)
-  }
-  
+    dispatch(deleteTentants(item._id));
+    setColor(item._id);
+  };
+
   useEffect(() => {
     if (tentant?.length === 0) {
-      dispatch(getTentants())
-    }
-    else if (apartment?.length===0) {
+      dispatch(getTentants());
+    } else if (apartment?.length === 0) {
       dispatch(getApartment());
+    } else if (notice?.length === 0) {
+      dispatch(getNotification());
     }
-  }, [tentant?.length,apartment?.length, dispatch])
-  console.log(tentant, "tentant",apartment);
-  console.log(color)
+  }, [tentant?.length, apartment?.length, dispatch, notice?.length]);
+  // console.log(tentant, "tentant",apartment);
+  // console.log(color)
   return (
     <div>
       <Flex minWidth="max-content" alignItems="center" gap="2" p={"15px"}>
@@ -127,8 +149,8 @@ const Tentants = () => {
                         </Button>
                       </Td>
                       <Td>
-                        <Button onClick={()=> showContract(`${item?._id}`)} >
-                           {contract && true ? contract:"uncompleted"}
+                        <Button  onClick={() => showContract(`${item?._id}`)} isDisabled={contract === "complete"}>
+                          {contract && true ? contract : "uncompleted"}
                         </Button>
                       </Td>
                       <Td>
@@ -137,7 +159,7 @@ const Tentants = () => {
                         </Button>
                       </Td>
                       <Td>
-                        <Button onClick={()=> showActive(`${item}`)}>
+                        <Button onClick={() => showActive(`${item}`)}>
                           Status
                         </Button>
                       </Td>
@@ -159,5 +181,5 @@ const Tentants = () => {
       </Box>
     </div>
   );
-}
-export default Tentants
+};
+export default Tentants;

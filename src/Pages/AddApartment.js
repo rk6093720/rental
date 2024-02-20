@@ -1,9 +1,8 @@
-import { Box,Select,Textarea , Flex,Spacer, Button, FormControl, FormLabel, Heading, Input, InputGroup,useToast } from '@chakra-ui/react'
+import { Box,Select,Textarea , Flex,Spacer, Button, FormControl, FormLabel,Input, InputGroup,useToast } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { getApartment, postApartment } from '../Redux/App/action';
 import { useNavigate } from 'react-router-dom';
-
 const AddApartment = () => {
   const [image,setImage]= useState(null);
   const [title,setTittle]= useState("");
