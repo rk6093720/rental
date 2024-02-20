@@ -189,7 +189,7 @@ const EditTentant = () => {
                   onChange={(e) => setAadharCard(e.target.files[0])}
                 />
               </FormControl>
-              <FormControl>
+              {/* <FormControl>
                 <FormLabel for="PanCard">PanCard</FormLabel>
                 <Input
                   id="panCard"
@@ -199,7 +199,7 @@ const EditTentant = () => {
                   placeholder="panCard"
                   onChange={(e) => setPanCard(e.target.files[0])}
                 />
-              </FormControl>
+              </FormControl> */}
             </Flex>
             <Flex>
               <FormControl>

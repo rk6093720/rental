@@ -2,6 +2,7 @@
 import * as types from "./actionTypes";
 import axios from "axios";
 
+const user = JSON.parse(localStorage.getItem("Admintoken")); 
 const getLandlord = ()=> async(dispatch)=>{
   dispatch({type:types.GET_LANDLORD_REQUEST})
     return await axios.get("http://localhost:8080/landlord/read")
@@ -74,7 +75,12 @@ export const setPagination = (pagination) => ({
 });
 const getApartment = ()=> async(dispatch)=>{
   dispatch({type:types.GET_APARTMENT_REQUEST});
-   await axios.get("http://localhost:8080/apartment/read")
+   await axios.get("http://localhost:8080/apartment/read",{
+    headers:{
+        Authorization:`Bearer ${user.token}`,
+        "Content-Type":"application/json"
+    }
+   })
     .then((r)=>{
         console.log(r,"get")
      return dispatch({type:types.GET_APARTMENT_SUCCESS, payload:r.data.data.getData})

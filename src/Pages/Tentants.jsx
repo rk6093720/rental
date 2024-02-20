@@ -115,24 +115,24 @@ const Tentants = () => {
             <Tbody>
               {tentant?.length > 0 &&
                 tentant?.map((item) => (
-                  <Tr key={item._id}>
+                  <Tr key={item?._id}>
                     <Td>{item.firstName}</Td>
                     <Td>{item.lastName}</Td>
                     <Td>{item.email}</Td>
                     <Td>{item.phone}</Td>
                     <Flex>
                       <Td>
-                        <Button onClick={() => View(`${item._id}`)}>
+                        <Button onClick={() => View(`${item?._id}`)}>
                           <ChevronDownIcon />
                         </Button>
                       </Td>
                       <Td>
-                        <Button onClick={()=> showContract(`${item._id}`)} >
+                        <Button onClick={()=> showContract(`${item?._id}`)} >
                            {contract && true ? contract:"uncompleted"}
                         </Button>
                       </Td>
                       <Td>
-                        <Button onClick={() => edit(`${item._id}`)}>
+                        <Button onClick={() => edit(`${item?._id}`)}>
                           <EditIcon />
                         </Button>
                       </Td>

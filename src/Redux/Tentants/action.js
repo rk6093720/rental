@@ -1,17 +1,25 @@
 
 import * as types from "./actionTypes";
 import axios from "axios";
-
+const user = JSON.parse(localStorage.getItem("Usertoken"));
+const admin = JSON.parse(localStorage.getItem("Admintoken"));
+console.log(admin)
 const getTentants = () => async (dispatch) => {
     dispatch({ type: types.GET_TENTANTS_REQUEST })
-    return await axios.get("http://localhost:8080/tentants/read")
-        .then((r) => {
-            console.log(r, "get")
-            dispatch({ type: types.GET_TENTANTS_SUCCESS, payload: r.data.Tentant })
-        })
-        .catch((e) => {
-            return dispatch({ type: types.GET_TENTANTS_FAILURE, payload: e })
-        })
+    return await axios
+      .get("http://localhost:8080/tentants/read", {
+        headers: {
+          Authorization: `Bearer ${admin.token}`,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((r) => {
+        console.log(r, "get");
+        dispatch({ type: types.GET_TENTANTS_SUCCESS, payload: r.data.Tentant });
+      })
+      .catch((e) => {
+        return dispatch({ type: types.GET_TENTANTS_FAILURE, payload: e });
+      });
 }
 const postTentants = (payload) => async (dispatch) => {
     dispatch({ type: types.POST_TENTANTS_REQUEST })
@@ -28,14 +36,23 @@ const postTentants = (payload) => async (dispatch) => {
 
 const editTentants = (id, payload) => async (dispatch) => {
     dispatch({ type: types.EDIT_TENTANTS_REQUEST });
-    return await axios.put(`http://localhost:8080/tentants/update/${id}`, payload)
-        .then((r) => {
-            console.log(r);
-            dispatch({ type: types.EDIT_TENTANTS_SUCCESS, payload: r.data.editTentants })
-        })
-        .catch((e) => {
-            dispatch({ type: types.EDIT_TENTANTS_FAILURE, payload: e })
-        })
+    return await axios
+      .put(`http://localhost:8080/tentants/update/${id}`, payload, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+          "Content-Type": "application/json",
+        },
+      })
+      .then((r) => {
+        console.log(r);
+        dispatch({
+          type: types.EDIT_TENTANTS_SUCCESS,
+          payload: r.data.editTentants,
+        });
+      })
+      .catch((e) => {
+        dispatch({ type: types.EDIT_TENTANTS_FAILURE, payload: e });
+      });
 }
 
 const deleteTentants = (id) => async (dispatch) => {
@@ -52,7 +69,12 @@ const deleteTentants = (id) => async (dispatch) => {
 const getNotification = () => async (dispatch) => {
   dispatch({ type: types.GET_NOTIFICATION_TENTANTS_REQUEST });
   return await axios
-    .get("http://localhost:8080/tentants/notification/read")
+    .get("http://localhost:8080/tentants/notification/read",{
+      headers:{
+        Authorization:`Bearer ${admin.token}`,
+        "Content-Type":"application/json"
+      }
+    })
     .then((r) => {
       console.log(r, "get");
       dispatch({
@@ -101,6 +123,6 @@ export {
   editTentants,
   deleteTentants,
   getNotification,
-//   postNotification,
+  // postNotification,
 editNotification
 };
