@@ -37,6 +37,24 @@ const editPayment = (id, payload) => async (dispatch) => {
             dispatch({ type: types.EDIT_PAYMENT_FAILURE, payload: e })
         })
 }
+const editApprove = (id, payload) => async (dispatch) => {
+  dispatch({ type: types.APPROVE_REQUEST });
+  return await axios
+    .patch(
+      `http://localhost:8080/payment/approve/${id}`,
+      payload
+    )
+    .then((r) => {
+      console.log(r);
+      dispatch({
+        type: types.APPROVE_SUCCESS,
+        payload: r.data.editPayment,
+      });
+    })
+    .catch((e) => {
+      dispatch({ type: types.APPROVE_FAILURE, payload: e });
+    });
+};
 
 const deletePayment = (id) => async (dispatch) => {
     dispatch({ type: types.DELETE_PAYMENT_REQUEST });
@@ -55,7 +73,7 @@ const getPaymentDetails =()=> async(dispatch)=>{
       .get("http://localhost:8080/payment/screentshot/read")
       .then((r) => {
         console.log(r, "get");
-        // dispatch({ type: types.GET_PAYMENT_SUCCESS, payload: r.data.Payment });
+        dispatch({ type: types.GET_PAYMENT_SUCCESS, payload: r.data.payment });
       })
       .catch((e) => {
         return dispatch({ type: types.GET_PAYMENT_FAILURE, payload: e });
@@ -67,4 +85,5 @@ export {
   editPayment,
   deletePayment,
   getPaymentDetails,
+  editApprove
 };

@@ -32,7 +32,6 @@ import ViewPayment from './ViewPayment';
 import AddVacateNotice from './AddVacateNotice';
 import ViewVacateNotice from './ViewVacateNotice';
 import EditVacateNotice from './EditVacateNotice';
-import EditPayment from './EditPayment';
 import EditInvoice from './EditInvoice';
 import ViewInvoice from './ViewInvoice';
 import Apartment from './Apartment';
@@ -83,7 +82,6 @@ const MainRoutes = () => {
                 <Route path='/lease/:id/edit' element={<EditLease/>}/>
                 <Route path='/utility/:id/edit' element={<EditUtility/>}/>
                 <Route path='/vacatenotice/:id/edit' element={<EditVacateNotice/>}/>   
-                <Route path='/payment/:id/edit' element={<EditPayment/>}/>  
                 <Route path='/invoice/:id/edit' element={<EditInvoice/>}/>
                 {/* <Route path='/helpDesk' element={<HelpDesk/>}/> */}
             </Routes>
