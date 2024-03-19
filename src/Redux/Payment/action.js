@@ -49,10 +49,22 @@ const deletePayment = (id) => async (dispatch) => {
             dispatch({ type: types.DELETE_PAYMENT_FAILURE, payload: e })
         })
 }
-
-export {
-    getPayment,
-    postPayment,
-    editPayment,
-    deletePayment
+const getPaymentDetails =()=> async(dispatch)=>{
+    dispatch({ type: types.GET_PAYMENT_REQUEST });
+    return await axios
+      .get("http://localhost:8080/payment/screentshot/read")
+      .then((r) => {
+        console.log(r, "get");
+        // dispatch({ type: types.GET_PAYMENT_SUCCESS, payload: r.data.Payment });
+      })
+      .catch((e) => {
+        return dispatch({ type: types.GET_PAYMENT_FAILURE, payload: e });
+      });
 }
+export {
+  getPayment,
+  postPayment,
+  editPayment,
+  deletePayment,
+  getPaymentDetails,
+};

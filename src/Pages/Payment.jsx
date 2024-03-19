@@ -3,9 +3,9 @@ import React, { useEffect, useState } from 'react';
 import {  useLocation, useNavigate } from 'react-router-dom';
 import { BsPersonFillAdd } from "react-icons/bs"
 import { useDispatch, useSelector } from 'react-redux';
-import { ChevronDownIcon, DeleteIcon, EditIcon } from '@chakra-ui/icons';
+import { ChevronDownIcon } from '@chakra-ui/icons';
 import { Button, Flex, Table, TableCaption, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
-import { deletePayment, getPayment } from '../Redux/Payment/action';
+import {  getPaymentDetails } from '../Redux/Payment/action';
 const Payment = () => {
   const dispatch = useDispatch();
   const [color, setColor] = useState(null);
@@ -30,24 +30,24 @@ const Payment = () => {
       navigate(`owner-dashboard/viewPayment/${id}`)
     }
   }
-  const edit =(id)=>{
-    if(location.pathname === "/superAdmin/payment"){
-      navigate(`/superAdmin/payment/${id}/edit`)
-    }else if(location.pathname === "/tentant-dashboard/payment"){
-      navigate(`/tentant-dashboard/payment/${id}/edit`)
-    }else{
-      navigate(`owner-dashboard/payment/${id}/edit`)
-    }
-  }
-  const handleDelete = (item) => {
-    dispatch(deletePayment(item._id))
-      .then(() => dispatch(getPayment()))
-    setColor(item._id)
-  }
-  const payment = useSelector((state) => state.Payment.paymentsapp);
+  // const edit =(id)=>{
+  //   if(location.pathname === "/superAdmin/payment"){
+  //     navigate(`/superAdmin/payment/${id}/edit`)
+  //   }else if(location.pathname === "/tentant-dashboard/payment"){
+  //     navigate(`/tentant-dashboard/payment/${id}/edit`)
+  //   }else{
+  //     navigate(`owner-dashboard/payment/${id}/edit`)
+  //   }
+  // }
+  // const handleDelete = (item) => {
+  //   dispatch(deletePayment(item._id))
+  //     .then(() => dispatch(getPaymentDetails()))
+  //   setColor(item._id)
+  // }
+  const payment = useSelector((state) => state.Payment.payment);
   useEffect(() => {
     if (payment?.length === 0) {
-      dispatch(getPayment())
+      dispatch(getPaymentDetails())
     }
   }, [payment.length, dispatch])
   console.log(payment);
@@ -71,13 +71,10 @@ const Payment = () => {
             <TableCaption></TableCaption>
             <Thead>
               <Tr>
-                <Th>Tentant</Th>
-                <Th>Lease</Th>
-                <Th>Amount</Th>
-                <Th>paymentMethod</Th>
-                <Th>paymentDate</Th>
-                <Th>Property</Th>
-                <Th>ReciptNumber</Th>
+                <Th>TransactionId</Th>
+                <Th>Name</Th>
+                <Th>PaymentDate</Th>
+                <Th>ScreenShot</Th>
                 <Th>Status</Th>
                 <Th>Action</Th>
               </Tr>
@@ -100,16 +97,16 @@ const Payment = () => {
                           <ChevronDownIcon />
                         </Button>
                       </Td>
-                      <Td>
+                      {/* <Td>
                         <Button onClick={()=> edit(`${item._id}`)}>
                           <EditIcon />
                         </Button>
-                      </Td>
-                      <Td>
+                      </Td> */}
+                      {/* <Td>
                         <Button onClick={() => handleDelete(item)}>
                           <DeleteIcon style={{ color: color === item._id ? "green" : "red" }} />
                         </Button>
-                      </Td>
+                      </Td> */}
                     </Flex>
                   </Tr>
                 })

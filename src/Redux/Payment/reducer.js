@@ -1,6 +1,7 @@
 import * as types from "./actionTypes"
 const initialState = {
     paymentsapp: [],
+    payment:[],
     isLoading: false,
     isError: false
 }
@@ -19,6 +20,7 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 isLoading: false,
                 paymentsapp: payload,
+                payment:payload,
                 isError: false,
             }
         case types.GET_PAYMENT_FAILURE:

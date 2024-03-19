@@ -3,6 +3,7 @@ import * as types from "./actionTypes";
 import axios from "axios";
 
 const user = JSON.parse(localStorage.getItem("Admintoken")); 
+console.log(user)
 const getLandlord = ()=> async(dispatch)=>{
   dispatch({type:types.GET_LANDLORD_REQUEST})
     return await axios.get("http://localhost:8080/landlord/read")
