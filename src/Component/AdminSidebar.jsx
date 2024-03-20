@@ -2,11 +2,11 @@ import { Box,Flex, Heading, Stack } from '@chakra-ui/react';
 import React from 'react'
 import { Link } from 'react-router-dom';
 import { Icon } from '@chakra-ui/icons';
-import { RiDashboardLine,RiHomeWifiFill } from "react-icons/ri";
-import { LuTableProperties } from "react-icons/lu";
-import {  FaFileInvoice } from "react-icons/fa";
+import { RiDashboardLine } from "react-icons/ri";
+// import { LuTableProperties } from "react-icons/lu";
+// import {  FaFileInvoice } from "react-icons/fa";
 import { FcHome } from "react-icons/fc";
-import { TbHomeCheck, TbHomeMove, TbReport } from "react-icons/tb";
+// import { TbHomeCheck, TbHomeMove, TbReport } from "react-icons/tb";
 import { MdPayment } from "react-icons/md";
 const AdminSidebar = () => {
     return (
@@ -77,12 +77,12 @@ const AdminSidebar = () => {
                         </Flex>
                     </Link> */}
                     {/* 10 */}
-                    <Link to="/owner-dashboard/reports" >
+                    {/* <Link to="/owner-dashboard/reports" >
                         <Flex _hover={{ color: "white", bg: "green" }} alignItems={"start"} justify={"space-evenly"} style={{ height:"50px", border: "1px solid black", marginTop: "45x", padding: "2px" }}>
                             <Box style={{ fontSize: "30px", width: "48%" }}><Icon as={TbReport} style={{ marginLeft: "38%", alignItems: "center" }} /></Box>
                             <Box style={{ fontSize: "20px", width: "50%", textAlign: "start", alignItems: "center" }}>Reports</Box>
                         </Flex>
-                    </Link>
+                    </Link> */}
                 </Stack>
             </Box>
         </div>

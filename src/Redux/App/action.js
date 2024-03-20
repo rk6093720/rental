@@ -1,19 +1,29 @@
 
 import * as types from "./actionTypes";
 import axios from "axios";
-
+const admin = JSON.parse(localStorage.getItem("SuperAdmintoken")); 
+const superAdmin =admin &&  admin?.token?.token;
 const user = JSON.parse(localStorage.getItem("Admintoken")); 
-console.log(user)
+console.log(user) 
 const getLandlord = ()=> async(dispatch)=>{
   dispatch({type:types.GET_LANDLORD_REQUEST})
-    return await axios.get("http://localhost:8080/landlord/read")
-    .then((r)=>{
-        console.log(r,"get")
-     dispatch({type:types.GET_LANDLORD_SUCCESS, payload:r.data.Landlords})
+  await axios
+    .get("http://localhost:8080/landlord/read", {
+      headers: {
+        Authorization:`Bearer ${superAdmin}`,
+        "Content-Type": "application/json",
+      },
     })
-    .catch((e)=>{
-       return  dispatch({type:types.GET_LANDLORD_FAILURE,payload:e})
+    .then((r) => {
+      console.log(r, "get");
+      return dispatch({
+        type: types.GET_LANDLORD_SUCCESS,
+        payload: r.data.Landlords,
+      });
     })
+    .catch((e) => {
+      return dispatch({ type: types.GET_LANDLORD_FAILURE, payload: e });
+    });
 }
 const postLandlord = (payload)=>async(dispatch)=>{
     dispatch({type:types.POST_LANDLORD_REQUEST})

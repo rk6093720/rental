@@ -74,7 +74,7 @@ const Landlord = () => {
                 <Td>{item.phone}</Td>
                 <Flex>
                   <Td>
-                    <Link to={`/viewLandlord/${item._id}`}>
+                    <Link to={`/superAdmin/viewLandlord/${item._id}`}>
                       <ChevronDownIcon />
                     </Link>
                   </Td>

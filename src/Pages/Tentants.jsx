@@ -32,6 +32,7 @@ const Tentants = () => {
   const apartment = useSelector((state) => state.App.apartment);
   const notice = useSelector((state) => state.Tentants.notification);
   const location = useLocation();
+  // console.log(location.pathname.split("/")[2]);
   const navigate = useNavigate();
   const toast = useToast();
   // const handleAdd=()=>{
@@ -95,7 +96,7 @@ const Tentants = () => {
   };
 
   useEffect(() => {
-    if (tentant?.length === 0) {
+    if (tentant?.length === 0 ) {
       dispatch(getTentants());
     } else if (apartment?.length === 0) {
       dispatch(getApartment());
