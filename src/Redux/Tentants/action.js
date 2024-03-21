@@ -3,7 +3,7 @@ import * as types from "./actionTypes";
 import axios from "axios";
   const adminToken = JSON.parse(localStorage.getItem("Admintoken"));
    const supertoken = JSON.parse(localStorage.getItem("SuperAdmintoken"));
-   let token = supertoken && supertoken?.token?.token;
+   const token = supertoken?.token?.token;
 const getTentants = () => async (dispatch) => {
     dispatch({ type: types.GET_TENTANTS_REQUEST });
   return await axios
@@ -25,10 +25,10 @@ const getTentants = () => async (dispatch) => {
 }
 const superTentants = () => async (dispatch) => {
   dispatch({ type: types.GET_TENTANTS_REQUEST });
-  return await axios
-    .get("http://localhost:8080/tentants/read/super", {
+  return await axios.get("http://localhost:8080/tentants/read/super",{
       headers: {
         Authorization:`Bearer ${token}`,
+        "Content-Type":"application/json"
       },
     })
     .then((r) => {
@@ -90,7 +90,6 @@ const deleteTentants = (id) => async (dispatch) => {
 }
 const getNotification = () => async (dispatch) => {
   dispatch({ type: types.GET_NOTIFICATION_TENTANTS_REQUEST });
-    const adminToken = JSON.parse(localStorage.getItem("Admintoken"));
   return await axios
     .get("http://localhost:8080/tentants/notification/read",{
       headers:{

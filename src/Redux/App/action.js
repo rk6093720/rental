@@ -1,16 +1,33 @@
 
 import * as types from "./actionTypes";
 import axios from "axios";
-const admin = JSON.parse(localStorage.getItem("SuperAdmintoken")); 
-const superAdmin =admin &&  admin?.token?.token;
-const user = JSON.parse(localStorage.getItem("Admintoken")); 
-console.log(user) 
+const getSuperAdminToken = () => {
+  const admin = JSON.parse(localStorage.getItem("SuperAdmintoken"));
+  return admin?.token?.token || null;
+};
+
+const getAdminToken = () => {
+  const user = JSON.parse(localStorage.getItem("Admintoken"));
+  return user?.token || null;
+};
+
+const getAuthToken = () => {
+  const superAdminToken = getSuperAdminToken();
+  const adminToken = getAdminToken();
+  return superAdminToken || adminToken;
+};
+const getAuthorizationHeader = () => {
+  const authToken = getAuthToken();
+  if (authToken) {
+    return { Authorization: `Bearer ${authToken}` };
+  }
+  return {};
+};
 const getLandlord = ()=> async(dispatch)=>{
   dispatch({type:types.GET_LANDLORD_REQUEST})
-  await axios
-    .get("http://localhost:8080/landlord/read", {
+ return await axios.get("http://localhost:8080/landlord/read/super", {
       headers: {
-        Authorization:`Bearer ${superAdmin}`,
+         ...getAuthorizationHeader(),
         "Content-Type": "application/json",
       },
     })
@@ -31,10 +48,10 @@ const postLandlord = (payload)=>async(dispatch)=>{
     return await axios.post(`http://localhost:8080/landlord/create`,payload)
     .then((r)=>{
         console.log(r)
-     dispatch({ type: types.POST_LANDLORD_SUCCESS, payload: r.data.Landlord })
+    return dispatch({ type: types.POST_LANDLORD_SUCCESS, payload: r.data.Landlord })
     })
     .catch((e)=>{
-     dispatch({type:types.POST_LANDLORD_FAILURE,payload:e})
+    return dispatch({type:types.POST_LANDLORD_FAILURE,payload:e})
     })
 }
 
@@ -43,10 +60,10 @@ const editLandLord = (id,payload) =>async(dispatch)=>{
     return await axios.put(`http://localhost:8080/landlord/update/${id}`,payload)
     .then((r)=>{
         console.log(r);
-         dispatch({ type: types.EDIT_LANDLORD_SUCCESS, payload: r.data.editLandlord })
+      return   dispatch({ type: types.EDIT_LANDLORD_SUCCESS, payload: r.data.editLandlord })
     })
     .catch((e)=>{
-         dispatch({type:types.EDIT_LANDLORD_FAILURE,payload:e})
+      return   dispatch({type:types.EDIT_LANDLORD_FAILURE,payload:e})
     })
 }
 
@@ -61,45 +78,81 @@ const deleteLandLord = (id) => async(dispatch)=>{
         dispatch({type:types.DELETE_LANDLORD_FAILURE,payload:e})
     })
 }
-const filterLandlord = (filters, sort, pagination) => async(dispatch)=>{
-    try {
-        dispatch({ type: types.FETCH_LANDLORDS_REQUEST, payload: { filters, sort, pagination } });
+const filterLandlord = (filters, sort, pagination) => async (dispatch) => {
+  try {
+    dispatch({
+      type: types.FETCH_LANDLORDS_REQUEST,
+      payload: { filters, sort, pagination },
+    });
 
-        const response = await axios.get("http://localhost:8080/landlord/land-filter", {
-            params: { filters, sort, pagination }
-        });
+    const response = await axios.get(
+      "http://localhost:8080/landlord/land-filter",
+      {
+        params: { filters, sort, pagination },
+      }
+    );
 
-        dispatch({
-            type: types.FETCH_LANDLORDS_SUCCESS,
-            payload: { FilterData: response.data.results, page: response.data.paginationInfo, filters, sort, pagination },
-        });
-    } catch (error) {
-        dispatch({
-            type: types.FETCH_LANDLORDS_FAILURE,
-            payload: { error },
-        });
-    }
-}
+    const { data } = response;
+
+    // Assuming the API response contains properties named `data` and `paginationInfo`
+    const { data: FilterData, paginationInfo } = data;
+
+    dispatch({
+      type: types.FETCH_LANDLORDS_SUCCESS,
+      payload: { FilterData, page: paginationInfo, filters, sort, pagination },
+    });
+  } catch (error) {
+    dispatch({
+      type: types.FETCH_LANDLORDS_FAILURE,
+      payload: { error },
+    });
+  }
+};
+
 export const setPagination = (pagination) => ({
     type: types.SET_PAGINATION,
     payload: pagination,
 });
 const getApartment = ()=> async(dispatch)=>{
   dispatch({type:types.GET_APARTMENT_REQUEST});
-   await axios.get("http://localhost:8080/apartment/read/admin",{
-    headers:{
-        Authorization:`Bearer ${user.token}`,
-        "Content-Type":"application/json"
-    }
-   })
-    .then((r)=>{
-        console.log(r,"get")
-     return dispatch({type:types.GET_APARTMENT_SUCCESS, payload:r.data.data.getData})
+  return await axios
+    .get("http://localhost:8080/apartment/read/admin", {
+      headers: {
+        ...getAuthorizationHeader(),
+        "Content-Type": "application/json",
+      },
     })
-    .catch((e)=>{
-       return  dispatch({type:types.GET_APARTMENT_FAILURE,payload:e})
+    .then((r) => {
+      console.log(r, "get");
+      return dispatch({
+        type: types.GET_APARTMENT_SUCCESS,
+        payload: r.data.data.getData,
+      });
     })
+    .catch((e) => {
+      return dispatch({ type: types.GET_APARTMENT_FAILURE, payload: e });
+    });
 }
+ const superApartment = () => async (dispatch) => {
+  dispatch({ type: types.GET_APARTMENT_REQUEST });
+  return await axios
+    .get("http://localhost:8080/apartment/read/super-admin", {
+      headers: {
+        ...getAuthorizationHeader(),
+        "Content-Type": "application/json",
+      },
+    })
+    .then((r) => {
+      console.log(r, "get");
+      return dispatch({
+        type: types.GET_APARTMENT_SUCCESS,
+        payload: r.data.data.getData,
+      });
+    })
+    .catch((e) => {
+      return dispatch({ type: types.GET_APARTMENT_FAILURE, payload: e });
+    });
+};
 const postApartment = (payload)=>async(dispatch)=>{
     dispatch({type:types.POST_APARTMENT_REQUEST})
     console.log(payload)  
@@ -153,5 +206,6 @@ export{
     getApartment,
     postApartment,
     editApartment,
-    deleteApartment
+    deleteApartment,
+    superApartment
 }

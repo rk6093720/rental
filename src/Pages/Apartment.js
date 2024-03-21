@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { BsPersonFillAdd } from "react-icons/bs"
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteApartment, filterLandlord, getApartment, setPagination } from '../Redux/App/action';
+import { deleteApartment, filterLandlord, getApartment, setPagination, superApartment } from '../Redux/App/action';
 import { ChevronDownIcon, DeleteIcon, EditIcon } from '@chakra-ui/icons';
 import { Button, Flex, Table, TableCaption, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 import { useLocation,useNavigate } from 'react-router-dom';
@@ -50,11 +50,11 @@ const Apartment = () => {
     if(land?.length === 0)
     {
     dispatch(getApartment())
+    }else if (location.pathname === "/superAdmin/apartment"){
+      dispatch(superApartment())
     }
-    dispatch(filterLandlord(filters, sort, pagination));
-  }, [land.length, dispatch, filters, sort, pagination])
-// console.log(land);
-// console.log(color)
+      dispatch(filterLandlord(filters, sort, pagination));
+  }, [land.length, dispatch, filters, sort, pagination,location.pathname])
   return (
     <div>
       <Flex minWidth='max-content' alignItems='center' gap='2'>

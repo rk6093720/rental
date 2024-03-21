@@ -1,4 +1,3 @@
-import { Box, Input, Spacer } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,6 +14,9 @@ import {
   Th,
   Thead,
   Tr,
+  Spacer,
+  Box,
+  Input
 } from "@chakra-ui/react";
 import {
   deleteTentants,
@@ -23,7 +25,8 @@ import {
   getTentants,
   superTentants,
 } from "../Redux/Tentants/action";
-import { getApartment } from "../Redux/App/action";
+import { getApartment, superApartment } from "../Redux/App/action";
+
 const Tentants = () => {
   const dispatch = useDispatch();
   const [color, setColor] = useState(null);
@@ -33,20 +36,35 @@ const Tentants = () => {
   const apartment = useSelector((state) => state.App.apartment);
   const notice = useSelector((state) => state.Tentants.notification);
   const location = useLocation();
-  // console.log(location.pathname.split("/")[2]);
   const navigate = useNavigate();
   const toast = useToast();
-  // const handleAdd=()=>{
-  //       if(location.pathname === "/superAdmin/tentants"){
-  //         navigate("/superAdmin/AddTentants")
-  //       }
-  //       else if(location.pathname === "/owner-dashboard/tentants")
-  //       {
-  //         navigate("/owner-dashboard/AddTentants")
-  //       }else{
-  //         navigate("/tentant-dashboard/AddTentants")
-  //       }
-  // }
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (apartment?.length === 0) {
+          dispatch(getApartment());
+        } else if (location.pathname === "/superAdmin/apartment") {
+          dispatch(superApartment());
+        } else if (notice?.length === 0) {
+          dispatch(getNotification());
+        } else if (
+          location.pathname === "/superAdmin/tentants" &&
+          tentant?.length === 0
+        ) {
+          dispatch(superTentants());
+        } else {
+          dispatch(getTentants());
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        // Handle error gracefully
+      }
+    };
+
+    fetchData();
+  }, [dispatch, location.pathname, apartment?.length, notice?.length, tentant]);
+
   const showContract = (id) => {
     const notificationId = notice.find((item) => item.contract);
     const apartmentId = apartment.find((item) => item);
@@ -59,7 +77,7 @@ const Tentants = () => {
     dispatch(editNotification(notificationId._id, payload));
     toast({
       title:
-        "Owner has give to access to see the contract pdf  after that admin has hide the data of user ",
+        "Owner has given access to see the contract pdf. After that, admin has hidden the user's data.",
       status: "success",
       duration: 5000,
       position: "top",
@@ -67,59 +85,52 @@ const Tentants = () => {
       colorScheme: "green",
     });
   };
+
   const showActive = () => {
     alert("active");
   };
+
   const View = (id) => {
+    let route = "";
     if (location.pathname === "/superAdmin/tentants") {
-      navigate(`/superAdmin/viewTentants/${id}`);
+      route = `/superAdmin/viewTentants/${id}`;
     } else if (location.pathname === "/tentant-dashboard/tentants") {
-      navigate(`/tentant-dashboard/viewTentants/${id}`);
+      route = `/tentant-dashboard/viewTentants/${id}`;
     } else {
-      navigate(`/owner-dashboard/viewTentants/${id}`);
+      route = `/owner-dashboard/viewTentants/${id}`;
     }
+    navigate(route);
   };
+
   const edit = (id) => {
+    let route = "";
     if (location.pathname === "/superAdmin/tentants") {
-      navigate(`/superAdmin/tentant/${id}/edit`);
+      route = `/superAdmin/tentant/${id}/edit`;
     } else if (location.pathname === "/tentant-dashboard/tentants") {
-      navigate(`/tentant-dashboard/tentant/${id}/edit`);
+      route = `/tentant-dashboard/tentant/${id}/edit`;
     } else {
-      navigate(`/owner-dashboard/tentant/${id}/edit`);
+      route = `/owner-dashboard/tentant/${id}/edit`;
     }
+    navigate(route);
   };
+
   const handleFilter = (e) => {
     setTentantsFilter(e.target.value);
   };
+
   const handleDelete = (item) => {
     dispatch(deleteTentants(item._id));
     setColor(item._id);
   };
 
-  useEffect(() => {
-    if (tentant?.length === 0 ) {
-      dispatch(getTentants());
-    } else if (apartment?.length === 0) {
-      dispatch(getApartment());
-    } else if (notice?.length === 0) {
-      dispatch(getNotification());
-    }else if (location.pathname === "/superAdmin/tentants" && tentant?.length === 0) {
-      dispatch(superTentants());
-    }
-  }, [tentant?.length, apartment?.length, dispatch, notice?.length, location.pathname]);
-  // console.log(tentant, "tentant",apartment);
-  // console.log(color)
   return (
     <div>
       <Flex minWidth="max-content" alignItems="center" gap="2" p={"15px"}>
-        {/* <Button onClick={handleAdd} style={{ border: "1px solid black", width: "250px", height: "50px", marginTop: "15px", borderRadius: "5px", backgroundColor: "black", color: "white" }}>
-            <BsPersonFillAdd style={{ width: "100%", fontSize: "24px", alignItems: "center", height: "100%", padding: "1px" }} />
-          </Button> */}
         <Spacer />
         <Box style={{ width: "500px", border: "0px" }}>
           <Input
             type="text"
-            placeholder="filter using first name of user "
+            placeholder="Filter by first name"
             value={tentantsFilter}
             onChange={handleFilter}
           />
@@ -134,51 +145,58 @@ const Tentants = () => {
                 <Th>FirstName</Th>
                 <Th>LastName</Th>
                 <Th>Email</Th>
-                <Th>phone</Th>
+                <Th>Phone</Th>
                 <Th>Action</Th>
               </Tr>
             </Thead>
             <Tbody>
               {tentant?.length > 0 &&
-                tentant?.map((item) => (
-                  <Tr key={item?._id}>
-                    <Td>{item.firstName}</Td>
-                    <Td>{item.lastName}</Td>
-                    <Td>{item.email}</Td>
-                    <Td>{item.phone}</Td>
-                    <Flex>
-                      <Td>
-                        <Button onClick={() => View(`${item?._id}`)}>
-                          <ChevronDownIcon />
-                        </Button>
-                      </Td>
-                      <Td>
-                        <Button  onClick={() => showContract(`${item?._id}`)} isDisabled={contract === "complete"}>
-                          {contract && true ? contract : "uncompleted"}
-                        </Button>
-                      </Td>
-                      <Td>
-                        <Button onClick={() => edit(`${item?._id}`)}>
-                          <EditIcon />
-                        </Button>
-                      </Td>
-                      <Td>
-                        <Button onClick={() => showActive(`${item}`)}>
-                          Status
-                        </Button>
-                      </Td>
-                      <Td>
-                        <Button onClick={() => handleDelete(item)}>
-                          <DeleteIcon
-                            style={{
-                              color: color === item._id ? "green" : "red",
-                            }}
-                          />
-                        </Button>
-                      </Td>
-                    </Flex>
-                  </Tr>
-                ))}
+                tentant
+                  .filter((item) =>
+                    item.firstName
+                      .toLowerCase()
+                      .includes(tentantsFilter.toLowerCase())
+                  )
+                  .map((item) => (
+                    <Tr key={item?._id}>
+                      <Td>{item.firstName}</Td>
+                      <Td>{item.lastName}</Td>
+                      <Td>{item.email}</Td>
+                      <Td>{item.phone}</Td>
+                      <Flex>
+                        <Td>
+                          <Button onClick={() => View(item._id)}>
+                            <ChevronDownIcon />
+                          </Button>
+                        </Td>
+                        <Td>
+                          <Button
+                            onClick={() => showContract(item._id)}
+                            isDisabled={contract === "complete"}
+                          >
+                            {contract && true ? contract : "uncompleted"}
+                          </Button>
+                        </Td>
+                        <Td>
+                          <Button onClick={() => edit(item._id)}>
+                            <EditIcon />
+                          </Button>
+                        </Td>
+                        <Td>
+                          <Button onClick={showActive}>Status</Button>
+                        </Td>
+                        <Td>
+                          <Button onClick={() => handleDelete(item)}>
+                            <DeleteIcon
+                              style={{
+                                color: color === item._id ? "green" : "red",
+                              }}
+                            />
+                          </Button>
+                        </Td>
+                      </Flex>
+                    </Tr>
+                  ))}
             </Tbody>
           </Table>
         </TableContainer>
@@ -186,4 +204,5 @@ const Tentants = () => {
     </div>
   );
 };
+
 export default Tentants;
