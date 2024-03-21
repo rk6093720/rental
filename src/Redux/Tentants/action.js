@@ -1,44 +1,47 @@
 
 import * as types from "./actionTypes";
 import axios from "axios";
-// const user = JSON.parse(localStorage.getItem("Usertoken"));
-// const admin = JSON.parse(localStorage.getItem("Admintoken"));
-// const superAdmin = JSON.parse(localStorage.getItem("SuperAdmintoken"));
-// const token = superAdmin && superAdmin?.token?.token;
-// console.log(admin)
+  const adminToken = JSON.parse(localStorage.getItem("Admintoken"));
+   const supertoken = JSON.parse(localStorage.getItem("SuperAdmintoken"));
+   let token = supertoken && supertoken?.token?.token;
 const getTentants = () => async (dispatch) => {
     dispatch({ type: types.GET_TENTANTS_REQUEST });
-    let headers = {
-      "Content-Type": "application/json",
-    };
-
-    // Get the user's token and role from localStorage
-    const userToken = JSON.parse(localStorage.getItem("Usertoken"));
-    const adminToken = JSON.parse(localStorage.getItem("Admintoken"));
-    const superAdminToken = JSON.parse(localStorage.getItem("SuperAdmintoken"));
-    console.log(superAdminToken.token.token)
-    // Check if a super admin is logged in
-    if (superAdminToken && superAdminToken.token.role === "SuperAdmin") {
-      headers.Authorization = `Bearer ${superAdminToken.token.token}`;
-    }
-    // Check if an admin is logged in
-    else if (adminToken && adminToken.role === "Admin") {
-      headers.Authorization = `Bearer ${adminToken.token}`;
-    }
-    // Check if a regular user is logged in
-    else if (userToken && userToken.role === "User") {
-      headers.Authorization = `Bearer ${userToken.token}`;
-    }
-  return  await axios.get("http://localhost:8080/tentants/read",
-    {headers})
-      .then((r) => {
-        console.log(r, "get");
-     return dispatch({ type: types.GET_TENTANTS_SUCCESS, payload: r.data.Tentant });
-      })
-      .catch((e) => {
-        return dispatch({ type: types.GET_TENTANTS_FAILURE, payload: e });
+  return await axios
+    .get("http://localhost:8080/tentants/read/admin", {
+      headers: {
+        Authorization:`Bearer ${adminToken.token}`,
+      },
+    })
+    .then((r) => {
+      console.log(r, "get");
+      return dispatch({
+        type: types.GET_TENTANTS_SUCCESS,
+        payload: r.data.Tentant,
       });
+    })
+    .catch((e) => {
+      return dispatch({ type: types.GET_TENTANTS_FAILURE, payload: e });
+    });
 }
+const superTentants = () => async (dispatch) => {
+  dispatch({ type: types.GET_TENTANTS_REQUEST });
+  return await axios
+    .get("http://localhost:8080/tentants/read/super", {
+      headers: {
+        Authorization:`Bearer ${token}`,
+      },
+    })
+    .then((r) => {
+      console.log(r, "get");
+      return dispatch({
+        type: types.GET_TENTANTS_SUCCESS,
+        payload: r.data.Tentant,
+      });
+    })
+    .catch((e) => {
+      return dispatch({ type: types.GET_TENTANTS_FAILURE, payload: e });
+    });
+};
 const postTentants = (payload) => async (dispatch) => {
     dispatch({ type: types.POST_TENTANTS_REQUEST })
     console.log(payload)
@@ -144,5 +147,6 @@ export {
   deleteTentants,
   getNotification,
   // postNotification,
-editNotification
+  editNotification,
+  superTentants,
 };

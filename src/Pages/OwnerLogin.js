@@ -38,8 +38,7 @@ const OwnerLogin = ()=>{
                         colorScheme: 'green',
                         status: 'success',
                     })
-                }
-                else if(res.payload.data.msg === "Invalid Password"){
+                }else if(res.payload.data.msg === "Invalid Password"){
                     toast({
                         title: 'Admin Login failed because of Invalid password',
                         duration: 5000,

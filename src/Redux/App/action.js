@@ -86,7 +86,7 @@ export const setPagination = (pagination) => ({
 });
 const getApartment = ()=> async(dispatch)=>{
   dispatch({type:types.GET_APARTMENT_REQUEST});
-   await axios.get("http://localhost:8080/apartment/read",{
+   await axios.get("http://localhost:8080/apartment/read/admin",{
     headers:{
         Authorization:`Bearer ${user.token}`,
         "Content-Type":"application/json"

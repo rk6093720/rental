@@ -115,7 +115,23 @@ const reducer = (state = initialState, action) => {
           isLoading: false,
           isError: false,
         };
-      case types.EDIT_NOTIFICATION_TENTANTS_FAILURE:
+      case types.SUPER_TENTANTS_REQUEST:
+        return {
+          ...state,
+          isLoading: true,
+        };
+      case types.SUPER_TENTANTS_SUCCESS:
+        return {
+          ...state,
+          isLoading: false,
+          tentants: payload,
+          isError: false,
+        };
+      case types.SUPER_TENTANTS_FAILURE:
+        return {
+          ...state,
+          isError:true
+        }
       default:
         return state;
     }

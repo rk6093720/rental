@@ -21,6 +21,7 @@ import {
   editNotification,
   getNotification,
   getTentants,
+  superTentants,
 } from "../Redux/Tentants/action";
 import { getApartment } from "../Redux/App/action";
 const Tentants = () => {
@@ -102,8 +103,10 @@ const Tentants = () => {
       dispatch(getApartment());
     } else if (notice?.length === 0) {
       dispatch(getNotification());
+    }else if (location.pathname === "/superAdmin/tentants" && tentant?.length === 0) {
+      dispatch(superTentants());
     }
-  }, [tentant?.length, apartment?.length, dispatch, notice?.length]);
+  }, [tentant?.length, apartment?.length, dispatch, notice?.length, location.pathname]);
   // console.log(tentant, "tentant",apartment);
   // console.log(color)
   return (
