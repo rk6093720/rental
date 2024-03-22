@@ -46,8 +46,7 @@ import { getLandlord, postLandlord } from "../Redux/App/action";
 import { getNotification } from "../Redux/Tentants/action";
 const OwnerDashboard = () => {
   const navigate = useNavigate();
-  const [Admin] = useState(JSON.parse(localStorage.getItem("Admintoken")));
-  console.log(Admin);
+  const Admin = useState(JSON.parse(localStorage.getItem("Admintoken")));
   const handleSignout = () => {
     localStorage.removeItem("Admintoken");
     navigate("/adminSignup");
@@ -72,6 +71,7 @@ const OwnerDashboard = () => {
   const [propertyCode, setPropertyCode] = useState("");
   const [propertyName, setPropertyName] = useState("");
   const [registerDate, setRegisterDate] = useState("");
+  const [timeLeft, setTimeLeft] = useState(null);
   const dispatch = useDispatch();
   const toast = useToast();
   const handleChangeFile = (e) => {
@@ -133,9 +133,42 @@ const OwnerDashboard = () => {
       }, 2000);
     }
   };
-  useEffect(() => {
-    dispatch(getNotification());
-  }, [dispatch]);
+ 
+   useEffect(() => {
+     if (Admin) {
+       const interval = setInterval(() => {
+         const expiryDate = new Date(Admin.adminTokenExpire);
+         const timeNow = Math.floor(Date.now() / 1000);
+         const difference = expiryDate - timeNow;
+         if (difference <= 0) {
+           clearInterval(interval);
+           navigate("/owner-login");
+           // Handle token expiration
+           // For example: setShowPopover(true);
+           return;
+         }
+         setTimeLeft(difference);
+       }, 1000);
+       return () => clearInterval(interval);
+     }
+   }, [Admin, navigate]);
+
+   const formatTime = (timeLeft) => {
+     if (timeLeft <= 0) {
+       return "00:00:00";
+     }
+     const hours = Math.floor(timeLeft / 3600);
+     const remainingSeconds = timeLeft % 3600;
+     const minutes = Math.floor(remainingSeconds / 60);
+     const seconds = remainingSeconds % 60;
+
+     return `${hours < 10 ? "0" : ""}${hours}:${
+       minutes < 10 ? "0" : ""
+     }${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+   };
+ useEffect(() => {
+   dispatch(getNotification());
+ }, [dispatch]);
   // console.log("c", count, notice);
   return (
     <div>
@@ -192,6 +225,11 @@ const OwnerDashboard = () => {
                 </Button>
               </Box>
               <Box>
+                {timeLeft !== null ? (
+                  <Text>{`Token Expiry Time: ${formatTime(timeLeft)}`}</Text>
+                ) : null}
+              </Box>
+              <Box>
                 <Popover>
                   <PopoverTrigger>
                     <Button>
@@ -233,17 +271,15 @@ const OwnerDashboard = () => {
                         </Box>
                       </PopoverBody>
                       <PopoverFooter>
-  
-                          <Button colorScheme="green" onClick={handleSignout}>
-                            Login
-                          </Button>
-                          <Spacer />
+                        <Flex justifyContent={"space-evenly"}>
                           <Button colorScheme="red" onClick={handleSignout}>
                             SignOut
                           </Button>
-                        <Button colorScheme="blue" onClick={onOpen}>
-                          Profile
-                        </Button>
+                          <Spacer/>
+                          <Button colorScheme="blue" onClick={onOpen}>
+                            Profile
+                          </Button>
+                        </Flex>
                         <Modal
                           isOpen={isOpen}
                           onClose={onClose}

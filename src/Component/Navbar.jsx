@@ -23,8 +23,7 @@ const Navbar = () => {
   const [superAdmin, setSuperAdmin] = useState(
     JSON.parse(localStorage.getItem("SuperAdmintoken"))
   );
-  const [timeLeft, setTimeLeft] = useState(0);
-
+  const [timeLeft, setTimeLeft] = useState(null);
   const handleSignout = () => {
     localStorage.removeItem("SuperAdmintoken");
     navigate("/adminSignup");
@@ -33,21 +32,33 @@ const Navbar = () => {
 
   useEffect(() => {
     if (superAdmin) {
-      const expiryDate = new Date(superAdmin.token.expiresIn);
       const interval = setInterval(() => {
-        const now = new Date();
-        const difference = expiryDate - now;
-        setTimeLeft(Math.max(0, difference));
-      }, 1000);
+        const expiryDate = new Date(superAdmin.token.expiresIn);
+        const timeNow = Math.floor(Date.now() / 1000);
+        const difference = expiryDate - timeNow;
+        if (difference <= 0) {
+          clearInterval(interval);
+          navigate("/adminLogin")
+          // Handle token expiration
+          // For example: setShowPopover(true);
+          return;
+        }
 
+        setTimeLeft(difference);
+      }, 1000);
       return () => clearInterval(interval);
     }
-  }, [superAdmin]);
+  }, [superAdmin,navigate]);
 
-  const formatTime = (time) => {
-    const hours = Math.floor(time / (1000 * 60 * 60));
-    const minutes = Math.floor((time % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((time % (1000 * 60)) / 1000);
+  const formatTime = (timeLeft) => {
+    if (timeLeft <= 0) {
+      return "00:00:00";
+    }
+    const hours = Math.floor(timeLeft / 3600);
+    const remainingSeconds = timeLeft % 3600;
+    const minutes = Math.floor(remainingSeconds / 60);
+    const seconds = remainingSeconds % 60;
+
     return `${hours < 10 ? "0" : ""}${hours}:${
       minutes < 10 ? "0" : ""
     }${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
@@ -87,7 +98,9 @@ const Navbar = () => {
           }}
         >
           <Box>
-            <Text>{`Token Expiry Time: ${formatTime(timeLeft)}`}</Text>
+            {timeLeft !== null ? (
+              <Text>{`Token Expiry Time: ${formatTime(timeLeft)}`}</Text>
+            ) : null}
           </Box>
           <Box>
             <Popover>
