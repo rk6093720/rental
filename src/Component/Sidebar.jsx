@@ -3,7 +3,7 @@ import React from 'react'
 import { Link } from 'react-router-dom';
 import { Icon } from '@chakra-ui/icons';
 import {  RiDashboardLine } from "react-icons/ri";
-// import { LuTableProperties } from "react-icons/lu";
+import { LuTableProperties } from "react-icons/lu";
 import { FaLandmark } from "react-icons/fa";
 import { FcHome } from "react-icons/fc";
 // import { TbHomeCheck, TbHomeMove, TbReport } from "react-icons/tb";
@@ -30,12 +30,12 @@ const Sidebar = () => {
                         </Flex>
                     </Link>
                     {/* 3 */}
-                    {/* <Link to="/superAdmin/properties" >
+                    <Link to="/superAdmin/apartment" >
                         <Flex _hover={{ color: "white", bg: "green" }} alignItems={"start"} justify={"space-evenly"} style={{ height:"50px", border: "1px solid black", marginTop: "45x", padding: "2px" }}>
                             <Box style={{ fontSize: "30px", width: "48%" }}><LuTableProperties style={{ marginLeft: "40%", alignItems: "center" }} /></Box>
-                            <Box style={{ fontSize: "20px", width: "50%", textAlign: "start", alignItems: "center" }}>Properties</Box>
+                            <Box style={{ fontSize: "20px", width: "50%", textAlign: "start", alignItems: "center" }}>Apartment</Box>
                         </Flex>
-                    </Link> */}
+                    </Link>
                     {/* 4 */}
                     <Link to="/superAdmin/tentants" >
                         <Flex _hover={{ color: "white", bg: "green" }} alignItems={"start"} justify={"space-evenly"} style={{ height:"50px", border: "1px solid black", marginTop: "45x", padding: "2px" }}>

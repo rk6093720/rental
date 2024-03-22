@@ -6,8 +6,7 @@ import axios from "axios";
    const token = supertoken?.token?.token;
 const getTentants = () => async (dispatch) => {
     dispatch({ type: types.GET_TENTANTS_REQUEST });
-  return await axios
-    .get("http://localhost:8080/tentants/read/admin", {
+  return await axios.get("http://localhost:8080/tentants/read/admin", {
       headers: {
         Authorization:`Bearer ${adminToken.token}`,
       },

@@ -46,15 +46,26 @@ const Apartment = () => {
       navigate(`/owner-dashboard/apartment/${id}/edit`)
     }
   }
-  useEffect(()=>{
-    if(land?.length === 0)
-    {
-    dispatch(getApartment())
-    }else if (location.pathname === "/superAdmin/apartment"){
-      dispatch(superApartment())
+useEffect(() => {
+    try {
+      // Fetch super admin apartment data only when the path is '/superAdmin/apartment' and land data is empty
+      if (
+        location.pathname === "/superAdmin/apartment" &&
+        (!land || land.length === 0)
+      ) {
+        dispatch(superApartment());
+      }
+       if (!land || land.length === 0){
+        dispatch(getApartment())
+      }
+       // Fetch landlord data based on filters, sort, and pagination
+        dispatch(filterLandlord(filters, sort, pagination));
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      // Handle error gracefully
     }
-      dispatch(filterLandlord(filters, sort, pagination));
-  }, [land.length, dispatch, filters, sort, pagination,location.pathname])
+}, [dispatch, filters, sort, pagination, land, location.pathname]);
+
   return (
     <div>
       <Flex minWidth='max-content' alignItems='center' gap='2'>

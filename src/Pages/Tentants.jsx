@@ -44,13 +44,16 @@ const Tentants = () => {
       try {
         if (apartment?.length === 0) {
           dispatch(getApartment());
-        } else if (location.pathname === "/superAdmin/apartment") {
+        }
+        if (location.pathname === "/superAdmin/apartment") {
           dispatch(superApartment());
-        } else if (notice?.length === 0) {
+        }
+        if (notice?.length === 0) {
           dispatch(getNotification());
-        } else if (
+        }
+        if (
           location.pathname === "/superAdmin/tentants" &&
-          tentant?.length === 0
+         (!tentant || tentant?.length === 0)
         ) {
           dispatch(superTentants());
         } else {
@@ -63,7 +66,14 @@ const Tentants = () => {
     };
 
     fetchData();
-  }, [dispatch, location.pathname, apartment?.length, notice?.length, tentant]);
+  }, [
+    dispatch,
+    location.pathname,
+    apartment?.length,
+    notice?.length,
+    tentant?.length,
+    tentant
+  ]);
 
   const showContract = (id) => {
     const notificationId = notice.find((item) => item.contract);

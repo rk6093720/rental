@@ -1,34 +1,34 @@
 
 import * as types from "./actionTypes";
 import axios from "axios";
-const getSuperAdminToken = () => {
+// const getSuperAdminToken = () => {
   const admin = JSON.parse(localStorage.getItem("SuperAdmintoken"));
-  return admin?.token?.token || null;
-};
+//   return admin?.token?.token || null;
+// };
 
-const getAdminToken = () => {
+// const getAdminToken = () => {
   const user = JSON.parse(localStorage.getItem("Admintoken"));
-  return user?.token || null;
-};
+//   return user?.token || null;
+// };
 
-const getAuthToken = () => {
-  const superAdminToken = getSuperAdminToken();
-  const adminToken = getAdminToken();
-  return superAdminToken || adminToken;
-};
-const getAuthorizationHeader = () => {
-  const authToken = getAuthToken();
-  if (authToken) {
-    return { Authorization: `Bearer ${authToken}` };
-  }
-  return {};
-};
+// const getAuthToken = () => {
+//   const superAdminToken = getSuperAdminToken();
+//   const adminToken = getAdminToken();
+//   return superAdminToken || adminToken;
+// };
+// const getAuthorizationHeader = () => {
+//   const authToken = getAuthToken();
+//   if (authToken) {
+//     return { Authorization: `Bearer ${authToken}` };
+//   }
+//   return {};
+// };
 const getLandlord = ()=> async(dispatch)=>{
   dispatch({type:types.GET_LANDLORD_REQUEST})
  return await axios.get("http://localhost:8080/landlord/read/super", {
       headers: {
-         ...getAuthorizationHeader(),
         "Content-Type": "application/json",
+        Authorization:`Bearer ${admin.token.token}`
       },
     })
     .then((r) => {
@@ -114,12 +114,11 @@ export const setPagination = (pagination) => ({
     payload: pagination,
 });
 const getApartment = ()=> async(dispatch)=>{
-  dispatch({type:types.GET_APARTMENT_REQUEST});
-  return await axios
-    .get("http://localhost:8080/apartment/read/admin", {
+    dispatch({type:types.GET_APARTMENT_REQUEST});
+  return await axios.get("http://localhost:8080/apartment/read/admin", {
       headers: {
-        ...getAuthorizationHeader(),
         "Content-Type": "application/json",
+        Authorization:`Bearer ${user.token}`
       },
     })
     .then((r) => {
@@ -134,23 +133,23 @@ const getApartment = ()=> async(dispatch)=>{
     });
 }
  const superApartment = () => async (dispatch) => {
-  dispatch({ type: types.GET_APARTMENT_REQUEST });
+  dispatch({ type: types.SUPERADMIN_APARTMENT_REQUEST });
   return await axios
-    .get("http://localhost:8080/apartment/read/super-admin", {
+    .get("http://localhost:8080/apartment/read/superadmin", {
       headers: {
-        ...getAuthorizationHeader(),
-        "Content-Type": "application/json",
+            "Content-Type": "application/json",
+            Authorization:`Bearer ${admin.token.token}`
       },
     })
     .then((r) => {
       console.log(r, "get");
       return dispatch({
-        type: types.GET_APARTMENT_SUCCESS,
+        type: types.SUPERADMIN_APARTMENT_SUCCESS,
         payload: r.data.data.getData,
       });
     })
     .catch((e) => {
-      return dispatch({ type: types.GET_APARTMENT_FAILURE, payload: e });
+      return dispatch({ type: types.SUPERADMIN_APARTMENT_FAILURE, payload: e });
     });
 };
 const postApartment = (payload)=>async(dispatch)=>{
