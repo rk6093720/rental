@@ -224,7 +224,7 @@ const OwnerDashboard = () => {
               </Box>
               <Box>
                 {timeLeft !== null ? (
-                  <Text>{`Token Expiry Time: ${formatTime(timeLeft)}`}</Text>
+                  <Text>{`Logout-Time: ${formatTime(timeLeft)}`}</Text>
                 ) : null}
               </Box>
               <Box>

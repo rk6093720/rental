@@ -164,14 +164,14 @@ const Invoices = () => {
                 </FormControl>
                 <br />
                 <FormControl isRequired>
-                  <FormLabel>Types of Room</FormLabel>
+                  <FormLabel>Apartment</FormLabel>
                   <Select
-                    placeholder="Types of Room"
+                    placeholder="ApartmentType"
                     value={roomType}
                     onChange={(e) => setRoomType(e.target.value)}
                   >
-                    <option value="Lease">Lease</option>
-                    <option value="Room">Room</option>
+                    <option value="1BHK">1BHK</option>
+                    <option value="2BHK">2BHK</option>
                   </Select>
                 </FormControl>
                 <br />
@@ -236,18 +236,15 @@ const Invoices = () => {
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                   >
-                    {
-                      user?.length > 0 && user.map((item)=>(
-                        <option
-                          value={item.firstName}
-                        >
+                    {user?.length > 0 &&
+                      user.map((item) => (
+                        <option value={item.firstName}>
                           {item.firstName + " " + item.lastName}
                         </option>
-                      ))
-                    }
+                      ))}
                   </Select>
                 </FormControl>
-                <br/>
+                <br />
                 <FormControl isRequired>
                   <FormLabel>Year</FormLabel>
                   <Select
