@@ -46,7 +46,7 @@ import { getLandlord, postLandlord } from "../Redux/App/action";
 import { getNotification } from "../Redux/Tentants/action";
 const OwnerDashboard = () => {
   const navigate = useNavigate();
-  const Admin = useState(JSON.parse(localStorage.getItem("Admintoken")));
+  const [Admin] = useState(JSON.parse(localStorage.getItem("Admintoken")));
   const handleSignout = () => {
     localStorage.removeItem("Admintoken");
     navigate("/adminSignup");
@@ -141,8 +141,8 @@ const OwnerDashboard = () => {
          const timeNow = Math.floor(Date.now() / 1000);
          const difference = expiryDate - timeNow;
          if (difference <= 0) {
+           navigate("/adminLogin");
            clearInterval(interval);
-           navigate("/owner-login");
            // Handle token expiration
            // For example: setShowPopover(true);
            return;
@@ -152,24 +152,22 @@ const OwnerDashboard = () => {
        return () => clearInterval(interval);
      }
    }, [Admin, navigate]);
+     const formatTime = (timeLeft) => {
+       if (timeLeft <= 0) {
+         return "00:00:00";
+       }
+       const hours = Math.floor(timeLeft / 3600);
+       const remainingSeconds = timeLeft % 3600;
+       const minutes = Math.floor(remainingSeconds / 60);
+       const seconds = remainingSeconds % 60;
 
-   const formatTime = (timeLeft) => {
-     if (timeLeft <= 0) {
-       return "00:00:00";
-     }
-     const hours = Math.floor(timeLeft / 3600);
-     const remainingSeconds = timeLeft % 3600;
-     const minutes = Math.floor(remainingSeconds / 60);
-     const seconds = remainingSeconds % 60;
-
-     return `${hours < 10 ? "0" : ""}${hours}:${
-       minutes < 10 ? "0" : ""
-     }${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
-   };
+       return `${hours < 10 ? "0" : ""}${hours}:${
+         minutes < 10 ? "0" : ""
+       }${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+     };   
  useEffect(() => {
    dispatch(getNotification());
  }, [dispatch]);
-  // console.log("c", count, notice);
   return (
     <div>
       <Flex style={{ width: "100%" }}>
@@ -264,7 +262,7 @@ const OwnerDashboard = () => {
                           {Admin ? (
                             <>
                               <Flex>
-                                <Text>{Admin.email.split("@")[0]}</Text>
+                                <Text>{Admin.email.substring(0,3)}</Text>
                               </Flex>
                             </>
                           ) : null}

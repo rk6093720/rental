@@ -16,6 +16,7 @@ import {
 import { Button, Flex, Table, TableCaption, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 import { deleteInvoice, getInvoice, postInvoice } from '../Redux/VacateNotice/action';
 import { GET_INVOICE_SUCCESS } from '../Redux/VacateNotice/actionTypes';
+import { getTentants } from '../Redux/Tentants/action';
 const Invoices = () => {
   const dispatch = useDispatch();
   const [color, setColor] = useState(null);
@@ -25,6 +26,7 @@ const Invoices = () => {
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [invoice,setInvoice]=useState("");
+  const [username,setUsername]=useState("");
   const [date,setDate]=useState("");
   const [roomType,setRoomType]=useState("");
   const [period,setPeriod]=useState("");
@@ -33,28 +35,30 @@ const Invoices = () => {
   const [rent,setRent]=useState("");
   const [month,setMonth]=useState("");
   const [year,setYear]=useState("");
+  const user = useSelector((state) => state.Tentants.tentants);
   const handleFilter = (e) => {
     setLandlordFilter(e.target.value)
   }
-  const View = (id)=>{
-    if(location.pathname === "/superAdmin/invoices"){
-      navigate(`/superAdmin/viewInvoice/${id}`)
-    }
-     else if(location.pathname === "/tentant-dashboard/invoices"){
-      navigate(`/tentant-dashboard/viewInvoice/${id}`)
-    }else{
-      navigate(`owner-dashboard/viewInvoice/${id}`)
-    }
-  }
-  const edit =(id)=>{
-    if(location.pathname === "/superAdmin/invoices"){
-      navigate(`/superAdmin/invoice/${id}/edit`)
-    }else if(location.pathname === "/tentant-dashboard/invoices"){
-      navigate(`/tentant-dashboard/invoice/${id}/edit`)
-    }else{
-      navigate(`owner-dashboard/invoice/${id}/edit`)
-    }
-  }
+ const View = (id) => {
+   let route = "";
+   if (location.pathname === "/superAdmin/invoices") {
+     route = `/superAdmin/viewInvoice/${id}`;
+   } else if (location.pathname === "/owner-dashboard/invoices") {
+     route = `/owner-dashboard/viewInvoice/${id}`;
+   } 
+   navigate(route);
+ };
+
+ const edit = (id) => {
+   let route = "";
+   if (location.pathname === "/superAdmin/invoices") {
+     route = `/superAdmin/invoice/${id}/edit`;
+   } else if (location.pathname === "/owner-dashboard/invoices") {
+     route = `/owner-dashboard/invoice/${id}/edit`;
+   } 
+   navigate(route);
+ };
+
   const handleDelete = (item) => {
     dispatch(deleteInvoice(item._id))
       .then(() => dispatch(getInvoice()))
@@ -95,119 +99,203 @@ const Invoices = () => {
     if (land?.length === 0) {
       dispatch(getInvoice())
     }
-  }, [land.length, dispatch])
-  console.log(land);
-  console.log(color);
+    else if(user?.length === 0){
+      dispatch(getTentants())
+    }
+
+  }, [land?.length,user?.length, dispatch])
+  console.log(land,user);
+  console.log(color,username);
   // invoice/:id/edit
   return (
     <div>
-      <Flex minWidth='max-content' alignItems='center' gap='2' p={"15px"}>
-          <Button onClick={onOpen} style={{ border: "1px solid black", width: "250px", height: "50px", marginTop: "15px", borderRadius: "5px", backgroundColor: "black", color: "white" }}>
-            <BsPersonFillAdd style={{ width: "100%", fontSize: "24px", alignItems: "center", height: "100%", padding: "1px" }} />
-          </Button>
-          <Modal isOpen={isOpen} onClose={onClose} style={{width:"70%",padding:"30px"}}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Add Inovice Details of Payment For Rent</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <Box>
-              <FormControl isRequired>
-                <FormLabel>Invoice Id</FormLabel>
-                <Input type='text' value={invoice} onChange={(e)=>setInvoice(e.target.value)}  placeholder='payment of Id (Invoice Number)' />
-              </FormControl>
-              <br />
-              <FormControl isRequired>
-                <FormLabel>Invoice Date</FormLabel>
-                <Input type='date' value={date} onChange={(e)=>setDate(e.target.value)}  placeholder='Invoice Date' />
-              </FormControl>
-              <br/>
-              <FormControl isRequired>
-              <FormLabel>Types of Room</FormLabel>
-                <Select placeholder='Types of Room' value={roomType} onChange={(e)=>setRoomType(e.target.value)}>
-                  <option value="Lease">Lease</option>
-                  <option value="Room">Room</option>
-                </Select>
-              </FormControl>
-              <br />
-              <FormControl isRequired>
-              <FormLabel>Period (Payment)</FormLabel>
-                <Input type='text' value={period} onChange={(e)=>setPeriod(e.target.value)}  placeholder='period' />
-              </FormControl>
-              <br/>
-              <FormControl isRequired>
-              <FormLabel>TotalAmount</FormLabel>
-                <Input type='text' value={totalAmount} onChange={(e)=>setTotalAmount(e.target.value)}  placeholder='TotalAmount' />
-              </FormControl>
-              <br/>
-              <FormControl isRequired>
-              <FormLabel>PaymentStatus</FormLabel>
-                <Select   placeholder='PaymentStatus' value={payment} onChange={(e)=>setPayment(e.target.value)} > 
-                <option value="Paid">Paid</option>
-                <option value="Due">Due</option>
-                </Select>
-              </FormControl>
-              <br/>
-              <FormControl isRequired>
-                <FormLabel>Month</FormLabel>
-              <Select placeholder='Select Month' value={month} onChange={(e)=>setMonth(e.target.value)}>
-                <option value='January'>January</option>
-                <option value='February'>February</option>
-                <option value='March'>March</option>
-                <option value='April'>April</option>
-                <option value='May'>May</option>
-                <option value='June'>June</option>
-                <option value='July'>July</option>
-                <option value='August'>August</option>
-                <option value='September'>September</option>
-                <option value='October'>October</option>
-                <option value='November'>November</option>
-                <option value='December'>December</option>
-                </Select>
+      <Flex minWidth="max-content" alignItems="center" gap="2" p={"15px"}>
+        <Button
+          onClick={onOpen}
+          style={{
+            border: "1px solid black",
+            width: "250px",
+            height: "50px",
+            marginTop: "15px",
+            borderRadius: "5px",
+            backgroundColor: "black",
+            color: "white",
+          }}
+        >
+          <BsPersonFillAdd
+            style={{
+              width: "100%",
+              fontSize: "24px",
+              alignItems: "center",
+              height: "100%",
+              padding: "1px",
+            }}
+          />
+        </Button>
+        <Modal
+          isOpen={isOpen}
+          onClose={onClose}
+          style={{ width: "70%", padding: "30px" }}
+        >
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>Add Inovice Details of Payment For Rent</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>
+              <Box>
+                <FormControl isRequired>
+                  <FormLabel>Invoice Id</FormLabel>
+                  <Input
+                    type="text"
+                    value={invoice}
+                    onChange={(e) => setInvoice(e.target.value)}
+                    placeholder="payment of Id (Invoice Number)"
+                  />
                 </FormControl>
-              <br/>
-              <FormControl isRequired>
-                <FormLabel>Year</FormLabel>
-               <Select placeholder='Select Year' value={year} onChange={(e)=>setYear(e.target.value)}>
-                <option value='2013'>2013</option>
-                <option value='2014'>2014</option>
-                <option value='2015'>2015</option>
-                <option value='2016'>2016</option>
-                <option value='2017'>2017</option>
-                <option value='2018'>2018</option>
-                <option value='2019'>2019</option>
-                <option value='2020'>2020</option>
-                <option value='2021'>2021</option>
-                <option value='2022'>2022</option>
-                <option value='2023'>2023</option>
-                <option value='2024'>2024</option>
-                </Select>
+                <br />
+                <FormControl isRequired>
+                  <FormLabel>Invoice Date</FormLabel>
+                  <Input
+                    type="date"
+                    value={date}
+                    onChange={(e) => setDate(e.target.value)}
+                    placeholder="Invoice Date"
+                  />
                 </FormControl>
-              <br/>
-              <FormControl isRequired>
-              <FormLabel>Rent</FormLabel>
-                <Input type='text' value={rent} onChange={(e)=>setRent(e.target.value)}  placeholder='Rent' />
-              </FormControl>
-            </Box>
-          </ModalBody>
-          <ModalFooter>
-            <Button colorScheme='blue' mr={3} onClick={onClose}>
-              Close
-            </Button>
-            <Button  onClick={handleAddInvoice}  colorScheme='red'>Submit</Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+                <br />
+                <FormControl isRequired>
+                  <FormLabel>Types of Room</FormLabel>
+                  <Select
+                    placeholder="Types of Room"
+                    value={roomType}
+                    onChange={(e) => setRoomType(e.target.value)}
+                  >
+                    <option value="Lease">Lease</option>
+                    <option value="Room">Room</option>
+                  </Select>
+                </FormControl>
+                <br />
+                <FormControl isRequired>
+                  <FormLabel>Period (Payment)</FormLabel>
+                  <Input
+                    type="text"
+                    value={period}
+                    onChange={(e) => setPeriod(e.target.value)}
+                    placeholder="period"
+                  />
+                </FormControl>
+                <br />
+                <FormControl isRequired>
+                  <FormLabel>TotalAmount</FormLabel>
+                  <Input
+                    type="text"
+                    value={totalAmount}
+                    onChange={(e) => setTotalAmount(e.target.value)}
+                    placeholder="TotalAmount"
+                  />
+                </FormControl>
+                <br />
+                <FormControl isRequired>
+                  <FormLabel>PaymentStatus</FormLabel>
+                  <Select
+                    placeholder="PaymentStatus"
+                    value={payment}
+                    onChange={(e) => setPayment(e.target.value)}
+                  >
+                    <option value="Paid">Paid</option>
+                    <option value="Due">Due</option>
+                  </Select>
+                </FormControl>
+                <br />
+                <FormControl isRequired>
+                  <FormLabel>Month</FormLabel>
+                  <Select
+                    placeholder="Select Month"
+                    value={month}
+                    onChange={(e) => setMonth(e.target.value)}
+                  >
+                    <option value="January">January</option>
+                    <option value="February">February</option>
+                    <option value="March">March</option>
+                    <option value="April">April</option>
+                    <option value="May">May</option>
+                    <option value="June">June</option>
+                    <option value="July">July</option>
+                    <option value="August">August</option>
+                    <option value="September">September</option>
+                    <option value="October">October</option>
+                    <option value="November">November</option>
+                    <option value="December">December</option>
+                  </Select>
+                </FormControl>
+                <br />
+                <FormControl isRequired>
+                  <FormLabel>User</FormLabel>
+                  <Select
+                    placeholder="user"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                  >
+                    {
+                      user?.length > 0 && user.map((item)=>(
+                        <option
+                          value={item.firstName}
+                        >
+                          {item.firstName + " " + item.lastName}
+                        </option>
+                      ))
+                    }
+                  </Select>
+                </FormControl>
+                <br/>
+                <FormControl isRequired>
+                  <FormLabel>Year</FormLabel>
+                  <Select
+                    placeholder="Select Year"
+                    value={year}
+                    onChange={(e) => setYear(e.target.value)}
+                  >
+                    <option value="2021">2021</option>
+                    <option value="2022">2022</option>
+                    <option value="2023">2023</option>
+                    <option value="2024">2024</option>
+                  </Select>
+                </FormControl>
+                <br />
+                <FormControl isRequired>
+                  <FormLabel>Rent</FormLabel>
+                  <Input
+                    type="text"
+                    value={rent}
+                    onChange={(e) => setRent(e.target.value)}
+                    placeholder="Rent"
+                  />
+                </FormControl>
+              </Box>
+            </ModalBody>
+            <ModalFooter>
+              <Button colorScheme="blue" mr={3} onClick={onClose}>
+                Close
+              </Button>
+              <Button onClick={handleAddInvoice} colorScheme="red">
+                Submit
+              </Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
         <Spacer />
         <Box style={{ width: "500px", border: "0px" }}>
-          <Input type="text" placeholder='filter using first name of user '
+          <Input
+            type="text"
+            placeholder="filter using first name of user "
             value={landlordFilter}
-            onChange={handleFilter} />
+            onChange={handleFilter}
+          />
         </Box>
       </Flex>
       <Box style={{ marginTop: "15px", padding: "20px" }}>
         <TableContainer>
-          <Table variant='striped' colorScheme='teal'>
+          <Table variant="striped" colorScheme="teal">
             <TableCaption></TableCaption>
             <Thead>
               <Tr>
@@ -222,43 +310,75 @@ const Invoices = () => {
               </Tr>
             </Thead>
             <Tbody>
-              {
-                land.length > 0 && land.map((item)=>(
+              {land.length > 0 &&
+                land.map((item) => (
                   <Tr key={item._id}>
-                  <Td >{item.invoice}</Td>
-                  <Td>{item.date}</Td>
-                  <Td>{item.roomType}</Td>
-                  <Td>{item.period}</Td>
-                  <Td>{item.totalAmount}</Td>
-                  <Td>{item.payment === "Paid"? (<Text style={{width:"60px",height:"30px",backgroundColor:"green",color:"white",fontSize:"24px",textAlign:'center',fontWeight:"bold"}}>Paid</Text>): (<Text style={{width:"60px",height:"30px",backgroundColor:"red",color:"white",fontSize:"24px",textAlign:'center',fontWeight:"bold"}}>Due</Text>)}</Td>
-                  <Td>{item.rent}</Td>
-                  <Flex>
+                    <Td>{item.invoice}</Td>
+                    <Td>{item.date}</Td>
+                    <Td>{item.roomType}</Td>
+                    <Td>{item.period}</Td>
+                    <Td>{item.totalAmount}</Td>
+                    <Td>
+                      {item.payment === "Paid" ? (
+                        <Text
+                          style={{
+                            width: "60px",
+                            height: "30px",
+                            backgroundColor: "green",
+                            color: "white",
+                            fontSize: "24px",
+                            textAlign: "center",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          Paid
+                        </Text>
+                      ) : (
+                        <Text
+                          style={{
+                            width: "60px",
+                            height: "30px",
+                            backgroundColor: "red",
+                            color: "white",
+                            fontSize: "24px",
+                            textAlign: "center",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          Due
+                        </Text>
+                      )}
+                    </Td>
+                    <Td>{item.rent}</Td>
+                    <Flex>
                       <Td>
-                        <Button onClick={()=>View(`${item._id}`)}>
+                        <Button onClick={() => View(`${item._id}`)}>
                           <ChevronDownIcon />
                         </Button>
                       </Td>
                       <Td>
-                        <Button onClick={()=> edit(`${item._id}`)}>
+                        <Button onClick={() => edit(`${item._id}`)}>
                           <EditIcon />
                         </Button>
                       </Td>
                       <Td>
                         <Button onClick={() => handleDelete(item)}>
-                          <DeleteIcon style={{ color: color === item._id ? "green" : "red" }} />
+                          <DeleteIcon
+                            style={{
+                              color: color === item._id ? "green" : "red",
+                            }}
+                          />
                         </Button>
                       </Td>
                     </Flex>
-                </Tr>
-                ))
-              } 
+                  </Tr>
+                ))}
             </Tbody>
           </Table>
         </TableContainer>
-
       </Box>
     </div>
-  )
+  );
 }
 
 export default Invoices

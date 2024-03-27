@@ -28,7 +28,7 @@ const getLandlord = ()=> async(dispatch)=>{
  return await axios.get("http://localhost:8080/landlord/read/super", {
       headers: {
         "Content-Type": "application/json",
-        Authorization:`Bearer ${admin.token.token}`
+        Authorization:`Bearer ${admin?.token?.token}`
       },
     })
     .then((r) => {
@@ -118,7 +118,7 @@ const getApartment = ()=> async(dispatch)=>{
   return await axios.get("http://localhost:8080/apartment/read/admin", {
       headers: {
         "Content-Type": "application/json",
-        Authorization:`Bearer ${user.token}`
+        Authorization:`Bearer ${user?.token}`
       },
     })
     .then((r) => {
@@ -138,14 +138,14 @@ const getApartment = ()=> async(dispatch)=>{
     .get("http://localhost:8080/apartment/read/superadmin", {
       headers: {
             "Content-Type": "application/json",
-            Authorization:`Bearer ${admin.token.token}`
+            Authorization:`Bearer ${admin?.token?.token}`
       },
     })
     .then((r) => {
       console.log(r, "get");
       return dispatch({
         type: types.SUPERADMIN_APARTMENT_SUCCESS,
-        payload: r.data.data.getData,
+        payload: r?.data?.data?.getData,
       });
     })
     .catch((e) => {

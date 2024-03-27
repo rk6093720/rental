@@ -8,7 +8,7 @@ const getTentants = () => async (dispatch) => {
     dispatch({ type: types.GET_TENTANTS_REQUEST });
   return await axios.get("http://localhost:8080/tentants/read/admin", {
       headers: {
-        Authorization:`Bearer ${adminToken.token}`,
+        Authorization:`Bearer ${adminToken?.token}`,
       },
     })
     .then((r) => {
@@ -56,11 +56,9 @@ const postTentants = (payload) => async (dispatch) => {
 
 const editTentants = (id, payload) => async (dispatch) => {
     dispatch({ type: types.EDIT_TENTANTS_REQUEST });
-     const userToken = JSON.parse(localStorage.getItem("Usertoken"));
     return await axios
       .put(`http://localhost:8080/tentants/update/${id}`, payload, {
         headers: {
-          Authorization: `Bearer ${userToken.token}`,
           "Content-Type": "application/json",
         },
       })
@@ -92,7 +90,7 @@ const getNotification = () => async (dispatch) => {
   return await axios
     .get("http://localhost:8080/tentants/notification/read",{
       headers:{
-        Authorization:`Bearer ${adminToken.token}`,
+        Authorization:`Bearer ${adminToken?.token}`,
         "Content-Type":"application/json"
       }
     })
