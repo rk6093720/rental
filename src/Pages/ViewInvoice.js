@@ -17,7 +17,6 @@ import {
   Td,
   // TableCaption,
   TableContainer,
-  Heading,
   Image,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
@@ -115,7 +114,7 @@ const ViewInvoice = () => {
                     }}
                   >
                     <Box>
-                      <Heading>ApartmentName</Heading>
+                      <h1>ApartmentName</h1>
                       <Box>
                         Address: 205, Devasandra Main Road,mc layout ,Bengaluru
                         560036
@@ -166,7 +165,7 @@ const ViewInvoice = () => {
                     }}
                   >
                     <Box>
-                      <Heading>Billed To</Heading>
+                      <h1>Billed To</h1>
                       <Box>Name:Rohit Kumar</Box>
                       <Box>
                         Address: 205, Devasandra Main Road,mc layout ,Bengaluru

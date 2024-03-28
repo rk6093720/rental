@@ -1,4 +1,4 @@
-import { Box, SimpleGrid, Tab, TabList,Image, TabPanel, TabPanels, Table, TableCaption, TableContainer, Tabs, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
+import { Box, SimpleGrid, Tab, TabList,Image, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom'

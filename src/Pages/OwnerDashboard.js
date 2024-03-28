@@ -141,6 +141,7 @@ const OwnerDashboard = () => {
          const timeNow = Math.floor(Date.now() / 1000);
          const difference = expiryDate - timeNow;
          if (difference <= 0) {
+          localStorage.removeItem("Admintoken");
            navigate("/adminLogin");
            clearInterval(interval);
            // Handle token expiration
@@ -165,6 +166,11 @@ const OwnerDashboard = () => {
          minutes < 10 ? "0" : ""
        }${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
      };   
+     useEffect(()=>{
+      if(timeLeft !== null){
+        formatTime(timeLeft)
+      }
+     },[timeLeft])
  useEffect(() => {
    dispatch(getNotification());
  }, [dispatch]);
@@ -224,7 +230,7 @@ const OwnerDashboard = () => {
               </Box>
               <Box>
                 {timeLeft !== null ? (
-                  <Text>{`Logout-Time: ${formatTime(timeLeft)}`}</Text>
+                  <Text>{`Session-expire: ${formatTime(timeLeft)}`}</Text>
                 ) : null}
               </Box>
               <Box>

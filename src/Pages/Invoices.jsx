@@ -26,6 +26,7 @@ const Invoices = () => {
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [invoice,setInvoice]=useState("");
+  const [apartmentName,setApartmentName]=useState("");
   const [username,setUsername]=useState("");
   const [date,setDate]=useState("");
   const [roomType,setRoomType]=useState("");
@@ -103,10 +104,9 @@ const Invoices = () => {
       dispatch(getTentants())
     }
 
-  }, [land?.length,user?.length, dispatch])
+  }, [land?.length,user?.length, dispatch]);
   console.log(land,user);
   console.log(color,username);
-  // invoice/:id/edit
   return (
     <div>
       <Flex minWidth="max-content" alignItems="center" gap="2" p={"15px"}>
@@ -114,7 +114,7 @@ const Invoices = () => {
           onClick={onOpen}
           style={{
             border: "1px solid black",
-            width: "250px",
+            width: "100px",
             height: "50px",
             marginTop: "15px",
             borderRadius: "5px",
@@ -135,7 +135,7 @@ const Invoices = () => {
         <Modal
           isOpen={isOpen}
           onClose={onClose}
-          style={{ width: "70%", padding: "30px" }}
+          style={{ width: "100%", padding: "10px" }}
         >
           <ModalOverlay />
           <ModalContent>
@@ -143,6 +143,16 @@ const Invoices = () => {
             <ModalCloseButton />
             <ModalBody>
               <Box>
+                <FormControl isRequired>
+                  <FormLabel>Apartment-Name</FormLabel>
+                  <Input
+                    type="text"
+                    value={apartmentName}
+                    onChange={(e) => setApartmentName(e.target.value)}
+                    placeholder="Apartment-Name"
+                  />
+                </FormControl>
+                <br />
                 <FormControl isRequired>
                   <FormLabel>Invoice Id</FormLabel>
                   <Input

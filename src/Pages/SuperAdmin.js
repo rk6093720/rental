@@ -1,53 +1,15 @@
-import React, { useEffect, useState } from 'react'
-import { Box,Flex,Spacer,Button,Switch} from "@chakra-ui/react"
-import { Link, Outlet } from 'react-router-dom';
-import { BsPersonFillAdd } from "react-icons/bs"
-import { useNavigate } from 'react-router-dom';
-import { useDispatch ,useSelector} from 'react-redux';
-import { 
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
-  TableContainer,
-} from '@chakra-ui/react'
-import {  DeleteIcon, EditIcon } from '@chakra-ui/icons';
-import { deleteLandLord, getLandlord } from '../Redux/App/action';
+import React from 'react'
+import { Box,Flex,Spacer} from "@chakra-ui/react"
+import {  Outlet } from 'react-router-dom';
+// import { BsPersonFillAdd } from "react-icons/bs"
+// import { useNavigate } from 'react-router-dom';
+// import { useDispatch ,useSelector} from 'react-redux';
+// import {  DeleteIcon, EditIcon } from '@chakra-ui/icons';
+// import { deleteLandLord, getLandlord } from '../Redux/App/action';
 import Navbar from '../Component/Navbar';
 import Sidebar from '../Component/Sidebar';
 import MainRoutes from './MainRoutes';
 const SuperAdmin = () => {
-  const [change,setChange]= useState(null);
-  const admin = useSelector((state) => state.App.landlord);
-  const dispatch=useDispatch();
-  const [color, setColor] = useState(null);
-  const navigate=useNavigate();
-  const handleAdd = ()=>{
-    navigate("/AddLandlord")
-  }
-  const handleAdmin = ()=>{
-    navigate("/owner-login");
-    window.location.reload()
-  }
-  const handleDelete = (item) => {
-    dispatch(deleteLandLord(item._id))
-      .then(() => dispatch(getLandlord()))
-    setColor(item._id)
-  }
-  const handleSwitch=(id,newStatus)=>{
-    const data = admin.map((item)=>(
-      item._id === id ? {status: !newStatus} :item  
-    ))
-    setChange(data)
-  }
-  useEffect(()=>{
-    if(admin.length === 0)
-    {
-      dispatch(getLandlord())
-    }
-  },[dispatch,admin.length])
   return (
     <div>
       <Flex style={{width:"100%"}}>

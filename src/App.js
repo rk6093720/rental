@@ -19,7 +19,6 @@ const App = () => {
   const isAuthUser= useSelector((state)=>state.Auth.isAuthUser)
   const role = useSelector((state)=> state.Auth.roles);
   const roles = useSelector((state)=>state.Auth.role);
-  console.log(role)
   return (
     <div>
       <Routes>
