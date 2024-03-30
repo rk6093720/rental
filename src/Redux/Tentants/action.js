@@ -3,7 +3,7 @@ import * as types from "./actionTypes";
 import axios from "axios";
   const adminToken = JSON.parse(localStorage.getItem("Admintoken"));
    const supertoken = JSON.parse(localStorage.getItem("SuperAdmintoken"));
-   const token = supertoken?.token?.token;
+   const token = supertoken.token;
 const getTentants = () => async (dispatch) => {
     dispatch({ type: types.GET_TENTANTS_REQUEST });
   return await axios.get("http://localhost:8080/tentants/read/admin", {

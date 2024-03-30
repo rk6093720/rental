@@ -4,7 +4,7 @@ const initialState = {
     isAuth: false,
     isAuthAdmin:false,
     isAuthUser:false,
-    token: appData("Supertoken") || appData("OwnerToken") || appData("UserToken")|| "",
+    token: appData("Supertoken") || appData("OwnerToken") ||  "",
     isLoading:false,
     isError:false,
     status:false,
@@ -41,17 +41,18 @@ const reducer = (state = initialState, action) => {
             isLoading:true,
         }
     case types.LOGIN_SUCCESS:
-        console.log(payload.token.role)
-        const {token}=payload;
+        console.log(payload)
+        const {role,token}=payload;
         console.log("2",token)
-        let newLogin = saveData(`${token.role}token`,payload)
+        let newLogin = saveData(`${role}token`,payload)
         return {
             ...state,
             isLoading:false,
             token:newLogin || token,
             admin:token,
-            roles:payload.token.role,
+            roles:payload.role,
             isAuth:true,
+            isAuthAdmin:true,
             isError:false,
             msg:payload
         }
@@ -62,11 +63,11 @@ const reducer = (state = initialState, action) => {
             isLoading:false,
             isError:true
         }
-        case types.OWNER_LOGIN_REQUEST:
-            return {
-                ...state,
-                isLoading:true,
-            }
+        // case types.OWNER_LOGIN_REQUEST:
+        //     return {
+        //         ...state,
+        //         isLoading:true,
+        //     }
         case types.OWNER_LOGIN_SUCCESS:
             console.log(payload)
             let newOwnerLogin = saveData(`${payload.role}token`,payload)
@@ -76,20 +77,20 @@ const reducer = (state = initialState, action) => {
                 token:newOwnerLogin,
                 admin:payload.email,
                 role:payload.role,
-                isAuthAdmin:payload.role === "Admin",
+                isAuthAdmin:payload.role === "Admin" ,
                 isAuthUser:payload.role === "User",
                 isError:false,
                 msg:payload
             }
-        case types.OWNER_LOGIN_FAILURE:
-            console.log(payload)
-            return {
-                ...state,
-                isAuth:false,
-                isLoading:false,
-                msg:payload,
-                isError:true
-            }
+        // case types.OWNER_LOGIN_FAILURE:
+        //     console.log(payload)
+        //     return {
+        //         ...state,
+        //         isAuth:false,
+        //         isLoading:false,
+        //         msg:payload,
+        //         isError:true
+        //     }
         case types.FORGET_PASSWORD_REQUEST:
             return {
                 ...state,

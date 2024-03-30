@@ -137,7 +137,7 @@ const OwnerDashboard = () => {
    useEffect(() => {
      if (Admin) {
        const interval = setInterval(() => {
-         const expiryDate = new Date(Admin.adminTokenExpire);
+         const expiryDate = new Date(Admin.isAdminTokenExpire);
          const timeNow = Math.floor(Date.now() / 1000);
          const difference = expiryDate - timeNow;
          if (difference <= 0) {

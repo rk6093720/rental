@@ -3,8 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import { EmailIcon, ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { Input,Text,InputGroup, InputRightElement, Button, Box, FormControl, FormLabel, useToast } from '@chakra-ui/react';
-import { ownerUserLogin } from '../Redux/Auth/action';
-import {  OWNER_LOGIN_SUCCESS } from '../Redux/Auth/actionTypes';
+import { LoginAuth } from '../Redux/Auth/action';
+import { LOGIN_SUCCESS } from '../Redux/Auth/actionTypes';
+// import {  OWNER_LOGIN_SUCCESS } from '../Redux/Auth/actionTypes';
 const OwnerLogin = ()=>{
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -25,10 +26,10 @@ const OwnerLogin = ()=>{
               password,
               role
             }
-            dispatch(ownerUserLogin(payload))
+            dispatch(LoginAuth(payload))
             .then((res)=>{
                 console.log(res)
-                if(res.type === OWNER_LOGIN_SUCCESS )
+                if(res.type === LOGIN_SUCCESS )
                 {
                     toast({
                         title: 'Admin Login success',
@@ -64,7 +65,7 @@ const OwnerLogin = ()=>{
                 navigate("/owner-dashboard/dashboard");
             }
         },[isAuthAdmin,navigate]);
-       // console.log(role)
+       console.log(isAuthAdmin)
     return (
     <div className='mainLogin' style={{ margin: "auto",marginTop:"65px"}}>
             <Box className='wholeBoxForLogin' style={{ width: "500px", height: "450px", margin: "auto", marginTop: "25px", padding: "5px", boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px" }}>

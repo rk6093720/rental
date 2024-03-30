@@ -3,7 +3,7 @@ import axios from "axios";
 
 const SignupAuth = (e)=>async (dispatch)=>{
   dispatch({ type: types.SIGNUP_REQUEST})
-    return await axios.post(`http://localhost:8080/admin/owner-signup`,e)
+    return await axios.post(`http://localhost:8080/admin/signup`,e)
     .then((r)=>{
         return dispatch({type:types.SIGNUP_SUCCESS, payload:r.data.msg})
     })
@@ -12,48 +12,69 @@ const SignupAuth = (e)=>async (dispatch)=>{
     })
 }
 //superAdmin login
-const  LoginAuth = (e)=> async(dispatch)=>{
-    dispatch({type:types.LOGIN_REQUEST})
-    return await axios.post(`http://localhost:8080/admin/login`,e) 
-    .then((r)=>{
-       console.log(r);
-       return dispatch({type:types.LOGIN_SUCCESS, payload:{token:r.data.data,status:r.data.status}})
-    })
-    .catch((e)=>{
-       return dispatch({ type: types.LOGIN_FAILURE, payload:{statusbar:e}})
-    })
-}
+const  LoginAuth = (payload)=> async(dispatch)=>{
+      try {
+        dispatch({ type: types.LOGIN_REQUEST });
+        const res = await axios.post(
+          `http://localhost:8080/admin/login`,
+          payload
+        );
+        const { token, email, role, expiresIn } = res.data.data;
+        let isSuperAdmin = false;
+        let isAdminTokenExpire = null;
+        if (role === "Admin" || role === "SuperAdmin") {
+          isSuperAdmin = true;
+          isAdminTokenExpire = role === "SuperAdmin" ? expiresIn : expiresIn;
+        }
+        return dispatch({
+          type: isSuperAdmin ? types.LOGIN_SUCCESS : types.OWNER_LOGIN_SUCCESS,
+          payload: {
+            token,
+            email,
+            role,
+            isAdminTokenExpire,
+            msg: res.data.msg,
+            statusbar: res.data.status,
+          },
+        });
+      } catch (error) {
+        return dispatch({
+          type: types.LOGIN_FAILURE,
+          payload: error.response,
+        });
+      }
+    };
 //owner and user login
-const  ownerUserLogin = (payload)=> async(dispatch)=>{
-    try {
-      dispatch({ type: types.OWNER_LOGIN_REQUEST });
-      let endPoint =
-        payload.role !== "User" ? "admin/owner-login" : "admin/user-login";
-      const res = await axios.post(
-        `http://localhost:8080/${endPoint}`,
-        payload
-      );
-    //   console.log(res.data.data);
-       const {token,email,role,adminTokenExpire}= res.data.data;
-         return dispatch({
-              type:types.OWNER_LOGIN_SUCCESS,
-              payload:{
-                  token,
-                  email,
-                  role,
-                  adminTokenExpire,
-                  msg:res.data.msg,
-                  statusbar:res.data.status
-              }
-          })
-    } catch (error) {
-       // console.log(error.response.data.msg)
-       return dispatch({
-            type:types.OWNER_LOGIN_FAILURE,
-            payload:error.response
-        })
-    }
-}
+// const  ownerUserLogin = (payload)=> async(dispatch)=>{
+//     try {
+//       dispatch({ type: types.OWNER_LOGIN_REQUEST });
+//       let endPoint =
+//         payload.role !== "User" ? "admin/owner-login" : "admin/user-login";
+//       const res = await axios.post(
+//         `http://localhost:8080/${endPoint}`,
+//         payload
+//       );
+//     //   console.log(res.data.data);
+//        const {token,email,role,adminTokenExpire}= res.data.data;
+//          return dispatch({
+//               type:types.OWNER_LOGIN_SUCCESS,
+//               payload:{
+//                   token,
+//                   email,
+//                   role,
+//                   adminTokenExpire,
+//                   msg:res.data.msg,
+//                   statusbar:res.data.status
+//               }
+//           })
+//     } catch (error) {
+//        // console.log(error.response.data.msg)
+//        return dispatch({
+//             type:types.OWNER_LOGIN_FAILURE,
+//             payload:error.response
+//         })
+//     }
+// }
 const forgetPassword =(el)=> async(dispatch)=>{
     dispatch({type:types.FORGET_PASSWORD_REQUEST})
     return await axios.post(`http://localhost:8080/admin/forget-password`,el)
@@ -101,7 +122,7 @@ export const rolesData=(payload)=>({
 export {
     SignupAuth,
     LoginAuth,
-    ownerUserLogin,
+    // ownerUserLogin,
     forgetPassword,
     getResetPwd,
     postResetPwd,

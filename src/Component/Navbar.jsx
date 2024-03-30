@@ -20,7 +20,7 @@ import {
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const [superAdmin, setSuperAdmin] = useState(
+  const [superAdmin] = useState(
     JSON.parse(localStorage.getItem("SuperAdmintoken"))
   );
   const [timeLeft, setTimeLeft] = useState(null);
@@ -33,7 +33,7 @@ const Navbar = () => {
   useEffect(() => {
     if (superAdmin) {
       const interval = setInterval(() => {
-        const expiryDate = new Date(superAdmin.token.expiresIn);
+        const expiryDate = new Date(superAdmin.isAdminTokenExpire);
         const timeNow = Math.floor(Date.now() / 1000);
         const difference = expiryDate - timeNow;
         if (difference <= 0) {
@@ -135,7 +135,7 @@ const Navbar = () => {
                       {superAdmin ? (
                         <>
                           <Flex>
-                            <Text>{superAdmin.token.role}</Text>
+                            <Text>{superAdmin.role}</Text>
                           </Flex>
                         </>
                       ) : null}

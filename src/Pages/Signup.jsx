@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Input, Button, FormControl, RadioGroup, Stack, Radio, FormLabel, InputGroup, InputRightElement, useToast} from "@chakra-ui/react";
+import { Box, Input, Button, FormControl, RadioGroup,Select, Stack, Radio, FormLabel, InputGroup, InputRightElement, useToast} from "@chakra-ui/react";
 import { useState } from 'react';
 import {  useNavigate } from 'react-router-dom';
 import { EmailIcon, ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
@@ -156,21 +156,20 @@ const Signup = () => {
               </InputGroup>
             </FormControl>
             <br />
-            <FormControl>
-              <FormLabel>UserType</FormLabel>
+            <FormControl isRequired>
+              <FormLabel>userType</FormLabel>
               <InputGroup
-                className="inputForUserType"
-                style={{ width: "100%", height: "50%", marginTop: "15px" }}
+                className="userType"
+                style={{ width: "100%", height: "5%" }}
               >
-                <Input
-                  placeholder="enter your UserType"
-                  type="text"
-                  autoComplete="userType"
-                  _hover={{ bg: "green", color: "white" }}
+                <Select
+                  placeholder="userType"
                   value={userType}
                   style={{ fontSize: "24px" }}
                   onChange={(e) => setUserType(e.target.value)}
-                />
+                >
+                  <option value="Admin">Admin</option>
+                </Select>
               </InputGroup>
             </FormControl>
             <br />
