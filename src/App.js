@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import Login from './Pages/Login';
 import Signup from './Pages/Signup';
 import OwnerLogin from './Pages/OwnerLogin';
-import UserLogin from './Pages/UserLogin';
+// import UserLogin from './Pages/UserLogin';
 import ForgetPassword from "./Pages/ForgetPassword";
 import ResetPassword from "./Pages/ResetPassword";
 import SuperAdmin from './Pages/SuperAdmin';
@@ -31,7 +31,7 @@ const App = () => {
 
         <Route path='/adminLogin' element={<Login />} />
         <Route path="/owner-login" element={<OwnerLogin />} />
-        <Route path='/user-login' element={<UserLogin />} />
+        {/* <Route path='/user-login' element={<UserLogin />} /> */}
         <Route path="/forget-password" element={<ForgetPassword />} />
         <Route path="/reset-password/:id/:token" element={<ResetPassword />} />
 

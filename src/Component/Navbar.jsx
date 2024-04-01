@@ -38,7 +38,7 @@ const Navbar = () => {
         const difference = expiryDate - timeNow;
         if (difference <= 0) {
           clearInterval(interval);
-          navigate("/adminLogin")
+          navigate("/adminSignup");
           // Handle token expiration
           // For example: setShowPopover(true);
           return;

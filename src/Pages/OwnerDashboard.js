@@ -142,7 +142,7 @@ const OwnerDashboard = () => {
          const difference = expiryDate - timeNow;
          if (difference <= 0) {
           localStorage.removeItem("Admintoken");
-           navigate("/adminLogin");
+           navigate("/adminSignup");
            clearInterval(interval);
            // Handle token expiration
            // For example: setShowPopover(true);

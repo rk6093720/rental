@@ -2,13 +2,15 @@
 import * as types from "./actionTypes";
 import axios from "axios";
   const adminToken = JSON.parse(localStorage.getItem("Admintoken"));
-   const supertoken = JSON.parse(localStorage.getItem("SuperAdmintoken"));
-   const token = supertoken.token;
+  const supertoken = JSON.parse(localStorage.getItem("SuperAdmintoken"));
+  //  console.log(adminToken,supertoken.token);
 const getTentants = () => async (dispatch) => {
     dispatch({ type: types.GET_TENTANTS_REQUEST });
-  return await axios.get("http://localhost:8080/tentants/read/admin", {
+  return await axios
+    .get("http://localhost:8080/tentants/read/admin", {
       headers: {
         Authorization:`Bearer ${adminToken?.token}`,
+        "Content-Type": "application/json",
       },
     })
     .then((r) => {
@@ -24,10 +26,11 @@ const getTentants = () => async (dispatch) => {
 }
 const superTentants = () => async (dispatch) => {
   dispatch({ type: types.GET_TENTANTS_REQUEST });
-  return await axios.get("http://localhost:8080/tentants/read/super",{
+  return await axios
+    .get("http://localhost:8080/tentants/read/superadmin", {
       headers: {
-        Authorization:`Bearer ${token}`,
-        "Content-Type":"application/json"
+        Authorization: `Bearer ${supertoken.refreshToken}`,
+        "Content-Type": "application/json",
       },
     })
     .then((r) => {

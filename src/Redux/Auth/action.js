@@ -19,7 +19,7 @@ const  LoginAuth = (payload)=> async(dispatch)=>{
           `http://localhost:8080/admin/login`,
           payload
         );
-        const { token, email, role, expiresIn } = res.data.data;
+        const { token, email, role, expiresIn,refresh } = res.data.data;
         let isSuperAdmin = false;
         let isAdminTokenExpire = null;
         if (role === "Admin" || role === "SuperAdmin") {
@@ -32,6 +32,7 @@ const  LoginAuth = (payload)=> async(dispatch)=>{
             token,
             email,
             role,
+            refreshToken:refresh,
             isAdminTokenExpire,
             msg: res.data.msg,
             statusbar: res.data.status,

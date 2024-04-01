@@ -1,34 +1,13 @@
-
 import * as types from "./actionTypes";
 import axios from "axios";
-// const getSuperAdminToken = () => {
-  const admin = JSON.parse(localStorage.getItem("SuperAdmintoken"));
-//   return admin?.token?.token || null;
-// };
-
-// const getAdminToken = () => {
-  const user = JSON.parse(localStorage.getItem("Admintoken"));
-//   return user?.token || null;
-// };
-
-// const getAuthToken = () => {
-//   const superAdminToken = getSuperAdminToken();
-//   const adminToken = getAdminToken();
-//   return superAdminToken || adminToken;
-// };
-// const getAuthorizationHeader = () => {
-//   const authToken = getAuthToken();
-//   if (authToken) {
-//     return { Authorization: `Bearer ${authToken}` };
-//   }
-//   return {};
-// };
+const admin = JSON.parse(localStorage.getItem("SuperAdmintoken"));
+const user = JSON.parse(localStorage.getItem("Admintoken"));
 const getLandlord = ()=> async(dispatch)=>{
   dispatch({type:types.GET_LANDLORD_REQUEST})
  return await axios.get("http://localhost:8080/landlord/read/super", {
       headers: {
         "Content-Type": "application/json",
-        Authorization:`Bearer ${admin?.token?.token}`
+        Authorization:`Bearer ${admin?.token}`
       },
     })
     .then((r) => {
@@ -54,7 +33,6 @@ const postLandlord = (payload)=>async(dispatch)=>{
     return dispatch({type:types.POST_LANDLORD_FAILURE,payload:e})
     })
 }
-
 const editLandLord = (id,payload) =>async(dispatch)=>{
     dispatch({type:types.EDIT_LANDLORD_REQUEST});
     return await axios.put(`http://localhost:8080/landlord/update/${id}`,payload)
@@ -66,7 +44,6 @@ const editLandLord = (id,payload) =>async(dispatch)=>{
       return   dispatch({type:types.EDIT_LANDLORD_FAILURE,payload:e})
     })
 }
-
 const deleteLandLord = (id) => async(dispatch)=>{
       dispatch({type:types.DELETE_LANDLORD_REQUEST});
     return await axios.delete(`http://localhost:8080/landlord/remove/${id}`)
@@ -138,7 +115,7 @@ const getApartment = ()=> async(dispatch)=>{
     .get("http://localhost:8080/apartment/read/superadmin", {
       headers: {
             "Content-Type": "application/json",
-            Authorization:`Bearer ${admin?.token}`
+            Authorization:`Bearer ${admin.refreshToken}`
       },
     })
     .then((r) => {

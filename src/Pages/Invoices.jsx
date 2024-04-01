@@ -27,7 +27,15 @@ const Invoices = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [invoice,setInvoice]=useState("");
   const [apartmentName,setApartmentName]=useState("");
+  const [apartmentAddress,setApartmentAddresss]=useState("");
+  const [ownerPhone,setOwnerPhone]=useState("");
+  const [ownerEmail,setOwnerEmail]=useState("");
+  const [water,setWater]=useState("");
+  const [electricity,setElectricity]=useState("");
   const [username,setUsername]=useState("");
+  const [userAddress,setUserAddress]=useState("");
+  const [userPhone,setUserPhone]=useState("");
+  const [image,setImage]=useState("");
   const [date,setDate]=useState("");
   const [roomType,setRoomType]=useState("");
   const [period,setPeriod]=useState("");
@@ -68,14 +76,24 @@ const Invoices = () => {
   const handleAddInvoice=()=>{
     const payload={
       invoice,
-      date,
-      roomType,
-      period,
-      totalAmount,
-      payment,
-      rent,
-      month,
-      year
+  apartmentName,
+  apartmentAddress,
+  ownerPhone,
+  ownerEmail,
+  water,
+  electricity,
+  username,
+  userAddress,
+  userPhone,
+  image,
+  date,
+  roomType,
+  period,
+  totalAmount,
+  payment,
+  rent,
+  month,
+  year
     }
     dispatch(postInvoice(payload))
     .then(()=> dispatch(getInvoice()))
@@ -150,6 +168,66 @@ const Invoices = () => {
                     value={apartmentName}
                     onChange={(e) => setApartmentName(e.target.value)}
                     placeholder="Apartment-Name"
+                  />
+                </FormControl>
+                <br />
+                <FormControl isRequired>
+                  <FormLabel>Apartment-Address</FormLabel>
+                  <Input
+                    type="text"
+                    value={apartmentAddress}
+                    onChange={(e) => setApartmentAddresss(e.target.value)}
+                    placeholder="Address"
+                  />
+                </FormControl>
+                <br />
+                <FormControl isRequired>
+                  <FormLabel>Owner-Email:</FormLabel>
+                  <Input
+                    type="text"
+                    value={ownerEmail}
+                    onChange={(e) => setOwnerEmail(e.target.value)}
+                    placeholder="Owner-Email"
+                  />
+                </FormControl>
+                <br />
+                <FormControl isRequired>
+                  <FormLabel>Owner-phone:</FormLabel>
+                  <Input
+                    type="text"
+                    value={ownerPhone}
+                    onChange={(e) => setOwnerPhone(e.target.value)}
+                    placeholder="Owner-phone"
+                  />
+                </FormControl>
+                <br />
+                <FormControl isRequired>
+                  <FormLabel>WaterBill:</FormLabel>
+                  <Input
+                    type="text"
+                    value={water}
+                    onChange={(e) => setWater(e.target.value)}
+                    placeholder="Owner-phone"
+                  />
+                </FormControl>
+                <br />
+                <FormControl isRequired>
+                  <FormLabel>Electricity-Bill:</FormLabel>
+                  <Input
+                    type="text"
+                    value={electricity}
+                    onChange={(e) => setElectricity(e.target.value)}
+                    placeholder="Owner-phone"
+                  />
+                </FormControl>
+                <br />
+                <FormControl isRequired>
+                  <FormLabel>Apartment-Image:</FormLabel>
+                  <Input
+                    type="text"
+                    value={image}
+                    onChange={(e) => setImage(e.target.value)}
+                    placeholder="Apartment-Image"
                   />
                 </FormControl>
                 <br />
@@ -240,9 +318,9 @@ const Invoices = () => {
                 </FormControl>
                 <br />
                 <FormControl isRequired>
-                  <FormLabel>User</FormLabel>
+                  <FormLabel>UserName</FormLabel>
                   <Select
-                    placeholder="user"
+                    placeholder="userName"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                   >
@@ -253,6 +331,15 @@ const Invoices = () => {
                         </option>
                       ))}
                   </Select>
+                </FormControl>
+                <br />
+                <FormControl isRequired>
+                  <FormLabel>User-Address</FormLabel>
+                  <Input
+                    placeholder="User-Address"
+                    value={userAddress}
+                    onChange={(e) => setUserAddress(e.target.value)}
+                  />
                 </FormControl>
                 <br />
                 <FormControl isRequired>
@@ -267,6 +354,15 @@ const Invoices = () => {
                     <option value="2023">2023</option>
                     <option value="2024">2024</option>
                   </Select>
+                </FormControl>
+                <br />
+                <FormControl isRequired>
+                  <FormLabel>UserPhone</FormLabel>
+                  <Input
+                    placeholder="Select Year"
+                    value={userPhone}
+                    onChange={(e) => setUserPhone(e.target.value)}
+                  />
                 </FormControl>
                 <br />
                 <FormControl isRequired>
