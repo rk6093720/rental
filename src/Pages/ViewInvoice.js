@@ -1,6 +1,5 @@
 import {
   Box,
-  SimpleGrid,
   Tab,
   Tabs,
   TabList,
@@ -49,43 +48,39 @@ const ViewInvoice = () => {
         </TabList>
         <TabPanels>
           <TabPanel>
-            <SimpleGrid columns={[2, null, 3]} spacing="40px">
-              <Box
-                border="1px solid black"
-                alignItems="center"
-                height="80px"
-                key={currentInvoice._id}
-              >
-                Id:{currentInvoice._id}{" "}
+            <Flex
+              columns={[2, null, 3]}
+              spacing="40px"
+              justifyContent={"space-evenly"}
+            >
+              <Box border="1px solid black" width={"80%"} alignItems="center">
+                <Box key={currentInvoice._id}>Id:{currentInvoice._id} </Box>
+                <Box border="1px solid black">
+                  InvoiceId:{currentInvoice.invoice}
+                </Box>
+                <Box border="1px solid black">Date:{currentInvoice.date}</Box>
+                <Box border="1px solid black">
+                  RoomType:{currentInvoice.apartmentType}
+                </Box>
+
+                <Box border="1px solid black">
+                  Owner-phone:{currentInvoice.ownerPhone}
+                </Box>
+                <Box border="1px solid black">Month:{currentInvoice.month}</Box>
+                <Box border="1px solid black">
+                  TotalAmount:{currentInvoice.totalAmount}
+                </Box>
+                <Box border="1px solid black">Year:{currentInvoice.year}</Box>
+                <Box border="1px solid black">Rent:{currentInvoice.rent}</Box>
+                <Box border="1px solid black">
+                  Payment:{currentInvoice.paymentStatus}
+                </Box>
               </Box>
-              <Box border="1px solid black" alignItems="center" height="80px">
-                InvoiceId:{currentInvoice.invoice}
+              <Spacer />
+              <Box border="1px solid black" height={"100%"}>
+                <Image src={currentInvoice.apartmentImage} />
               </Box>
-              <Box border="1px solid black" alignItems="center" height="80px">
-                Date:{currentInvoice.date}
-              </Box>
-              <Box border="1px solid black" alignItems="center" height="80px">
-                RoomType:{currentInvoice.roomType}
-              </Box>
-              <Box border="1px solid black" alignItems="center" height="80px">
-                Period:{currentInvoice.period}
-              </Box>
-              <Box border="1px solid black" alignItems="center" height="80px">
-                Month:{currentInvoice.month}
-              </Box>
-              <Box border="1px solid black" alignItems="center" height="80px">
-                TotalAmount:{currentInvoice.totalAmount}
-              </Box>
-              <Box border="1px solid black" alignItems="center" height="80px">
-                Year:{currentInvoice.year}
-              </Box>
-              <Box border="1px solid black" alignItems="center" height="80px">
-                Rent:{currentInvoice.rent}
-              </Box>
-              <Box border="1px solid black" alignItems="center" height="80px">
-                Payment:{currentInvoice.payment}
-              </Box>
-            </SimpleGrid>
+            </Flex>
           </TabPanel>
           <TabPanel>
             <Box
@@ -114,13 +109,13 @@ const ViewInvoice = () => {
                     }}
                   >
                     <Box>
-                      <h1>ApartmentName</h1>
+                      <h1>{currentInvoice.apartmentName}</h1>
                       <Box>
-                        Address: 205, Devasandra Main Road,mc layout ,Bengaluru
-                        560036
+                        Address: 205,{currentInvoice.apartmentAddress} Main
+                        Road,mc layout ,Bengaluru 560036
                       </Box>
-                      <Box>Email:enquiry@apartmentname.com</Box>
-                      <Box>Helpline Number:1234567890</Box>
+                      <Box>Email:{currentInvoice.ownerEmail}</Box>
+                      <Box>Helpline Number:{currentInvoice.ownerPhone}</Box>
                     </Box>
                   </Box>
                   <Spacer style={{ width: "10%" }} />
@@ -138,8 +133,8 @@ const ViewInvoice = () => {
                       }}
                     >
                       <Image
-                        src="http://localhost:8080/apartmentImages/apartment-image.jpg"
-                        alt="apartment-name"
+                        src={currentInvoice.apartmentImage}
+                        alt={currentInvoice.apartmentName}
                         width={"80%"}
                         height={"100%"}
                       />
@@ -166,12 +161,11 @@ const ViewInvoice = () => {
                   >
                     <Box>
                       <h1>Billed To</h1>
-                      <Box>Name:Rohit Kumar</Box>
+                      <Box>Name:{currentInvoice.username}</Box>
                       <Box>
-                        Address: 205, Devasandra Main Road,mc layout ,Bengaluru
-                        560036
+                        Address: {currentInvoice.userAddress}
                       </Box>
-                      <Box>Phone:1234567890</Box>
+                      <Box>Phone:{currentInvoice.userPhone}</Box>
                     </Box>
                   </Box>
                   <Spacer style={{ width: "10%" }} />
@@ -189,9 +183,9 @@ const ViewInvoice = () => {
                         marginTop: "5px",
                       }}
                     >
-                      <Box>Date:27/03/2024</Box>
-                      <Box>Status:Due/Paid</Box>
-                      <Box>Invoice Number:Inv00013</Box>
+                      <Box>Date:{currentInvoice.date}</Box>
+                      <Box>Status:{currentInvoice.paymentStatus}</Box>
+                      <Box>Invoice Number:{currentInvoice.invoice}</Box>
                     </Box>
                   </Box>
                 </Flex>
@@ -212,12 +206,11 @@ const ViewInvoice = () => {
                       <Td
                         style={{ letterSpacing: "2px", textAlign: "justify" }}
                       >
-                        Address: 205, Devasandra Main <br /> Road, mc layout
-                        ,Bengaluru 560036
+                        Address: {currentInvoice.apartmentAddress}
                       </Td>
-                      <Td>₹20,000</Td>
+                      <Td>₹{currentInvoice.rent}</Td>
                       <Td>Water + electricity</Td>
-                      <Td>Due</Td>
+                      <Td>{currentInvoice.paymentStatus}</Td>
                     </Tr>
                   </Tbody>
                   <Tfoot></Tfoot>
@@ -228,15 +221,15 @@ const ViewInvoice = () => {
                 style={{
                   width: "20%",
                   height: "100px",
-                  marginLeft:"70%",
-                  textAlign:"end"
+                  marginLeft: "70%",
+                  textAlign: "end",
                 }}
               >
-                <Box>Rent:₹20,000</Box>
-                <Box>Water:₹5,000</Box>
-                <Box>Electricity:₹2,000</Box>
-                <hr/>
-                <Box>TotalAmount:₹27,000</Box>
+                <Box>Rent:₹{currentInvoice.rent}</Box>
+                <Box>Water:₹{currentInvoice.water}</Box>
+                <Box>Electricity:₹{currentInvoice.electricity}</Box>
+                <hr />
+                <Box>TotalAmount:₹{currentInvoice.totalAmount}</Box>
               </Box>
             </Box>
           </TabPanel>

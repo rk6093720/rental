@@ -10,7 +10,6 @@ const initialState = {
 const reducer = (state = initialState, action) => {
     const { type, payload } = action;
     switch (type) {
-
         case types.GET_VACATENOTICE_REQUEST:
             return {
                 ...state,

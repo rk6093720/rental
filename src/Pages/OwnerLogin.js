@@ -62,7 +62,7 @@ const OwnerLogin = ()=>{
         }
         useEffect(()=>{
             if(isAuthAdmin ){
-                navigate("/owner-dashboard/dashboard");
+                navigate("/owner-dashboard");
             }
         },[isAuthAdmin,navigate]);
        console.log(isAuthAdmin)

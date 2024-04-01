@@ -115,7 +115,7 @@ const getApartment = ()=> async(dispatch)=>{
     .get("http://localhost:8080/apartment/read/superadmin", {
       headers: {
             "Content-Type": "application/json",
-            Authorization:`Bearer ${admin.refreshToken}`
+            Authorization:`Bearer ${admin?.token}`
       },
     })
     .then((r) => {

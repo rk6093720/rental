@@ -35,12 +35,12 @@ const Invoices = () => {
   const [username,setUsername]=useState("");
   const [userAddress,setUserAddress]=useState("");
   const [userPhone,setUserPhone]=useState("");
-  const [image,setImage]=useState("");
+  const [apartmentImage, setApartmentImage] = useState("");
   const [date,setDate]=useState("");
-  const [roomType,setRoomType]=useState("");
-  const [period,setPeriod]=useState("");
+  const [apartmentType, setApartmentType] = useState("");
+  // const [period,setPeriod]=useState("");
   const [totalAmount,setTotalAmount]=useState("");
-  const [payment,setPayment]=useState("");
+  const [paymentStatus, setPaymentStatus] = useState("");
   const [rent,setRent]=useState("");
   const [month,setMonth]=useState("");
   const [year,setYear]=useState("");
@@ -74,27 +74,26 @@ const Invoices = () => {
     setColor(item._id)
   }
   const handleAddInvoice=()=>{
-    const payload={
+    const payload = {
+      apartmentName,
+      apartmentImage,
+      apartmentAddress,
+      ownerEmail,
+      ownerPhone,
       invoice,
-  apartmentName,
-  apartmentAddress,
-  ownerPhone,
-  ownerEmail,
-  water,
-  electricity,
-  username,
-  userAddress,
-  userPhone,
-  image,
-  date,
-  roomType,
-  period,
-  totalAmount,
-  payment,
-  rent,
-  month,
-  year
-    }
+      date,
+      apartmentType,
+      username,
+      userAddress,
+      userPhone,
+      totalAmount,
+      paymentStatus,
+      water,
+      electricity,
+      month,
+      year,
+      rent,
+    };
     dispatch(postInvoice(payload))
     .then(()=> dispatch(getInvoice()))
     .then((r)=>{
@@ -123,8 +122,6 @@ const Invoices = () => {
     }
 
   }, [land?.length,user?.length, dispatch]);
-  console.log(land,user);
-  console.log(color,username);
   return (
     <div>
       <Flex minWidth="max-content" alignItems="center" gap="2" p={"15px"}>
@@ -224,9 +221,9 @@ const Invoices = () => {
                 <FormControl isRequired>
                   <FormLabel>Apartment-Image:</FormLabel>
                   <Input
-                    type="text"
-                    value={image}
-                    onChange={(e) => setImage(e.target.value)}
+                    type="url"
+                    value={apartmentImage}
+                    onChange={(e) => setApartmentImage(e.target.value)}
                     placeholder="Apartment-Image"
                   />
                 </FormControl>
@@ -255,15 +252,15 @@ const Invoices = () => {
                   <FormLabel>Apartment</FormLabel>
                   <Select
                     placeholder="ApartmentType"
-                    value={roomType}
-                    onChange={(e) => setRoomType(e.target.value)}
+                    value={apartmentType}
+                    onChange={(e) => setApartmentType(e.target.value)}
                   >
                     <option value="1BHK">1BHK</option>
                     <option value="2BHK">2BHK</option>
                   </Select>
                 </FormControl>
                 <br />
-                <FormControl isRequired>
+                {/* <FormControl isRequired>
                   <FormLabel>Period (Payment)</FormLabel>
                   <Input
                     type="text"
@@ -272,7 +269,7 @@ const Invoices = () => {
                     placeholder="period"
                   />
                 </FormControl>
-                <br />
+                <br /> */}
                 <FormControl isRequired>
                   <FormLabel>TotalAmount</FormLabel>
                   <Input
@@ -287,8 +284,8 @@ const Invoices = () => {
                   <FormLabel>PaymentStatus</FormLabel>
                   <Select
                     placeholder="PaymentStatus"
-                    value={payment}
-                    onChange={(e) => setPayment(e.target.value)}
+                    value={paymentStatus}
+                    onChange={(e) => setPaymentStatus(e.target.value)}
                   >
                     <option value="Paid">Paid</option>
                     <option value="Due">Due</option>
@@ -396,7 +393,7 @@ const Invoices = () => {
           />
         </Box>
       </Flex>
-      <Box style={{ marginTop: "15px", padding: "20px" }}>
+      <Box style={{ marginTop: "15px", padding: "40px" }}>
         <TableContainer>
           <Table variant="striped" colorScheme="teal">
             <TableCaption></TableCaption>
@@ -405,7 +402,6 @@ const Invoices = () => {
                 <Th>Invoice Number</Th>
                 <Th>Invoice Date</Th>
                 <Th>RoomType</Th>
-                <Th>Period</Th>
                 <Th>TotalAmount</Th>
                 <Th>PaymentStatus</Th>
                 <Th> Rent</Th>
@@ -418,11 +414,10 @@ const Invoices = () => {
                   <Tr key={item._id}>
                     <Td>{item.invoice}</Td>
                     <Td>{item.date}</Td>
-                    <Td>{item.roomType}</Td>
-                    <Td>{item.period}</Td>
+                    <Td>{item.apartmentType}</Td>
                     <Td>{item.totalAmount}</Td>
                     <Td>
-                      {item.payment === "Paid" ? (
+                      {item.paymentStatus === "Paid" ? (
                         <Text
                           style={{
                             width: "60px",

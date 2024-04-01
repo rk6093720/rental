@@ -29,7 +29,7 @@ const superTentants = () => async (dispatch) => {
   return await axios
     .get("http://localhost:8080/tentants/read/superadmin", {
       headers: {
-        Authorization: `Bearer ${supertoken.refreshToken}`,
+        Authorization: `Bearer ${supertoken?.token}`,
         "Content-Type": "application/json",
       },
     })

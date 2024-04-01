@@ -77,8 +77,8 @@ const reducer = (state = initialState, action) => {
                 token:newOwnerLogin,
                 admin:payload.email,
                 role:payload.role,
-                isAuthAdmin:payload.role === "Admin" ,
-                isAuthUser:payload.role === "User",
+                isAuthAdmin:true,
+                // isAuthUser:payload.role === "User",
                 isError:false,
                 msg:payload
             }
