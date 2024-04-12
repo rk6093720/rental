@@ -1,15 +1,20 @@
 
 import * as types from "./actionTypes";
 import axios from "axios";
-  const adminToken = JSON.parse(localStorage.getItem("Admintoken"));
-  const supertoken = JSON.parse(localStorage.getItem("SuperAdmintoken"));
+  function getAdminToken(){
+    return JSON.parse(localStorage.getItem("Admintoken"));
+  }
+  const adminToken = getAdminToken();
+ function getToken(){
+  return JSON.parse(localStorage.getItem("SuperAdmintoken"));
+ }
+ const superadmin = getToken();
   //  console.log(adminToken,supertoken.token);
 const getTentants = () => async (dispatch) => {
     dispatch({ type: types.GET_TENTANTS_REQUEST });
-  return await axios
-    .get("http://localhost:8080/tentants/read/admin", {
+  return await axios.get("http://localhost:8080/tentants/read/admin", {
       headers: {
-        Authorization:`Bearer ${adminToken?.token}`,
+        Authorization: `Bearer ${getAdminToken()?.token}`,
         "Content-Type": "application/json",
       },
     })
@@ -26,10 +31,9 @@ const getTentants = () => async (dispatch) => {
 }
 const superTentants = () => async (dispatch) => {
   dispatch({ type: types.GET_TENTANTS_REQUEST });
-  return await axios
-    .get("http://localhost:8080/tentants/read/superadmin", {
+  return await axios.get("http://localhost:8080/tentants/read/superadmin", {
       headers: {
-        Authorization: `Bearer ${supertoken?.token}`,
+        Authorization: `Bearer ${getToken()?.token}`,
         "Content-Type": "application/json",
       },
     })
@@ -59,8 +63,7 @@ const postTentants = (payload) => async (dispatch) => {
 
 const editTentants = (id, payload) => async (dispatch) => {
     dispatch({ type: types.EDIT_TENTANTS_REQUEST });
-    return await axios
-      .put(`http://localhost:8080/tentants/update/${id}`, payload, {
+    return await axios.put(`http://localhost:8080/tentants/update/${id}`, payload, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -91,11 +94,11 @@ const deleteTentants = (id) => async (dispatch) => {
 const getNotification = () => async (dispatch) => {
   dispatch({ type: types.GET_NOTIFICATION_TENTANTS_REQUEST });
   return await axios
-    .get("http://localhost:8080/tentants/notification/read",{
-      headers:{
-        Authorization:`Bearer ${adminToken?.token}`,
-        "Content-Type":"application/json"
-      }
+    .get("http://localhost:8080/tentants/notification/read", {
+      headers: {
+        Authorization: `Bearer ${getAdminToken()?.token}`,
+        "Content-Type": "application/json",
+      },
     })
     .then((r) => {
       console.log(r, "get");
@@ -105,7 +108,10 @@ const getNotification = () => async (dispatch) => {
       });
     })
     .catch((e) => {
-      return dispatch({ type: types.GET_NOTIFICATION_TENTANTS_FAILURE, payload: e });
+      return dispatch({
+        type: types.GET_NOTIFICATION_TENTANTS_FAILURE,
+        payload: e,
+      });
     });
 };
 // const postNotification = (payload) => async (dispatch) => {

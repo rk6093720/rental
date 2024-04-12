@@ -62,10 +62,9 @@ const OwnerLogin = ()=>{
         }
         useEffect(()=>{
             if(isAuthAdmin ){
-                navigate("/owner-dashboard");
+                navigate("/owner-dashboard/dashboard");
             }
         },[isAuthAdmin,navigate]);
-       console.log(isAuthAdmin)
     return (
     <div className='mainLogin' style={{ margin: "auto",marginTop:"65px"}}>
             <Box className='wholeBoxForLogin' style={{ width: "500px", height: "450px", margin: "auto", marginTop: "25px", padding: "5px", boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px" }}>
