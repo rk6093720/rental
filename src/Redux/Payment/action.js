@@ -79,11 +79,67 @@ const getPaymentDetails =()=> async(dispatch)=>{
         return dispatch({ type: types.GET_PAYMENT_FAILURE, payload: e });
       });
 }
+const getInvoice = () => async (dispatch) => {
+  dispatch({ type: types.GET_INVOICE_REQUEST });
+  return await axios
+    .get("http://localhost:8080/invoice/read")
+    .then((r) => {
+      console.log(r, "get");
+      dispatch({ type: types.GET_INVOICE_SUCCESS, payload: r.data.Invoice });
+    })
+    .catch((e) => {
+      return dispatch({ type: types.GET_INVOICE_FAILURE, payload: e });
+    });
+};
+const postInvoice = () => async (dispatch) => {
+  dispatch({ type: types.POST_INVOICE_REQUEST });
+  return await axios
+    .get("http://localhost:8080/invoice/create")
+    .then((r) => {
+      console.log(r, "get");
+      dispatch({ type: types.POST_INVOICE_SUCCESS, payload: r.data.AddInvoice });
+    })
+    .catch((e) => {
+      return dispatch({ type: types.POST_INVOICE_FAILURE, payload: e });
+    });
+};
+const editInvoice = (id, payload) => async (dispatch) => {
+  dispatch({ type: types.EDIT_INVOICE_REQUEST });
+  return await axios
+    .patch(`http://localhost:8080/invoice/update/${id}`, payload)
+    .then((r) => {
+      console.log(r);
+      dispatch({
+        type: types.EDIT_INVOICE_SUCCESS,
+        payload: r.data.editPayment,
+      });
+    })
+    .catch((e) => {
+      dispatch({ type: types.EDIT_INVOICE_FAILURE, payload: e });
+    });
+};
+
+const deleteInvoice = (id) => async (dispatch) => {
+  dispatch({ type: types.DELETE_INVOICE_REQUEST });
+  return await axios
+    .delete(`http://localhost:8080/invoice/remove/${id}`)
+    .then((r) => {
+      console.log(r);
+      dispatch({ type: types.DELETE_INVOICE_SUCCESS, payload: id });
+    })
+    .catch((e) => {
+      dispatch({ type: types.DELETE_INVOICE_FAILURE, payload: e });
+    });
+};
 export {
   getPayment,
   postPayment,
   editPayment,
   deletePayment,
   getPaymentDetails,
-  editApprove
+  editApprove,
+  getInvoice,
+  postInvoice,
+  editInvoice,
+  deleteInvoice
 };

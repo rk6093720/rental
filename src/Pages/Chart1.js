@@ -43,26 +43,26 @@
 //     title: 'Rent',
 //   },
 // };
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Chart } from 'react-google-charts';
-import { useDispatch, useSelector } from 'react-redux';
-import { getInvoice } from '../Redux/VacateNotice/action';
-
+// import { useDispatch, useSelector } from 'react-redux';
 const Chart1 = () => {
-  const invoice = useSelector((state) => state.VacateNotice.invoice);
-  const dispatch = useDispatch();
+  // const invoice = useSelector((state) => state.VacateNotice.invoice);
+  // const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getInvoice());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(
+  //     // getInvoice()
+  //     );
+  // }, []);
 
   // Check if there's an invoice and extract data
-  const data = invoice.map((item) => [item.month || 'N/A', parseInt(item.rent) || 0]);
+  // const data = invoice.map((item) => [item.month || 'N/A', parseInt(item.rent) || 0]);
   return (
     <div className='piechart'>
       <Chart
         chartType="BarChart"
-        data={[["Month", "Rent"], ...data]} // Include column headers
+        // data={[["Month", "Rent"], ...data]} // Include column headers
         options={options}
         width={"100%"}
         height={"400px"}

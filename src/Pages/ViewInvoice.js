@@ -21,7 +21,6 @@ import {
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getInvoice } from "../Redux/VacateNotice/action";
 const ViewInvoice = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -29,7 +28,9 @@ const ViewInvoice = () => {
   const [currentInvoice, setCurrentInvoice] = useState({});
   useEffect(() => {
     if (invoice.length === 0) {
-      dispatch(getInvoice());
+      dispatch(
+        // getInvoice()
+        );
     }
   }, [dispatch, invoice.length]);
   useEffect(() => {

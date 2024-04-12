@@ -29,7 +29,7 @@ const Apartment = () => {
     // Update Redux state when local state changes
     dispatch(setPagination({ ...pagination, page: newPage }));
   };
-
+  // const superadminApartment = useSelector((state)=>state.App.superapartment);
   const land = useSelector((state) => state.App.apartment);
   const View = (id)=>{
     if(location.pathname === "/superAdmin/apartment"){

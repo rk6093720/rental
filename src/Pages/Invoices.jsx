@@ -14,9 +14,9 @@ import {
   ModalCloseButton,
 } from '@chakra-ui/react'
 import { Button, Flex, Table, TableCaption, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
-import { deleteInvoice, getInvoice, postInvoice } from '../Redux/VacateNotice/action';
-import { GET_INVOICE_SUCCESS } from '../Redux/VacateNotice/actionTypes';
 import { getTentants } from '../Redux/Tentants/action';
+import { deleteInvoice, getInvoice, postInvoice } from '../Redux/Payment/action';
+import { GET_INVOICE_SUCCESS } from '../Redux/Payment/actionTypes';
 const Invoices = () => {
   const dispatch = useDispatch();
   const [color, setColor] = useState(null);
@@ -69,8 +69,12 @@ const Invoices = () => {
  };
 
   const handleDelete = (item) => {
-    dispatch(deleteInvoice(item._id))
-      .then(() => dispatch(getInvoice()))
+    dispatch(
+      deleteInvoice(item._id)
+      )
+      .then(() => dispatch(
+        getInvoice()
+        ))
     setColor(item._id)
   }
   const handleAddInvoice=()=>{
@@ -94,10 +98,15 @@ const Invoices = () => {
       year,
       rent,
     };
-    dispatch(postInvoice(payload))
-    .then(()=> dispatch(getInvoice()))
+    dispatch(
+      postInvoice(payload)
+      )
+    .then(()=> dispatch(
+      getInvoice()
+      ))
     .then((r)=>{
-        if(r.type === GET_INVOICE_SUCCESS){
+        if(r.type === GET_INVOICE_SUCCESS
+          ){
           toast({
             title: 'Invoice created Successfully',
             duration: 5000,
@@ -112,7 +121,7 @@ const Invoices = () => {
       console.log(e);
     })
   }
-  const land = useSelector((state) => state.VacateNotice.invoice);
+  const land = useSelector((state) => state.Payment.invoice);
   useEffect(() => {
     if (land?.length === 0) {
       dispatch(getInvoice())

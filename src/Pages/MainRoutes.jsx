@@ -1,7 +1,6 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom';
 import Properties from './Properties';
-import Setting from './Setting';
 import Profile from './Profile';
 import Landlord from './Landlord';
 import Tentants from './Tentants';
@@ -9,7 +8,6 @@ import Leases from './Leases';
 import Utlility from './Utlility';
 import Invoices from './Invoices';
 import Payment from './Payment';
-import VacateNotices from './VacateNotices';
 import Reports from './Reports';
 import Dashboard from './Dashboard';
 import AddLandlord from './AddLandlord';
@@ -29,9 +27,6 @@ import ViewUtility from './ViewUtility';
 import EditUtility from './EditUtility';
 import AddPayment from './AddPayment';
 import ViewPayment from './ViewPayment';
-import AddVacateNotice from './AddVacateNotice';
-import ViewVacateNotice from './ViewVacateNotice';
-import EditVacateNotice from './EditVacateNotice';
 import EditInvoice from './EditInvoice';
 import ViewInvoice from './ViewInvoice';
 import Apartment from './Apartment';
@@ -44,7 +39,6 @@ const MainRoutes = () => {
         <div>
             <Routes>
                 <Route path='/properties' element={<Properties />} />
-                <Route path='/setting' element={<Setting />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path='/landlords' element={<Landlord />} />
                 <Route path='/tentants' element={<Tentants />} />
@@ -52,7 +46,6 @@ const MainRoutes = () => {
                 <Route path='/utilities' element={<Utlility/>}/>
                 <Route path='/invoices' element={<Invoices/>}/>
                 <Route path='/payment' element={<Payment/>}/>
-                <Route path='/vacateNotices' element={<VacateNotices/>}/>
                 <Route path='/reports' element={<Reports/>}/>
                 <Route path='/dashboard' element={
                 <Dashboard/>
@@ -65,7 +58,6 @@ const MainRoutes = () => {
                 <Route path='/AddTentants' element={<AddTentants/>}/>
                 <Route path='/AddLease' element={<AddLease/>}/>
                 <Route path='/AddUtility' element={<AddUtility/>}/>
-                <Route path='/AddVacateNotice' element={<AddVacateNotice/>}/>
                 <Route path='/view-apartment/:id' element={<ViewApartment/>}/>
                 <Route path='/apartment/:id/edit' element={<EditApartmentDetails/>}/>
                 <Route path='/viewUtility/:id' element={<ViewUtility/>}/>
@@ -75,13 +67,11 @@ const MainRoutes = () => {
                 <Route path='/viewLandlord/:id' element={<ViewLandLord/>}/>
                 <Route path='/viewProperty/:id' element={<ViewProperties/>}/>
                 <Route path='/viewInvoice/:id' element={<ViewInvoice/>}/>
-                <Route path='/viewVacateNotice/:id' element={<ViewVacateNotice/>}/> 
                 <Route path='/tentant/:id/edit' element={<EditTentant/>}/>
                 <Route path='/landlord/:id/edit' element={<EditLandLord/>}/>  
                 <Route path='/property/:id/edit' element={<EditProperty/>}/> 
                 <Route path='/lease/:id/edit' element={<EditLease/>}/>
                 <Route path='/utility/:id/edit' element={<EditUtility/>}/>
-                <Route path='/vacatenotice/:id/edit' element={<EditVacateNotice/>}/>   
                 <Route path='/invoice/:id/edit' element={<EditInvoice/>}/>
                 {/* <Route path='/helpDesk' element={<HelpDesk/>}/> */}
             </Routes>

@@ -2,6 +2,7 @@ import * as types from "./actionTypes"
 const initialState = {
     paymentsapp: [],
     payment:[],
+    invoice:[],
     isLoading: false,
     isError: false
 }
@@ -104,7 +105,42 @@ const reducer = (state = initialState, action) => {
           isLoading: false,
           isError: true,
         };
-
+      case types.GET_INVOICE_REQUEST:
+        return {
+          ...state,
+          isLoading: true,
+        };
+      case types.GET_INVOICE_SUCCESS:
+        return {
+          ...state,
+          isLoading: false,
+          invoice: payload,
+          isError: false,
+        };
+      case types.GET_INVOICE_FAILURE:
+        return {
+          ...state,
+          isLoading: false,
+          isError: true,
+        };
+      case types.POST_INVOICE_REQUEST:
+        return {
+          ...state,
+          isLoading: true,
+        };
+      case types.POST_INVOICE_SUCCESS:
+        return {
+          ...state,
+          isLoading: false,
+          invoice: [...state.invoice, payload],
+          isError: false,
+        };
+      case types.POST_INVOICE_FAILURE:
+        return {
+          ...state,
+          isLoading: false,
+          isError: true,
+        };
       default:
         return state;
     }

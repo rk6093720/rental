@@ -2,8 +2,8 @@ import { Box, Button, Flex, FormControl, FormLabel, Heading, Input, Select, useT
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { editInvoice, getInvoice } from "../Redux/VacateNotice/action";
-import { GET_INVOICE_SUCCESS } from "../Redux/VacateNotice/actionTypes";
+import { editInvoice, getInvoice } from "../Redux/Payment/action";
+import { GET_INVOICE_SUCCESS } from "../Redux/Payment/actionTypes";
 const EditInvoice = () =>{
     const {id} = useParams()
     const [invoice,setInvoice]=useState("");
@@ -17,9 +17,9 @@ const EditInvoice = () =>{
     const [year,setYear]=useState("");
     const location = useLocation();
     const [currentLand,setCurrentLand]=useState({});
-    const invoiceLand = useSelector((state)=> state.VacateNotice.invoice);
     const dispatch= useDispatch();
     const toast = useToast();
+    const invoiceLand = useSelector((state)=> state.Payment.invoice);
     const navigate = useNavigate();
     const handleEditInvoice=(e)=>{
         e.preventDefault();
@@ -34,10 +34,15 @@ const EditInvoice = () =>{
            month,
            year,
         }
-        dispatch(editInvoice(id,payload))
-        .then(()=> dispatch(getInvoice()))
+        dispatch(
+          editInvoice(id,payload)
+          )
+        .then(()=> dispatch(
+          getInvoice()
+          ))
         .then((r)=>{
-            if(r.type === GET_INVOICE_SUCCESS){
+            if(r.type === GET_INVOICE_SUCCESS
+              ){
                 toast({
                   title: 'Invoice is Edit Successfully',
                   duration: 5000,
@@ -65,7 +70,9 @@ const EditInvoice = () =>{
     useEffect(()=>{
         if(invoiceLand.length===0)
         {
-         dispatch(getInvoice())
+         dispatch(
+          getInvoice()
+          )
         }
      },[invoiceLand.length, dispatch])
      useEffect(()=>{
@@ -82,7 +89,7 @@ const EditInvoice = () =>{
          landById && setMonth(landById.month)
          landById && setYear(landById.year)
        }
-     },[id,invoiceLand])
+     },[id, invoiceLand])
     return (
         <div>
              <Box style={{width:"100%",padding:"25px"}} >

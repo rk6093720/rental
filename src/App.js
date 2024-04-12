@@ -1,6 +1,6 @@
 // App.js
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Login from './Pages/Login';
@@ -19,6 +19,9 @@ const App = () => {
   const isAuthUser= useSelector((state)=>state.Auth.isAuthUser)
   const role = useSelector((state)=> state.Auth.roles);
   const roles = useSelector((state)=>state.Auth.role);
+  useEffect(()=>{
+
+  },[])
   return (
     <div>
       <Routes>

@@ -38,6 +38,7 @@ const Navbar = () => {
         const difference = expiryDate - timeNow;
         if (difference <= 0) {
           clearInterval(interval);
+          localStorage.removeItem("SuperAdmintoken");
           navigate("/adminSignup");
           // Handle token expiration
           // For example: setShowPopover(true);
